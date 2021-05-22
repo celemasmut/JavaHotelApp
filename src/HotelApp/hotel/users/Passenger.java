@@ -1,16 +1,21 @@
 package HotelApp.hotel.users;
 
-public class Passenger extends User {
+import HotelApp.hotel.Register;
+import java.util.Scanner;
+
+import static HotelApp.hotel.Hotel.addUserToList;
+
+public class Passenger extends User  {
     private String name;
     private String dni;
-    private String source;
+    private String hometown;
     private String homeAddress;
 
-    public Passenger(int id, String loginName, String password, String name, String dni, String source, String homeAddress) {
+    public Passenger(int id, String loginName, String password, String name, String dni, String hometown, String homeAddress) {
         super(id, loginName, password);
         this.name = name;
         this.dni = dni;
-        this.source = source;
+        this.hometown =hometown;
         this.homeAddress = homeAddress;
     }
 
@@ -31,11 +36,11 @@ public class Passenger extends User {
     }
 
     public String getSource() {
-        return source;
+        return hometown;
     }
 
     public void setSource(String source) {
-        this.source = source;
+        this.hometown = source;
     }
 
     public String getHomeAddress() {
@@ -50,4 +55,6 @@ public class Passenger extends User {
     public void menu() {
 
     }
+
+
 }

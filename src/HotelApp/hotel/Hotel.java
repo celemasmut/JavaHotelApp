@@ -7,13 +7,14 @@ import HotelApp.hotel.users.Passenger;
 import HotelApp.hotel.users.Receptionist;
 import HotelApp.hotel.users.User;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Hotel {
-    private List <User> usersList;;
-    private List <Room> roomsList;
-    private List<Reservation> reservationsList;
+    private static List <User> usersList;;
+    private static List <Room> roomsList;
+    private static List<Reservation> reservationsList;
 
     public Hotel() {
         this.usersList = new ArrayList<>();
@@ -66,5 +67,20 @@ public class Hotel {
             }
         }
         return posInList;
+    }
+
+    public static boolean addUserToList (User usertToAdd)
+    {
+    usersList.add(usertToAdd);
+    return true;
+    }
+    public static boolean existenceInTheList(User userToSearch)
+    {
+        for (User aux:usersList)
+        {
+            if (userToSearch.equals(aux))
+                return true;
+        }
+        return false;
     }
 }
