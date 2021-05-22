@@ -28,10 +28,10 @@ public class Hotel {
          String inputUserName;
          String inputPassword;
 
-         System.out.println("Ingrese su nombre de usuario:");
+         System.out.println("Insert user name:");
          inputUserName=keyboard.nextLine();
          inputUserName.toLowerCase();
-         System.out.println("Ingrese su contraseña:");
+         System.out.println("Insert password:");
          inputPassword=keyboard.nextLine();
          posInList=searchUserInList(inputUserName,inputPassword);
          if (posInList>-1)
@@ -50,7 +50,7 @@ public class Hotel {
              }
          }
          else
-             System.out.println("Algo fue ingresado de manera erronea");
+             System.out.println("There is no match in user, try again or register");
 
 
     }
