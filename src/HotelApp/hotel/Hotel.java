@@ -53,9 +53,6 @@ public class Hotel {
              System.out.println("Algo fue ingresado de manera erronea");
 
 
-
-
-
     }
     public int searchUserInList(String inputUserName,String inputPassword)
     {

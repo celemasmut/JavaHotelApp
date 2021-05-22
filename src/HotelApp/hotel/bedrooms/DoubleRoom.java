@@ -2,8 +2,8 @@ package HotelApp.hotel.bedrooms;
 
 import HotelApp.hotel.users.Passenger;
 
-public class Family extends Room{
-    public Family(Passenger occupant, String roomNumber, int numberOfBeds, double price) {
+public class DoubleRoom extends Room{
+    public DoubleRoom(Passenger occupant, String roomNumber, int numberOfBeds, double price) {
         super(occupant, roomNumber, numberOfBeds, price);
     }
 
@@ -14,7 +14,6 @@ public class Family extends Room{
 
     @Override
     public String toString() {
-        return "Family{}";
+        return "Double{}";
     }
 }
-
