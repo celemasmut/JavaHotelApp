@@ -6,7 +6,7 @@ public abstract class  Room {
     private Passenger occupant;
     ///Enum clasificacion
     private String roomNumber;
-    ///Enum de estado
+    private State stateRoom;
     private int numberOfBeds;
     private double price;
     ///enum de consumos con lista

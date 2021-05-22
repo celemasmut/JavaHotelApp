@@ -9,5 +9,5 @@ public class Reservation {
     private Room roomToReserve;
     private LocalDate arrivalDay;
     private LocalDate dayOfExit;
-    ///Pension ENUM
+    private MealPlan plan;
 }
