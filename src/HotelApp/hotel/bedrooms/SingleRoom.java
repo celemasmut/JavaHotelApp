@@ -4,8 +4,9 @@ package HotelApp.hotel.bedrooms;
 import HotelApp.hotel.users.Passenger;
 
 public class SingleRoom extends Room{
-    public SingleRoom(Passenger occupant, String roomNumber, int numberOfBeds, double price) {
-        super(occupant, roomNumber, numberOfBeds, price);
+
+    public SingleRoom(String roomNumber, State stateRoom, int numberOfBeds, double price) {
+        super(roomNumber, stateRoom, numberOfBeds, price);
     }
 
     @Override
