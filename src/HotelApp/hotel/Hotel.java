@@ -22,59 +22,25 @@ public class Hotel {
         this.reservationsList = new ArrayList<>();
     }
 
-    public void login ()
-    {
-         int posInList;
-         Scanner keyboard = new Scanner (System.in);
-         String inputUserName;
-         String inputPassword;
-
-         System.out.println("Insert user name:");
-         inputUserName=keyboard.nextLine();
-         inputUserName.toLowerCase();
-         System.out.println("Insert password:");
-         inputPassword=keyboard.nextLine();
-         posInList=searchUserInList(inputUserName,inputPassword);
-         if (posInList>-1)
-         {
-             if (usersList.get(posInList) instanceof Passenger)
-             {
-                 usersList.get(posInList).menu();
-             }
-             else if (usersList.get(posInList) instanceof Receptionist)
-             {
-                 usersList.get(posInList).menu();
-             }
-             if (usersList.get(posInList) instanceof Admin)
-             {
-                 usersList.get(posInList).menu();
-             }
-         }
-         else
-             System.out.println("There is no match in user, try again or register");
-
-
-    }
-    public int searchUserInList(String inputUserName,String inputPassword)
-    {
-        int posInList=-1;
-        for (User aux:usersList)
-        {
-            if (inputUserName.equalsIgnoreCase(aux.getLoginName()) && inputPassword.equals(aux.getPassword()))
-            {
-                posInList=usersList.indexOf(aux);
-
-            }
-        }
-        return posInList;
+    public static List<User> getUsersList() {
+        return usersList;
     }
 
-    public static boolean addUserToList (User usertToAdd)
-    {
-    usersList.add(usertToAdd);
-    return true;
+    public static List<Room> getRoomsList() {
+        return roomsList;
     }
-    public static boolean existenceInTheList(User userToSearch)
+
+    public static List<Reservation> getReservationsList() {
+        return reservationsList;
+    }
+
+
+
+    protected static boolean addUserToList (User userToAdd){
+        usersList.add(userToAdd);
+        return true;
+    }
+    protected static boolean existenceInTheList(User userToSearch)
     {
         for (User aux:usersList)
         {

@@ -4,13 +4,10 @@ import HotelApp.hotel.Register;
 
 import java.util.Scanner;
 
-import static HotelApp.hotel.Hotel.addUserToList;
-import static HotelApp.hotel.Hotel.existenceInTheList;
 
-public class Admin extends User implements Register
-{
-    public Admin(int id, String loginName, String password) {
-        super(id, loginName, password);
+public class Admin extends User implements Register {
+    public Admin(String loginName, String password) {
+        super(loginName, password);
     }
 
     @Override
@@ -20,7 +17,7 @@ public class Admin extends User implements Register
 
     @Override
     public void userRegistration() {
-        int answer=0;
+   /*     int answer=0;
         String inputName;
         String inputDni;
         String inputHometown;
@@ -47,7 +44,7 @@ public class Admin extends User implements Register
             inputLoginName=keyboard.nextLine();
             System.out.println("Enter password for passenger:");
             inputPassword=keyboard.nextLine();
-            Passenger pasajeroToAdd= new Passenger(1,inputLoginName,inputPassword,inputName,inputDni,inputHometown,inputHomeAdress);
+            Passenger pasajeroToAdd= new Passenger(inputLoginName,inputPassword,inputName,inputDni,inputHometown,inputHomeAdress);
             if(existenceInTheList(pasajeroToAdd))
             {
                 System.out.println("Uno de los de los datos fue mal ingresado");
@@ -59,14 +56,14 @@ public class Admin extends User implements Register
             inputLoginName=keyboard.nextLine();
             System.out.println("Enter password for passenger:");
             inputPassword=keyboard.nextLine();
-            Receptionist receptionistToAdd= new Receptionist(2,inputLoginName,inputPassword);
+            Receptionist receptionistToAdd= new Receptionist(inputLoginName,inputPassword);
             if (existenceInTheList(receptionistToAdd))
             {
                 System.out.println("Uno de los de los datos fue mal ingresado");
             }
             else{
                 addUserToList(receptionistToAdd);
-            }
-        }
+            }*/
     }
 }
+

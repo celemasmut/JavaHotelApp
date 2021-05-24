@@ -9,8 +9,7 @@ public abstract class User  {
     private String loginName;
     private String password;
 
-    public User(int autoIncrease, String loginName, String password) {
-        this.id = autoIncrease;
+    public User(String loginName, String password) {
         this.loginName = loginName;
         this.password = password;
     }

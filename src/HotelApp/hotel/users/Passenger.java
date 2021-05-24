@@ -3,7 +3,6 @@ package HotelApp.hotel.users;
 import HotelApp.hotel.Register;
 import java.util.Scanner;
 
-import static HotelApp.hotel.Hotel.addUserToList;
 
 public class Passenger extends User  {
     private String name;
@@ -11,8 +10,8 @@ public class Passenger extends User  {
     private String hometown;
     private String homeAddress;
 
-    public Passenger(int id, String loginName, String password, String name, String dni, String hometown, String homeAddress) {
-        super(id, loginName, password);
+    public Passenger(String loginName, String password, String name, String dni, String hometown, String homeAddress) {
+        super(loginName, password);
         this.name = name;
         this.dni = dni;
         this.hometown =hometown;
