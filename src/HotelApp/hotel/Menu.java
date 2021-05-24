@@ -30,7 +30,7 @@ public class Menu {
         return data;
     }
 
-    private void initiate(){
+    public void initiate(){
         int op =0;
         do{
             showFirstMenu();
@@ -114,7 +114,7 @@ public class Menu {
                     printOut.println("Wrong option");
                     break;
             }
-        }while (op != 3);
+        }while (op != 4);
     }
 
     private void userLogin ()
