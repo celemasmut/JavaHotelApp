@@ -1,17 +1,19 @@
 package HotelApp.hotel;
 
 import HotelApp.hotel.bedrooms.*;
-import HotelApp.hotel.users.Admin;
 import HotelApp.hotel.users.Passenger;
-import HotelApp.hotel.users.Receptionist;
 import HotelApp.hotel.users.User;
 
 import java.io.PrintStream;
+import java.time.LocalDate;
+
 import java.util.Scanner;
 
 public class Menu {
     private PrintStream printOut;
     private User user;
+
+    Scanner scan = new Scanner(System.in);
 
 
     public Menu(){
@@ -25,17 +27,12 @@ public class Menu {
         printOut.println("3- Leave");
     }
 
-    private int scanIntData(){
-        Scanner scan = new Scanner(System.in);
-        int data = scan.nextInt();
-        return data;
-    }
 
     public void initiate(){
-        int op =0;
+        int op;
         do{
             showFirstMenu();
-            op=scanIntData();
+            op= scan.nextInt();
             switch (op){
                 case 1:
                     register();
@@ -69,7 +66,6 @@ public class Menu {
     }
 
     private void register(){
-        Scanner scan = new Scanner(System.in);
         printOut.println("Insert Name: ");
         String name = scan.next();
         printOut.println("Insert DNI :");
@@ -97,10 +93,10 @@ public class Menu {
     }
 
     private void login(){
-        int op=0;
+        int op;
         do{
             showLoginMenu();
-            op = scanIntData();
+            op = scan.nextInt();
             switch (op){
                 case 1:
                     passenger();
@@ -120,7 +116,7 @@ public class Menu {
 
     private void userLogin ()
     {
-        boolean exist=false;
+        boolean exist;
         Scanner scan = new Scanner (System.in);
         String userName;
         String password;
@@ -181,7 +177,7 @@ public class Menu {
 
     private MealPlan chooseMealPlan(){
         showMealPlan();
-        int op= scanIntData();
+        int op= scan.nextInt();
         int i=1;
         for(MealPlan plan : MealPlan.values()){
             if(op == i){
@@ -191,24 +187,65 @@ public class Menu {
         return null;
     }
 
-  /*  private boolean toReserveRoom(String roomNumberChoosed){
-        boolean reserved= false;
+    private LocalDate chooseArrivalDate(){
+        printOut.println("Choose the arrival date yyyy/MM/dd");
+        printOut.println("Year : ");
+        int year = scan.nextInt();
+
+        printOut.println("Month : ");
+        int month = scan.nextInt();
+
+        printOut.println("Day : ");
+        int day = scan.nextInt();
+
+
+        return LocalDate.of(year,month,day);
+    }
+
+    private int setDaysOfStay(){
+        return scan.nextInt();
+    }
+
+    private LocalDate setDayOfExit(int daysOfStay){
+        return chooseArrivalDate().plusDays(daysOfStay);
+    }
+
+    private Reservation toReserveRoom( LocalDate arrival,LocalDate exit,String roomNumberChoosed,MealPlan plan){
+        Reservation reservation=null;
         for(Room room : Hotel.getRoomsList()){
             if(room.getRoomNumber().equals(roomNumberChoosed)){
-                Reservation reservation = new Reservation(room);
+                reservation = new Reservation(room,arrival, exit,plan);
             }
         }
-        return reserved;
-    }*/
+        return reservation;
+    }
 
+    private void confirmReservation(Reservation reserv, int dayOfStay){
+        printOut.println(reserv.toString());
+        printOut.println(" Is a total of $"+reserv.totalPriceReservation(dayOfStay));
+        printOut.println("Confirm pay : \n 1-Confirm \n 2-No Confirm");
+        int confirm = scan.nextInt();
+        if(confirm == 1){
+            reserv.getRoomToReserve().setStateRoom(State.RESERVED);
+            Hotel.addReservation(reserv);
+        }else if(confirm == 2){
+            reserv = null;
+            printOut.println("The reservation is deleted");
+        }
+        else{
+            printOut.println("Wrong option");
+        }
+    }
 
 
 
     private void passenger(){
         //ver hab dispo
+        int dayOfStay = setDaysOfStay();
         seeRoomFree();
-        chooseMealPlan();//usar para passar por param.
         //reservar
+        Reservation newReserv = toReserveRoom(chooseArrivalDate(),setDayOfExit(dayOfStay),scan.nextLine(),chooseMealPlan());
+        confirmReservation(newReserv,dayOfStay);
 
     }
     private void receptionist(){

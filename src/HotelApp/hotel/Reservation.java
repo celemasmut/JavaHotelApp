@@ -3,26 +3,32 @@ package HotelApp.hotel;
 import HotelApp.hotel.bedrooms.Room;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 public class Reservation {
-    private int id;
+    private UUID id;
     private Room roomToReserve;
     private LocalDate arrivalDay;
     private LocalDate dayOfExit;
     private MealPlan plan;
 
     public Reservation(Room roomToReserve, LocalDate arrivalDay, LocalDate dayOfExit, MealPlan plan) {
+        setId();
         this.roomToReserve = roomToReserve;
         this.arrivalDay = arrivalDay;
         this.dayOfExit = dayOfExit;
         this.plan = plan;
     }
 
+    public void setId() {
+        this.id = UUID.randomUUID();
+    }
+
     public void setPlan(MealPlan plan) {
         this.plan = plan;
     }
 
-    public int getId() {
+    public UUID getId() {
         return id;
     }
 
@@ -53,5 +59,13 @@ public class Reservation {
 
     public void setRoomToReserve(Room roomToReserve) {
         this.roomToReserve = roomToReserve;
+    }
+
+    public double totalPriceReservation(int daysOfStay){
+        double totalPriceReservation=0;
+        if(roomToReserve != null){
+            totalPriceReservation = (roomToReserve.getPrice() * daysOfStay) + (plan.getPrice()*daysOfStay);
+        }
+        return totalPriceReservation;
     }
 }
