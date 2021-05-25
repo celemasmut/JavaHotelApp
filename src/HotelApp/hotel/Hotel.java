@@ -34,9 +34,17 @@ public class Hotel {
         return reservationsList;
     }
 
+    protected static void addReservation( Reservation reservation){
+        reservationsList.add(reservation);
+    }
+
+    public static void addRoomToList(Room room){
+        roomsList.add(room);
+    }
 
 
-    protected static boolean addUserToList (User userToAdd){
+// esto sera por ahora publico solo por que no tenemos los archivos para levantarlos. luego sera protected.
+    public static boolean addUserToList (User userToAdd){
         usersList.add(userToAdd);
         return true;
     }

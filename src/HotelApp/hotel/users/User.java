@@ -1,7 +1,5 @@
 package HotelApp.hotel.users;
 
-import HotelApp.hotel.Register;
-
 import java.util.Objects;
 
 public abstract class User  {
@@ -13,7 +11,6 @@ public abstract class User  {
         this.loginName = loginName;
         this.password = password;
     }
-    public abstract void menu();
 
     public String getLoginName() {
         return loginName;

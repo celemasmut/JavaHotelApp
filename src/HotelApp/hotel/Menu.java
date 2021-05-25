@@ -120,7 +120,7 @@ public class Menu {
 
     private void userLogin ()
     {
-        int posInList=0;
+        boolean exist=false;
         Scanner scan = new Scanner (System.in);
         String userName;
         String password;
@@ -130,39 +130,26 @@ public class Menu {
         userName.toLowerCase();
         printOut.println("Insert password:");
         password=scan.nextLine();
-        posInList=searchUserInList(userName,password);
-        if (posInList>-1)
+        exist=searchUserInList(userName,password);
+        if (!exist)
         {
-            if (Hotel.getUsersList().get(posInList) instanceof Passenger)
-            {
-                Hotel.getUsersList().get(posInList).menu();
-            }
-            else if (Hotel.getUsersList().get(posInList) instanceof Receptionist)
-            {
-                Hotel.getUsersList().get(posInList).menu();
-            }
-            if (Hotel.getUsersList().get(posInList) instanceof Admin)
-            {
-                Hotel.getUsersList().get(posInList).menu();
-            }
-        }
-        else
             printOut.println("There is no match in user, try again or register");
 
+        }
     }
 
-    private int searchUserInList(String userName,String password)
+    private boolean searchUserInList(String userName,String password)
     {
-        int posInList=-1;
+        boolean exist = false;
         for (User aux:Hotel.getUsersList())
         {
             if (userName.equalsIgnoreCase(aux.getLoginName()) && password.equals(aux.getPassword()))
             {
-                posInList=Hotel.getUsersList().indexOf(aux);
-
+                exist=true;
+                break;
             }
         }
-        return posInList;
+        return exist;
     }
 
     private void seeRoomFree(){
@@ -184,9 +171,43 @@ public class Menu {
         }
     }
 
+    private void showMealPlan(){
+        int i=1;
+        for(MealPlan mealPlan : MealPlan.values()){
+            printOut.println(i +" - " + mealPlan +" " + mealPlan.getDescription());
+            i++;
+        }
+    }
+
+    private MealPlan chooseMealPlan(){
+        showMealPlan();
+        int op= scanIntData();
+        int i=1;
+        for(MealPlan plan : MealPlan.values()){
+            if(op == i){
+                return plan;
+            }
+        }
+        return null;
+    }
+
+  /*  private boolean toReserveRoom(String roomNumberChoosed){
+        boolean reserved= false;
+        for(Room room : Hotel.getRoomsList()){
+            if(room.getRoomNumber().equals(roomNumberChoosed)){
+                Reservation reservation = new Reservation(room);
+            }
+        }
+        return reserved;
+    }*/
+
+
+
+
     private void passenger(){
         //ver hab dispo
         seeRoomFree();
+        chooseMealPlan();//usar para passar por param.
         //reservar
 
     }

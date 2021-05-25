@@ -1,8 +1,5 @@
 package HotelApp.hotel.users;
 
-import HotelApp.hotel.Register;
-import java.util.Scanner;
-
 
 public class Passenger extends User  {
     private String name;
@@ -50,10 +47,6 @@ public class Passenger extends User  {
         this.homeAddress = homeAddress;
     }
 
-    @Override
-    public void menu() {
-
-    }
 
 
 }

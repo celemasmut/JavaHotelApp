@@ -7,8 +7,4 @@ public class Receptionist extends User{
         super(loginName, password);
     }
 
-    @Override
-    public void menu() {
-
-    }
 }
