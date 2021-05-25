@@ -15,6 +15,6 @@ public class DoubleRoom extends Room{
 
     @Override
     public String toString() {
-        return "Double{}";
+        return super.toString();
     }
 }

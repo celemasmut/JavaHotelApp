@@ -77,4 +77,15 @@ public abstract class  Room {
 
     public abstract void showConsumptions ();
 
+    @Override
+    public String toString() {
+        return "Room{" +
+                "occupant=" + occupant +
+                ", roomNumber='" + roomNumber + '\'' +
+                ", stateRoom=" + stateRoom +
+                ", numberOfBeds=" + numberOfBeds +
+                ", price=" + price +
+                ", consumed=" + consumed +
+                '}';
+    }
 }

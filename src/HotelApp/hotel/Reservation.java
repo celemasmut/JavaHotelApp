@@ -68,4 +68,15 @@ public class Reservation {
         }
         return totalPriceReservation;
     }
+
+    @Override
+    public String toString() {
+        return "Reservation{" +
+                "id=" + id +
+                ", roomToReserve=" + roomToReserve +
+                ", arrivalDay=" + arrivalDay +
+                ", dayOfExit=" + dayOfExit +
+                ", plan=" + plan +
+                '}';
+    }
 }

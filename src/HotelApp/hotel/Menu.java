@@ -114,7 +114,7 @@ public class Menu {
         }while (op != 4);
     }
 
-    private void userLogin ()
+    private boolean userLogin ()
     {
         boolean exist;
         Scanner scan = new Scanner (System.in);
@@ -132,6 +132,7 @@ public class Menu {
             printOut.println("There is no match in user, try again or register");
 
         }
+        return exist;
     }
 
     private boolean searchUserInList(String userName,String password)
@@ -151,18 +152,14 @@ public class Menu {
     private void seeRoomFree(){
         for(Room room : Hotel.getRoomsList()){
             if( room.getStateRoom().equals(State.FREE)){
-                if(room instanceof SingleRoom){
-                    room.toString();
-                }
-                if(room instanceof DoubleRoom){
-                    room.toString();
-                }
-                if(room instanceof FamilyRoom){
-                    room.toString();
-                }
-                if(room instanceof KingRoom){
-                    room.toString();
-                }
+                if(room instanceof SingleRoom)
+                    printOut.println(room.toString());
+                if(room instanceof DoubleRoom)
+                    printOut.println(room.toString());
+                if(room instanceof FamilyRoom)
+                    printOut.println(room.toString());
+                if(room instanceof KingRoom)
+                    printOut.println(room.toString());
             }
         }
     }
@@ -178,11 +175,13 @@ public class Menu {
     private MealPlan chooseMealPlan(){
         showMealPlan();
         int op= scan.nextInt();
+        scan.nextLine();
         int i=1;
         for(MealPlan plan : MealPlan.values()){
             if(op == i){
                 return plan;
             }
+            i++;
         }
         return null;
     }
@@ -206,8 +205,8 @@ public class Menu {
         return scan.nextInt();
     }
 
-    private LocalDate setDayOfExit(int daysOfStay){
-        return chooseArrivalDate().plusDays(daysOfStay);
+    private LocalDate setDayOfExit(LocalDate arrival,int daysOfStay){
+        return arrival.plusDays(daysOfStay);
     }
 
     private Reservation toReserveRoom( LocalDate arrival,LocalDate exit,String roomNumberChoosed,MealPlan plan){
@@ -240,13 +239,19 @@ public class Menu {
 
 
     private void passenger(){
-        //ver hab dispo
-        int dayOfStay = setDaysOfStay();
-        seeRoomFree();
-        //reservar
-        Reservation newReserv = toReserveRoom(chooseArrivalDate(),setDayOfExit(dayOfStay),scan.nextLine(),chooseMealPlan());
-        confirmReservation(newReserv,dayOfStay);
-
+        //login
+        if(userLogin()) {
+            //ver hab dispo
+            int dayOfStay = setDaysOfStay();
+            LocalDate arrival = chooseArrivalDate();
+            seeRoomFree();
+            printOut.println("Insert number of room you want to reserve ");
+            String room = scan.next();
+            scan.nextLine();
+            //reservar
+            Reservation newReserv = toReserveRoom(arrival, setDayOfExit(arrival,dayOfStay), room, chooseMealPlan());
+            confirmReservation(newReserv, dayOfStay);
+        }
     }
     private void receptionist(){
 

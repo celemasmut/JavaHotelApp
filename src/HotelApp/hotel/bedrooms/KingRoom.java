@@ -16,6 +16,6 @@ public class KingRoom extends Room {
 
     @Override
     public String toString() {
-        return "King{}";
+        return super.toString();
     }
 }

@@ -16,6 +16,6 @@ public class SingleRoom extends Room{
 
     @Override
     public String toString() {
-        return "Single{}";
+        return super.toString();
     }
 }

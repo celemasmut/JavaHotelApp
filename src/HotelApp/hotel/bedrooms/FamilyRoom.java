@@ -15,7 +15,7 @@ public class FamilyRoom extends Room{
 
     @Override
     public String toString() {
-        return "Family{}";
+        return super.toString();
     }
 }
 
