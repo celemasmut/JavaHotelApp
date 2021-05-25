@@ -1,5 +1,6 @@
 package HotelApp.hotel;
 
+import HotelApp.hotel.bedrooms.*;
 import HotelApp.hotel.users.Admin;
 import HotelApp.hotel.users.Passenger;
 import HotelApp.hotel.users.Receptionist;
@@ -164,7 +165,29 @@ public class Menu {
         return posInList;
     }
 
+    private void seeRoomFree(){
+        for(Room room : Hotel.getRoomsList()){
+            if( room.getStateRoom().equals(State.FREE)){
+                if(room instanceof SingleRoom){
+                    room.toString();
+                }
+                if(room instanceof DoubleRoom){
+                    room.toString();
+                }
+                if(room instanceof FamilyRoom){
+                    room.toString();
+                }
+                if(room instanceof KingRoom){
+                    room.toString();
+                }
+            }
+        }
+    }
+
     private void passenger(){
+        //ver hab dispo
+        seeRoomFree();
+        //reservar
 
     }
     private void receptionist(){
