@@ -6,30 +6,30 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 public class Reservation {
-    private UUID id;
+    private String dniPassenger;
     private Room roomToReserve;
     private LocalDate arrivalDay;
     private LocalDate dayOfExit;
     private MealPlan plan;
 
-    public Reservation(Room roomToReserve, LocalDate arrivalDay, LocalDate dayOfExit, MealPlan plan) {
-        setId();
+    public Reservation(Room roomToReserve, LocalDate arrivalDay, LocalDate dayOfExit, MealPlan plan,String dniPassenger) {
+        this.dniPassenger=dniPassenger;
         this.roomToReserve = roomToReserve;
         this.arrivalDay = arrivalDay;
         this.dayOfExit = dayOfExit;
         this.plan = plan;
     }
 
-    public void setId() {
-        this.id = UUID.randomUUID();
+    public String getDniPassenger() {
+        return dniPassenger;
     }
 
     public void setPlan(MealPlan plan) {
         this.plan = plan;
     }
 
-    public UUID getId() {
-        return id;
+    public void setDniPassenger(String dniPassenger) {
+        this.dniPassenger = dniPassenger;
     }
 
     public Room getRoomToReserve() {
@@ -72,7 +72,7 @@ public class Reservation {
     @Override
     public String toString() {
         return "Reservation{" +
-                "id=" + id +
+                "dniPassenger='" + dniPassenger + '\'' +
                 ", roomToReserve=" + roomToReserve +
                 ", arrivalDay=" + arrivalDay +
                 ", dayOfExit=" + dayOfExit +

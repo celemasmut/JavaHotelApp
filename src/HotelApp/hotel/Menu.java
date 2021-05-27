@@ -65,31 +65,39 @@ public class Menu {
         return exist;
     }
 
-    private void register(){
+    private String register(){
         printOut.println("Insert Name: ");
         String name = scan.next();
         printOut.println("Insert DNI :");
+        scan.nextLine();
         String dni = scan.next();
         boolean exist = validatePassengerDni(dni);
         if(!exist){
             printOut.println("Insert HomeTown : ");
+            scan.nextLine();
             String homeTown = scan.next();
             printOut.println("Insert HomeAddress : ");
+            scan.nextLine();
             String homeAddress = scan.next();
             printOut.println("Insert username :");
+            scan.nextLine();
             String userName= scan.next();
             printOut.println("Insert password : ");
+            scan.nextLine();
             String password = scan.next();
 
             Hotel.addUserToList(new Passenger(userName,password,name,dni,homeTown,homeAddress));
             printOut.println("New Passenger registered");
+            return dni;
         }
+        return null;
     }
 
     private void showLoginMenu(){
         printOut.println("1- Passenger");
         printOut.println("2- Receptionist");
         printOut.println("3- Admin");
+        printOut.println("4- Exit");
     }
 
     private void login(){
@@ -108,15 +116,15 @@ public class Menu {
                     admin();
                     break;
                 default:
-                    printOut.println("Wrong option");
+                    printOut.println("Good Bye");
                     break;
             }
         }while (op != 4);
     }
 
-    private boolean userLogin ()
+    private String userLogin ()
     {
-        boolean exist;
+        String exist=null;
         Scanner scan = new Scanner (System.in);
         String userName;
         String password;
@@ -127,7 +135,7 @@ public class Menu {
         printOut.println("Insert password:");
         password=scan.nextLine();
         exist=searchUserInList(userName,password);
-        if (!exist)
+        if (exist==null)
         {
             printOut.println("There is no match in user, try again or register");
 
@@ -135,30 +143,33 @@ public class Menu {
         return exist;
     }
 
-    private boolean searchUserInList(String userName,String password)
+    private String searchUserInList(String userName,String password)
     {
-        boolean exist = false;
+        String exist = null;
         for (User aux:Hotel.getUsersList())
         {
             if (userName.equalsIgnoreCase(aux.getLoginName()) && password.equals(aux.getPassword()))
             {
-                exist=true;
-                break;
+                if (aux instanceof Passenger){
+                    exist=((Passenger) aux).getDni();
+                    break;
+                }
+
             }
         }
         return exist;
     }
 
-    private void seeRoomFree(){
+    private void seeRoomFree(int option){
         for(Room room : Hotel.getRoomsList()){
             if( room.getStateRoom().equals(State.FREE)){
-                if(room instanceof SingleRoom)
+                if(room instanceof SingleRoom&& option==1)
                     printOut.println(room.toString());
-                if(room instanceof DoubleRoom)
+                if(room instanceof DoubleRoom&& option==2)
                     printOut.println(room.toString());
-                if(room instanceof FamilyRoom)
+                if(room instanceof FamilyRoom&&option==3)
                     printOut.println(room.toString());
-                if(room instanceof KingRoom)
+                if(room instanceof KingRoom&&option==4)
                     printOut.println(room.toString());
             }
         }
@@ -202,6 +213,7 @@ public class Menu {
     }
 
     private int setDaysOfStay(){
+        printOut.println("Days of Stay:");
         return scan.nextInt();
     }
 
@@ -209,11 +221,11 @@ public class Menu {
         return arrival.plusDays(daysOfStay);
     }
 
-    private Reservation toReserveRoom( LocalDate arrival,LocalDate exit,String roomNumberChoosed,MealPlan plan){
+    private Reservation toReserveRoom( LocalDate arrival,LocalDate exit,String roomNumberChoosed,MealPlan plan,String dniUser){
         Reservation reservation=null;
         for(Room room : Hotel.getRoomsList()){
             if(room.getRoomNumber().equals(roomNumberChoosed)){
-                reservation = new Reservation(room,arrival, exit,plan);
+                reservation = new Reservation(room,arrival, exit,plan,dniUser);
             }
         }
         return reservation;
@@ -227,6 +239,7 @@ public class Menu {
         if(confirm == 1){
             reserv.getRoomToReserve().setStateRoom(State.RESERVED);
             Hotel.addReservation(reserv);
+            System.out.println(Hotel.getReservationsList().get(0).toString());
         }else if(confirm == 2){
             reserv = null;
             printOut.println("The reservation is deleted");
@@ -240,21 +253,100 @@ public class Menu {
 
     private void passenger(){
         //login
-        if(userLogin()) {
+        String dniUser;
+        dniUser=userLogin();
+        int optionOfRoom=0;
+        if(dniUser!=null) {
             //ver hab dispo
             int dayOfStay = setDaysOfStay();
             LocalDate arrival = chooseArrivalDate();
-            seeRoomFree();
+            printOut.println("Insert number of type Room:");
+            printOut.println("1_ Single Room");
+            printOut.println("2_ Double Room");
+            printOut.println("3_ Family Room");
+            printOut.println("4_ King Room");
+            optionOfRoom=scan.nextInt();
+            seeRoomFree(optionOfRoom);
             printOut.println("Insert number of room you want to reserve ");
             String room = scan.next();
             scan.nextLine();
             //reservar
-            Reservation newReserv = toReserveRoom(arrival, setDayOfExit(arrival,dayOfStay), room, chooseMealPlan());
+            Reservation newReserv = toReserveRoom(arrival, setDayOfExit(arrival,dayOfStay), room, chooseMealPlan(),dniUser);
             confirmReservation(newReserv, dayOfStay);
+
         }
     }
-    private void receptionist(){
+    private void showRecepcionistMenu()
+    {
+        printOut.println("1_Check in");
+        printOut.println("2_Reservation");
+        printOut.println("3_Check out");
+        printOut.println("4_Show consumition of room");
+        printOut.println("5_Exit");
+    }
+    private LocalDate chooseDate(){
 
+        return LocalDate.now();
+    }
+    private void checkIn(){
+        int option=0;
+        int optionOfRoom=0;
+        String numberOfRoom;
+        String dniUser;
+        printOut.println("wants to make the entry of a passenger. Enter 1 or if you want to enter a reservation enter 2");
+        option=scan.nextInt();
+        if (option==1)
+        {
+            dniUser=register();
+            int dayOfStay = setDaysOfStay();
+            LocalDate arrival = LocalDate.now();
+            printOut.println("Insert number of type Room:");
+            printOut.println("1_ Single Room");
+            printOut.println("2_ Double Room");
+            printOut.println("3_ Family Room");
+            printOut.println("4_ King Room");
+            optionOfRoom=scan.nextInt();
+            seeRoomFree(optionOfRoom);
+            printOut.println("Insert number of room you want to reserve ");
+            numberOfRoom =scan.next();
+            scan.nextLine();
+            //reservar
+            Reservation newReserv = toReserveRoom(arrival, setDayOfExit(arrival,dayOfStay), numberOfRoom, chooseMealPlan(),dniUser);
+
+        }else if (option==2){
+
+        }
+
+
+    }
+    private void receptionist(){
+        boolean exit=false;
+        int option;
+        while (!exit)
+        {
+            showRecepcionistMenu();
+            option=scan.nextInt();
+            switch (option)
+            {
+                case 1:
+                    checkIn();
+                    break;
+                case 2:
+                    ///reservation();
+                    break;
+                case 3:
+                    ///checkOut();
+                    break;
+                case 4:
+                    ///showConsumitionOfRoom();
+                    break;
+                case 5:
+                    leave();
+                    break;
+
+            }
+
+        }
     }
 
     private void admin(){
