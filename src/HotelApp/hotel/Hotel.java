@@ -49,7 +49,7 @@ public class Hotel {
         usersList.add(userToAdd);
         return true;
     }
-    private static boolean changeStateOfRoom(Reservation reservation)
+    protected static boolean changeStateOfRoom(Reservation reservation)
     {
         int posInList;
         int posInListOfPassenger;
@@ -82,6 +82,14 @@ public class Hotel {
        }
        return posToReturn;
     }
+    protected static void showListOfRoom()
+    {
+        for (Room roomAux:roomsList)
+        {
+            System.out.println(roomAux.toString());
+        }
+    }
+
     /*protected static boolean existenceInTheList(User userToSearch)
     {
         for (User aux:usersList)

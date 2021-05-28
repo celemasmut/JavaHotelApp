@@ -9,6 +9,9 @@ import java.time.LocalDate;
 
 import java.util.Scanner;
 
+import static HotelApp.hotel.Hotel.changeStateOfRoom;
+import static HotelApp.hotel.Hotel.showListOfRoom;
+
 public class Menu {
     private PrintStream printOut;
     private User user;
@@ -293,6 +296,7 @@ public class Menu {
         int optionOfRoom=0;
         String numberOfRoom;
         String dniUser;
+        boolean result;
         printOut.println("wants to make the entry of a passenger. Enter 1 or if you want to enter a reservation enter 2");
         option=scan.nextInt();
         if (option==1)
@@ -312,6 +316,7 @@ public class Menu {
             scan.nextLine();
             //reservar
             Reservation newReserv = toReserveRoom(arrival, setDayOfExit(arrival,dayOfStay), numberOfRoom, chooseMealPlan(),dniUser);
+            result=changeStateOfRoom(newReserv);
 
         }else if (option==2){
 
@@ -330,6 +335,7 @@ public class Menu {
             {
                 case 1:
                     checkIn();
+                    showListOfRoom();
                     break;
                 case 2:
                     ///reservation();
