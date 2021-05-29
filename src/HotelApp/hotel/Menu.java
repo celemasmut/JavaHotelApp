@@ -326,6 +326,9 @@ public class Menu {
                         break;
                     case 4:
                         break;
+                    case 5:
+                        exit=true;
+                        break;
                 }
             }while (!exit);
         }
