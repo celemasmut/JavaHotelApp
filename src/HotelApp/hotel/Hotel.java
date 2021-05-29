@@ -94,7 +94,8 @@ public class Hotel {
         List<Reservation> passengerReservations = new ArrayList<>();
         for(Reservation reserv : reservationsList){
             if(reserv.getDniPassenger().equals(dni)){
-                passengerReservations.add(reserv);
+                if(reserv.getStatus() != Status.CANCELLED)
+                    passengerReservations.add(reserv);
             }
         }
         return passengerReservations;
