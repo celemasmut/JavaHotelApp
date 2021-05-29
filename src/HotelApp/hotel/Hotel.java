@@ -92,10 +92,12 @@ public class Hotel {
 
     protected static List<Reservation> getPassengerReservations(String dni){
         List<Reservation> passengerReservations = new ArrayList<>();
-        for(Reservation reserv : reservationsList){
-            if(reserv.getDniPassenger().equals(dni)){
-                if(reserv.getStatus() != Status.CANCELLED)
-                    passengerReservations.add(reserv);
+        if(reservationsList.size() > 0) {
+            for (Reservation reserv : reservationsList) {
+                if (reserv.getDniPassenger().equals(dni)) {
+                    if (reserv.getStatus() != Status.CANCELLED)
+                        passengerReservations.add(reserv);
+                }
             }
         }
         return passengerReservations;
@@ -103,19 +105,23 @@ public class Hotel {
 
     protected static List<Reservation> getStatusReservations(List<Reservation> passengerReservList, Status status){
         List<Reservation> statusReservation = new ArrayList<>();
-        for(Reservation reserv : passengerReservList){
-            if(reserv.getStatus().equals(status)){
-                statusReservation.add(reserv);
+        if(passengerReservList.size() > 0) {
+            for (Reservation reserv : passengerReservList) {
+                if (reserv.getStatus().equals(status)) {
+                    statusReservation.add(reserv);
+                }
             }
         }
         return  statusReservation;
     }
 
     protected static boolean canceledReservation(Reservation canceled){
-        for(Reservation reservation : reservationsList){
-            if(reservation.equals(canceled)){
-                reservation.setStatus(Status.CANCELLED);
-                return true;
+        if(reservationsList.size() > 0) {
+            for (Reservation reservation : reservationsList) {
+                if (reservation.equals(canceled)) {
+                    reservation.setStatus(Status.CANCELLED);
+                    return true;
+                }
             }
         }
         return false;
