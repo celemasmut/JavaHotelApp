@@ -11,8 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import static HotelApp.hotel.Hotel.changeStateOfRoom;
-import static HotelApp.hotel.Hotel.showListOfRoom;
+import static HotelApp.hotel.Hotel.*;
 
 public class Menu {
     private PrintStream printOut;
@@ -241,6 +240,7 @@ public class Menu {
         int confirm = scan.nextInt();
         if(confirm == 1){
             reserv.getRoomToReserve().setStateRoom(State.RESERVED);
+            reserv.setStatus(Status.CONFIRMED);
             Hotel.addReservation(reserv);
             printOut.println(Hotel.getReservationsList().get(0).toString());//ver la utilidad al ejecutar. si solo muestra la reserva cambiar linea
         }else if(confirm == 2){
@@ -260,7 +260,13 @@ public class Menu {
         printOut.println("4_ King Room");
     }
 
-
+    private void showConfirmedReservation(List<Reservation> confirmedReservation){
+        printOut.println(" Your confirmed reservations");
+        int i=1;
+        for(Reservation confirmed : confirmedReservation){
+            printOut.println(i + " - " +confirmed.toString());
+        }
+    }
 
     private void passenger(){
         String dniUser;
@@ -280,7 +286,21 @@ public class Menu {
             confirmReservation(newReserv, dayOfStay);
              //ver todas las reservas
             Hotel.getPassengerReservations(dniUser).forEach(ob -> printOut.println(ob.toString()));
-            
+            //cancelar reserva
+            showConfirmedReservation(Hotel.getConfirmedReservations(Hotel.getPassengerReservations(dniUser)));
+            printOut.println("Choose the reservation you want to canceled");
+            int i = scan.nextInt();
+            Reservation reservationCanceled = Hotel.getConfirmedReservations(Hotel.getPassengerReservations(dniUser)).get(i-1);
+            printOut.println(reservationCanceled.toString());
+            printOut.println("Confirm to cancel reservation ? \n 1- yes \n 2- No");
+            i=scan.nextInt();
+            if(i == 1){
+                if(canceledReservation(reservationCanceled)){
+                    printOut.println("Reservation canceled");
+                }else{
+                    printOut.println("Something went wrong with the cancellation");
+                }
+            }
         }
     }
     private void showRecepcionistMenu()

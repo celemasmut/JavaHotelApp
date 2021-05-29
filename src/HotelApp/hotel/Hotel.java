@@ -100,6 +100,26 @@ public class Hotel {
         return passengerReservations;
     }
 
+    protected static List<Reservation> getConfirmedReservations(List<Reservation> passengerReservList){
+        List<Reservation> confirmedReservation = new ArrayList<>();
+        for(Reservation reserv : passengerReservList){
+            if(reserv.getStatus().equals(Status.CONFIRMED)){
+                confirmedReservation.add(reserv);
+            }
+        }
+        return  confirmedReservation;
+    }
+
+    protected static boolean canceledReservation(Reservation canceled){
+        for(Reservation reservation : reservationsList){
+            if(reservation.equals(canceled)){
+                reservation.setStatus(Status.CANCELLED);
+                return true;
+            }
+        }
+        return false;
+    }
+
     /*protected static boolean existenceInTheList(User userToSearch)
     {
         for (User aux:usersList)

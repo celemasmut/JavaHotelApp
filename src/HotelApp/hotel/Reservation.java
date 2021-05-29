@@ -1,6 +1,7 @@
 package HotelApp.hotel;
 
 import HotelApp.hotel.bedrooms.Room;
+import HotelApp.hotel.bedrooms.State;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -11,6 +12,7 @@ public class Reservation {
     private LocalDate arrivalDay;
     private LocalDate dayOfExit;
     private MealPlan plan;
+    private Status status;
 
     public Reservation(Room roomToReserve, LocalDate arrivalDay, LocalDate dayOfExit, MealPlan plan,String dniPassenger) {
         this.dniPassenger=dniPassenger;
@@ -56,6 +58,13 @@ public class Reservation {
         this.dayOfExit = dayOfExit;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 
     public void setRoomToReserve(Room roomToReserve) {
         this.roomToReserve = roomToReserve;
