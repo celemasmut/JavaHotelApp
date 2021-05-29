@@ -7,6 +7,8 @@ import HotelApp.hotel.users.User;
 import java.io.PrintStream;
 import java.time.LocalDate;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import static HotelApp.hotel.Hotel.changeStateOfRoom;
@@ -148,19 +150,17 @@ public class Menu {
 
     private String searchUserInList(String userName,String password)
     {
-        String exist = null;
         for (User aux:Hotel.getUsersList())
         {
-            if (userName.equalsIgnoreCase(aux.getLoginName()) && password.equals(aux.getPassword()))
+            if (aux instanceof Passenger)
             {
-                if (aux instanceof Passenger){
-                    exist=((Passenger) aux).getDni();
-                    break;
+                if (userName.equalsIgnoreCase(aux.getLoginName()) && password.equals(aux.getPassword())){
+                    return ((Passenger) aux).getDni();
                 }
 
             }
         }
-        return exist;
+        return null;
     }
 
     private void seeRoomFree(int option){
@@ -242,7 +242,7 @@ public class Menu {
         if(confirm == 1){
             reserv.getRoomToReserve().setStateRoom(State.RESERVED);
             Hotel.addReservation(reserv);
-            System.out.println(Hotel.getReservationsList().get(0).toString());
+            printOut.println(Hotel.getReservationsList().get(0).toString());//ver la utilidad al ejecutar. si solo muestra la reserva cambiar linea
         }else if(confirm == 2){
             reserv = null;
             printOut.println("The reservation is deleted");
@@ -252,22 +252,24 @@ public class Menu {
         }
     }
 
+    private void showTypeOfRooms(){
+        printOut.println("Insert number of type Room:");
+        printOut.println("1_ Single Room");
+        printOut.println("2_ Double Room");
+        printOut.println("3_ Family Room");
+        printOut.println("4_ King Room");
+    }
+
 
 
     private void passenger(){
-        //login
         String dniUser;
         dniUser=userLogin();
         int optionOfRoom=0;
         if(dniUser!=null) {
-            //ver hab dispo
             int dayOfStay = setDaysOfStay();
             LocalDate arrival = chooseArrivalDate();
-            printOut.println("Insert number of type Room:");
-            printOut.println("1_ Single Room");
-            printOut.println("2_ Double Room");
-            printOut.println("3_ Family Room");
-            printOut.println("4_ King Room");
+            showTypeOfRooms();
             optionOfRoom=scan.nextInt();
             seeRoomFree(optionOfRoom);
             printOut.println("Insert number of room you want to reserve ");
@@ -276,7 +278,9 @@ public class Menu {
             //reservar
             Reservation newReserv = toReserveRoom(arrival, setDayOfExit(arrival,dayOfStay), room, chooseMealPlan(),dniUser);
             confirmReservation(newReserv, dayOfStay);
-
+             //ver todas las reservas
+            Hotel.getPassengerReservations(dniUser).forEach(ob -> printOut.println(ob.toString()));
+            
         }
     }
     private void showRecepcionistMenu()
@@ -304,11 +308,7 @@ public class Menu {
             dniUser=register();
             int dayOfStay = setDaysOfStay();
             LocalDate arrival = LocalDate.now();
-            printOut.println("Insert number of type Room:");
-            printOut.println("1_ Single Room");
-            printOut.println("2_ Double Room");
-            printOut.println("3_ Family Room");
-            printOut.println("4_ King Room");
+            showTypeOfRooms();
             optionOfRoom=scan.nextInt();
             seeRoomFree(optionOfRoom);
             printOut.println("Insert number of room you want to reserve ");
@@ -317,6 +317,7 @@ public class Menu {
             //reservar
             Reservation newReserv = toReserveRoom(arrival, setDayOfExit(arrival,dayOfStay), numberOfRoom, chooseMealPlan(),dniUser);
             result=changeStateOfRoom(newReserv);
+
 
         }else if (option==2){
 
