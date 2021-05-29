@@ -101,14 +101,14 @@ public class Hotel {
         return passengerReservations;
     }
 
-    protected static List<Reservation> getConfirmedReservations(List<Reservation> passengerReservList){
-        List<Reservation> confirmedReservation = new ArrayList<>();
+    protected static List<Reservation> getStatusReservations(List<Reservation> passengerReservList, Status status){
+        List<Reservation> statusReservation = new ArrayList<>();
         for(Reservation reserv : passengerReservList){
-            if(reserv.getStatus().equals(Status.CONFIRMED)){
-                confirmedReservation.add(reserv);
+            if(reserv.getStatus().equals(status)){
+                statusReservation.add(reserv);
             }
         }
-        return  confirmedReservation;
+        return  statusReservation;
     }
 
     protected static boolean canceledReservation(Reservation canceled){

@@ -7,7 +7,6 @@ import HotelApp.hotel.users.User;
 import java.io.PrintStream;
 import java.time.LocalDate;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -260,11 +259,11 @@ public class Menu {
         printOut.println("4_ King Room");
     }
 
-    private void showConfirmedReservation(List<Reservation> confirmedReservation){
-        printOut.println(" Your confirmed reservations");
+    private void showStatusReservation(List<Reservation> confirmedReservation){
+        printOut.println(" Your reservations");
         int i=1;
-        for(Reservation confirmed : confirmedReservation){
-            printOut.println(i + " - " +confirmed.toString());
+        for(Reservation reserv : confirmedReservation){
+                printOut.println(i + " - " + reserv.toString());
         }
     }
 
@@ -272,7 +271,8 @@ public class Menu {
         printOut.println("1 - To book a room");
         printOut.println("2 - See all your reservations");
         printOut.println("3 - Cancel a reservation");
-        printOut.println();
+        printOut.println("4 - Check reservation");
+        printOut.println("4 - Add an order");
     }
 
     private void toBookARoom(String dniUser){
@@ -290,10 +290,10 @@ public class Menu {
     }
 
     private void toCancelReservation(String dniUser){
-        showConfirmedReservation(Hotel.getConfirmedReservations(Hotel.getPassengerReservations(dniUser)));
+        showStatusReservation(Hotel.getStatusReservations(Hotel.getPassengerReservations(dniUser),Status.CONFIRMED));
         printOut.println("Choose the reservation you want to canceled");
         int i = scan.nextInt();
-        Reservation reservationCanceled = Hotel.getConfirmedReservations(Hotel.getPassengerReservations(dniUser)).get(i-1);
+        Reservation reservationCanceled = Hotel.getStatusReservations(Hotel.getPassengerReservations(dniUser),Status.CONFIRMED).get(i-1);
         printOut.println(reservationCanceled.toString());
         printOut.println("Confirm to cancel reservation ? \n 1- yes \n 2- No");
         i=scan.nextInt();
@@ -304,6 +304,13 @@ public class Menu {
                 printOut.println("Something went wrong with the cancellation");
             }
         }
+    }
+
+    private void checkActiveReservation(String dniUser){
+        showStatusReservation(Hotel.getStatusReservations(Hotel.getPassengerReservations(dniUser),Status.ACTIVE));
+        printOut.println("Choose the active reservation you want to check");
+        int index= scan.nextInt();
+        printOut.println(Hotel.getStatusReservations(Hotel.getPassengerReservations(dniUser),Status.ACTIVE).get(index-1));
     }
 
     private void passenger(){
@@ -325,6 +332,7 @@ public class Menu {
                         toCancelReservation(dniUser);
                         break;
                     case 4:
+                        checkActiveReservation(dniUser);
                         break;
                     case 5:
                         exit=true;
