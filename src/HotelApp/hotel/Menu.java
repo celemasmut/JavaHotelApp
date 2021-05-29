@@ -316,6 +316,7 @@ public class Menu {
             scan.nextLine();
             //reservar
             Reservation newReserv = toReserveRoom(arrival, setDayOfExit(arrival,dayOfStay), numberOfRoom, chooseMealPlan(),dniUser);
+            confirmReservation(newReserv,dayOfStay);
             result=changeStateOfRoom(newReserv);
 
         }else if (option==2){
@@ -347,7 +348,7 @@ public class Menu {
                     ///showConsumitionOfRoom();
                     break;
                 case 5:
-                    leave();
+                    exit=leave();
                     break;
 
             }
@@ -359,7 +360,7 @@ public class Menu {
 
     }
 
-    private void leave(){
-
+    private boolean leave(){
+        return true;
     }
 }
