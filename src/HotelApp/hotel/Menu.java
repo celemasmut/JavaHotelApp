@@ -268,39 +268,66 @@ public class Menu {
         }
     }
 
+    private void passengerMenu(){
+        printOut.println("1 - To book a room");
+        printOut.println("2 - See all your reservations");
+        printOut.println("3 - Cancel a reservation");
+        printOut.println();
+    }
+
+    private void toBookARoom(String dniUser){
+        int optionOfRoom=0;
+        int dayOfStay = setDaysOfStay();
+        LocalDate arrival = chooseArrivalDate();
+        showTypeOfRooms();
+        optionOfRoom=scan.nextInt();
+        seeRoomFree(optionOfRoom);
+        printOut.println("Insert number of room you want to book ");
+        String room = scan.next();
+        scan.nextLine();
+        Reservation newReserv = toReserveRoom(arrival, setDayOfExit(arrival,dayOfStay), room, chooseMealPlan(),dniUser);
+        confirmReservation(newReserv, dayOfStay);
+    }
+
+    private void toCancelReservation(String dniUser){
+        showConfirmedReservation(Hotel.getConfirmedReservations(Hotel.getPassengerReservations(dniUser)));
+        printOut.println("Choose the reservation you want to canceled");
+        int i = scan.nextInt();
+        Reservation reservationCanceled = Hotel.getConfirmedReservations(Hotel.getPassengerReservations(dniUser)).get(i-1);
+        printOut.println(reservationCanceled.toString());
+        printOut.println("Confirm to cancel reservation ? \n 1- yes \n 2- No");
+        i=scan.nextInt();
+        if(i == 1){
+            if(canceledReservation(reservationCanceled)){
+                printOut.println("Reservation canceled");
+            }else{
+                printOut.println("Something went wrong with the cancellation");
+            }
+        }
+    }
+
     private void passenger(){
         String dniUser;
         dniUser=userLogin();
-        int optionOfRoom=0;
         if(dniUser!=null) {
-            int dayOfStay = setDaysOfStay();
-            LocalDate arrival = chooseArrivalDate();
-            showTypeOfRooms();
-            optionOfRoom=scan.nextInt();
-            seeRoomFree(optionOfRoom);
-            printOut.println("Insert number of room you want to reserve ");
-            String room = scan.next();
-            scan.nextLine();
-            //reservar
-            Reservation newReserv = toReserveRoom(arrival, setDayOfExit(arrival,dayOfStay), room, chooseMealPlan(),dniUser);
-            confirmReservation(newReserv, dayOfStay);
-             //ver todas las reservas
-            Hotel.getPassengerReservations(dniUser).forEach(ob -> printOut.println(ob.toString()));
-            //cancelar reserva
-            showConfirmedReservation(Hotel.getConfirmedReservations(Hotel.getPassengerReservations(dniUser)));
-            printOut.println("Choose the reservation you want to canceled");
-            int i = scan.nextInt();
-            Reservation reservationCanceled = Hotel.getConfirmedReservations(Hotel.getPassengerReservations(dniUser)).get(i-1);
-            printOut.println(reservationCanceled.toString());
-            printOut.println("Confirm to cancel reservation ? \n 1- yes \n 2- No");
-            i=scan.nextInt();
-            if(i == 1){
-                if(canceledReservation(reservationCanceled)){
-                    printOut.println("Reservation canceled");
-                }else{
-                    printOut.println("Something went wrong with the cancellation");
+            boolean exit = false;
+            do{
+                passengerMenu();
+                int op = scan.nextInt();
+                switch (op){
+                    case 1:
+                        toBookARoom(dniUser);
+                        break;
+                    case 2:
+                        Hotel.getPassengerReservations(dniUser).forEach(ob -> printOut.println(ob.toString()));
+                        break;
+                    case 3:
+                        toCancelReservation(dniUser);
+                        break;
+                    case 4:
+                        break;
                 }
-            }
+            }while (!exit);
         }
     }
     private void showRecepcionistMenu()
