@@ -390,10 +390,38 @@ public class Menu {
 
 
         }else if (option==2){
+            printOut.println("Insert DNI :");
+            scan.nextLine();
+             dniUser= scan.next();
+            Reservation reservToActivate=searchReservationInList(dniUser);
+            if (reservToActivate!=null)
+            {
+                Passenger passengerToRoom=searchPassengerInList(dniUser);
+                result=changeStateOfRoom(passengerToRoom,reservToActivate.getRoomToReserve(),State.OCCUPIED);
+            }else {
+                printOut.println("No hay ninguna coincidencia con el DNI");
+            }
 
         }
 
 
+    }
+    private void checkOut()
+    {
+        String dniPassenger;
+        boolean result;
+        printOut.println("Insert DNI :");
+        scan.nextLine();
+        dniPassenger=scan.next();
+        Reservation reservationCheckOut=searchReservation(dniPassenger);
+        if (reservationCheckOut!=null)
+        {
+            Passenger passengerToCheckOut=searchPassengerInList(dniPassenger);
+            result=changeStateOfRoom(passengerToCheckOut,reservationCheckOut.getRoomToReserve(),State.FREE);
+            result=deleteReservationInList(reservationCheckOut);
+
+
+        }
     }
     private void receptionist(){
         boolean exit=false;
@@ -412,7 +440,8 @@ public class Menu {
                     ///reservation();
                     break;
                 case 3:
-                    ///checkOut();
+                    checkOut();
+                    showReservation();
                     break;
                 case 4:
                     ///showConsumitionOfRoom();
