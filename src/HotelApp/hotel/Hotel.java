@@ -49,10 +49,7 @@ public class Hotel {
         usersList.add(userToAdd);
         return true;
     }
-    public static boolean addReservationOList(Reservation reservationToAdd)
-    {
-        return reservationsList.add(reservationToAdd);
-    }
+
     protected static boolean changeStateOfRoom(Passenger passengerToRoom,Room roomToReserve, State state)
     {
         int posInList;
@@ -140,9 +137,12 @@ public class Hotel {
     }
     protected static boolean deleteReservationInList(Reservation reservationToDelete)
     {
-        boolean remove=reservationsList.remove(reservationToDelete);
-        return remove;
-
+        if (reservationToDelete!=null){
+        int posInList=reservationsList.indexOf(reservationToDelete);
+        reservationsList.get(posInList).setStatus(Status.COMPLETED);
+        return true;
+        }
+        return false;
     }
     protected static void showReservation()
     {
