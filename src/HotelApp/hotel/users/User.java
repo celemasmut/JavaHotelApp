@@ -3,13 +3,19 @@ package HotelApp.hotel.users;
 import java.util.Objects;
 
 public abstract class User  {
+    private static int idStatic = 0;
     private int id;
     private String loginName;
     private String password;
 
     public User(String loginName, String password) {
+        id = getId();
         this.loginName = loginName;
         this.password = password;
+    }
+
+    public int getId() {
+        return id = idStatic++;
     }
 
     public String getLoginName() {
