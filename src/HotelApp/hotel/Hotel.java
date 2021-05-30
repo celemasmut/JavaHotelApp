@@ -49,21 +49,21 @@ public class Hotel {
         usersList.add(userToAdd);
         return true;
     }
+
     protected static boolean changeStateOfRoom(Passenger passengerToRoom,Room roomToReserve, State state)
     {
         int posInList;
 
 
-        if (passengerToRoom!=null)
-        {
+
             posInList=roomsList.indexOf(roomToReserve);
             roomsList.get(posInList).setStateRoom(state);
             roomsList.get(posInList).setOccupant(passengerToRoom);
             return true;
 
-        }
-        return false;
+
     }
+
     protected static Passenger searchPassengerInList (String dni)
     {
        int posToReturn=-1;
@@ -79,6 +79,17 @@ public class Hotel {
            }
        }
        return null;
+    }
+    protected static Reservation searchReservation (String dniPassenger)
+    {
+        for (Reservation reservation:reservationsList)
+        {
+            if (dniPassenger.equalsIgnoreCase(reservation.getDniPassenger()))
+            {
+                return reservation;
+            }
+        }
+        return null;
     }
     protected static void showListOfRoom()
     {
@@ -123,6 +134,33 @@ public class Hotel {
             }
         }
         return false;
+    }
+    protected static boolean deleteReservationInList(Reservation reservationToDelete)
+    {
+        if (reservationToDelete!=null){
+        int posInList=reservationsList.indexOf(reservationToDelete);
+        reservationsList.get(posInList).setStatus(Status.COMPLETED);
+        return true;
+        }
+        return false;
+    }
+    protected static void showReservation()
+    {
+        for (Reservation reservation:reservationsList)
+        {
+            System.out.println(reservation.toString());
+        }
+    }
+    protected static Reservation searchReservationInList (String dniPassenger)
+    {
+        for (Reservation reservationAux:reservationsList)
+        {
+            if (dniPassenger.equalsIgnoreCase(reservationAux.getDniPassenger()))
+            {
+                return reservationAux;
+            }
+        }
+        return null;
     }
 
     /*protected static boolean existenceInTheList(User userToSearch)

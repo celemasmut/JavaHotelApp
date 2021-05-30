@@ -86,6 +86,7 @@ public class Reservation {
                 ", arrivalDay=" + arrivalDay +
                 ", dayOfExit=" + dayOfExit +
                 ", plan=" + plan +
+                ", status=" + status +
                 '}';
     }
 }
