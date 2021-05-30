@@ -292,13 +292,9 @@ public class Menu {
     }
 
     private void confirmCancellation(Reservation reservationChosen){
-       /* if(showStatusReservation(Hotel.getStatusReservations(Hotel.getPassengerReservations(dniUser),Status.CONFIRMED))) {
-            printOut.println("Choose the reservation you want to canceled");
-            int i = scan.nextInt();
-            Reservation reservationCanceled = Hotel.getStatusReservations(Hotel.getPassengerReservations(dniUser), Status.CONFIRMED).get(i - 1);
-            printOut.println(reservationCanceled.toString());*/
+        if(reservationChosen.getStatus().equals(Status.CONFIRMED)) {
             printOut.println("Confirm to cancel reservation ? \n 1- yes \n 2- No");
-           int  i = scan.nextInt();
+            int i = scan.nextInt();
             if (i == 1) {
                 if (toCancelReservation(reservationChosen)) {
                     printOut.println("Reservation canceled");
@@ -306,6 +302,7 @@ public class Menu {
                     printOut.println("Something went wrong with the cancellation");
                 }
             }
+        }
     }
 
 
@@ -333,12 +330,14 @@ public class Menu {
         return op;
     }
      private void addAnItemToList(Reservation actualReservation,int index){
-        int i = 1;
-        for (ProductToConsume prod : ProductToConsume.values()) {
-            if (index == i) {
-                actualReservation.getRoomToReserve().addConsumption(prod);
+        if(actualReservation.getStatus().equals(Status.ACTIVE)) {
+            int i = 1;
+            for (ProductToConsume prod : ProductToConsume.values()) {
+                if (index == i) {
+                    actualReservation.getRoomToReserve().addConsumption(prod);
+                }
+                i++;
             }
-            i++;
         }
     }
 
@@ -409,6 +408,7 @@ public class Menu {
                 printOut.println(prod +" $"+prod.getPrice());
                 totalPrice+=prod.getPrice();
             }
+            if(reservationChosen.getStatus().equals(Status.ACTIVE))
             printOut.println("Total price : $"+totalPrice);
         }
     }
@@ -423,7 +423,8 @@ public class Menu {
                         confirmCancellation(reservationChosen);
                         break;
                     case 2:
-                        addAnItemToList(reservationChosen, chooseAnItemProduct());
+                        if(reservationChosen.getStatus().equals(Status.ACTIVE))
+                            addAnItemToList(reservationChosen, chooseAnItemProduct());
                         break;
                     case 3:
                         checkPassengerConsumptions(reservationChosen);
