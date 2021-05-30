@@ -54,18 +54,16 @@ public class Menu {
     }
 
     private boolean validatePassengerDni(String dni){
-        boolean exist= false;
         if(Hotel.getUsersList().size() > 0 ){
             for (User user : Hotel.getUsersList()){
                 if(user instanceof Passenger){
                     if(((Passenger) user).getDni().equals(dni)) {
-                        exist = true;
-                        break;
+                        return true;
                     }
                 }
             }
         }
-        return exist;
+        return false;
     }
 
     private String register(){
@@ -259,25 +257,24 @@ public class Menu {
         printOut.println("4_ King Room");
     }
 
-    private boolean showStatusReservation(List<Reservation> confirmedReservation){
-       boolean show = false;
-       if(confirmedReservation.size() > 0) {
+    private boolean showReservationByStatus(List<Reservation> statusTypeReservation){
+       if(statusTypeReservation.size() > 0) {
            printOut.println(" Your reservations");
            int i = 1;
-           for (Reservation reserv : confirmedReservation) {
+           for (Reservation reserv : statusTypeReservation) {
+
                printOut.println(i + " - " + reserv.toString());
+               i++;
            }
-           show=true;
+           return true;
        }
-       return show;
+       return false;
     }
 
     private void passengerMenu(){
         printOut.println("1 - To book a room");
         printOut.println("2 - See all your reservations");
-        printOut.println("3 - Cancel a reservation");
-        printOut.println("4 - Check reservation");
-        printOut.println("5 - Add an order");
+        printOut.println("3 - Check a reservation");
     }
 
     private void toBookARoom(String dniUser){
@@ -294,33 +291,78 @@ public class Menu {
         confirmReservation(newReserv, dayOfStay);
     }
 
-    private void toCancelReservation(String dniUser){
-        if(showStatusReservation(Hotel.getStatusReservations(Hotel.getPassengerReservations(dniUser),Status.CONFIRMED))) {
-            printOut.println("Choose the reservation you want to canceled");
-            int i = scan.nextInt();
-            Reservation reservationCanceled = Hotel.getStatusReservations(Hotel.getPassengerReservations(dniUser), Status.CONFIRMED).get(i - 1);
-            printOut.println(reservationCanceled.toString());
+    private void confirmCancellation(Reservation reservationChosen){
+        if(reservationChosen.getStatus().equals(Status.CONFIRMED)) {
             printOut.println("Confirm to cancel reservation ? \n 1- yes \n 2- No");
-            i = scan.nextInt();
+            int i = scan.nextInt();
             if (i == 1) {
-                if (canceledReservation(reservationCanceled)) {
+                if (toCancelReservation(reservationChosen)) {
                     printOut.println("Reservation canceled");
                 } else {
                     printOut.println("Something went wrong with the cancellation");
                 }
             }
-        }else{
-            printOut.println("There is no reservation to cancel");
         }
     }
 
-    private void checkActiveReservation(String dniUser){
-        if(showStatusReservation(Hotel.getStatusReservations(Hotel.getPassengerReservations(dniUser),Status.ACTIVE))) {
-            printOut.println("Choose the active reservation you want to check");
+
+    private Reservation checkStatusReservation(String dniUser, Status status){
+        if(showReservationByStatus(Hotel.getStatusReservations(Hotel.getPassengerReservations(dniUser),status))) {
+            printOut.println("Choose the reservation you want to check");
             int index = scan.nextInt();
-            printOut.println(Hotel.getStatusReservations(Hotel.getPassengerReservations(dniUser), Status.ACTIVE).get(index - 1));
+            return Hotel.getStatusReservations(Hotel.getPassengerReservations(dniUser), status).get(index - 1);
+        }
+        return null;
+    }
+
+    private void showProductToConsume(){
+        int i=1;
+        for(ProductToConsume prod : ProductToConsume.values()){
+            printOut.println(i +"-"+prod + " price: $"+ prod.getPrice());
+            i++;
         }
     }
+
+    private int chooseAnItemProduct() {
+        showProductToConsume();
+        printOut.println("Choose item ");
+        int op = scan.nextInt();
+        return op;
+    }
+     private void addAnItemToList(Reservation actualReservation,int index){
+        if(actualReservation.getStatus().equals(Status.ACTIVE)) {
+            int i = 1;
+            for (ProductToConsume prod : ProductToConsume.values()) {
+                if (index == i) {
+                    actualReservation.getRoomToReserve().addConsumption(prod);
+                }
+                i++;
+            }
+        }
+    }
+
+    private int showStatusReservation(){
+        int i=1;
+        printOut.println("Choose number of status");
+        for(Status status : Status.values()){
+            printOut.println(i+" -"+status);
+            i++;
+        }
+        int x = scan.nextInt();
+        return x;
+    }
+    private Status chooseStatusReservation(int pos){
+        int i=1;
+        for(Status status : Status.values()){
+            if(pos == i){
+                return status;
+            }
+            i++;
+        }
+        return null;
+    }
+
+
 
     private void passenger(){
         String dniUser;
@@ -338,20 +380,64 @@ public class Menu {
                         Hotel.getPassengerReservations(dniUser).forEach(ob -> printOut.println(ob.toString()));
                         break;
                     case 3:
-                        toCancelReservation(dniUser);
+                        if(Hotel.getPassengerReservations(dniUser).size() > 0) {
+                            Status status = chooseStatusReservation(showStatusReservation());
+                            Reservation reservationChosen = checkStatusReservation(dniUser,status);
+                            if(reservationChosen != null && reservationChosen.getStatus() != Status.CANCELLED) {
+                                printOut.println(reservationChosen.toString());
+                                reservationChosenMenu(reservationChosen);
+                            }
+                        }
                         break;
                     case 4:
-                        checkActiveReservation(dniUser);
-                        break;
-                    case 5:
-                        break;
-                    case 6:
                         exit=true;
                         break;
                 }
             }while (!exit);
         }
     }
+    private void showReservationChosenMenu(){
+        printOut.println("1 - Cancel a reservation");
+        printOut.println("2 - Add an order");
+        printOut.println("3 - Check your consumptions");
+    }
+    private void checkPassengerConsumptions(Reservation reservationChosen){
+        if(reservationChosen.getRoomToReserve().getConsumed().size() > 0) {
+            double totalPrice =0;
+            for (ProductToConsume prod : reservationChosen.getRoomToReserve().getConsumed()) {
+                printOut.println(prod +" $"+prod.getPrice());
+                totalPrice+=prod.getPrice();
+            }
+            if(reservationChosen.getStatus().equals(Status.ACTIVE))
+            printOut.println("Total price : $"+totalPrice);
+        }
+    }
+     private void reservationChosenMenu(Reservation reservationChosen){
+        if(reservationChosen != null){
+            boolean exit = false;
+            do{
+                showReservationChosenMenu();
+                int op = scan.nextInt();
+                switch (op) {
+                    case 1:
+                        confirmCancellation(reservationChosen);
+                        break;
+                    case 2:
+                        if(reservationChosen.getStatus().equals(Status.ACTIVE))
+                            addAnItemToList(reservationChosen, chooseAnItemProduct());
+                        break;
+                    case 3:
+                        checkPassengerConsumptions(reservationChosen);
+                        break;
+                    case 4:
+                        exit =true;
+                        break;
+                }
+
+            }while(!exit);
+        }
+     }
+
     private void showRecepcionistMenu()
     {
         printOut.println("1_Check in");
