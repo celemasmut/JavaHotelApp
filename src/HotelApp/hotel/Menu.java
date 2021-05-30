@@ -257,11 +257,12 @@ public class Menu {
         printOut.println("4_ King Room");
     }
 
-    private boolean showStatusReservation(List<Reservation> statusTypeReservation){
+    private boolean showReservationByStatus(List<Reservation> statusTypeReservation){
        if(statusTypeReservation.size() > 0) {
            printOut.println(" Your reservations");
            int i = 1;
            for (Reservation reserv : statusTypeReservation) {
+
                printOut.println(i + " - " + reserv.toString());
                i++;
            }
@@ -273,7 +274,7 @@ public class Menu {
     private void passengerMenu(){
         printOut.println("1 - To book a room");
         printOut.println("2 - See all your reservations");
-        printOut.println("3 - Check reservation");
+        printOut.println("3 - Check a reservation");
     }
 
     private void toBookARoom(String dniUser){
@@ -308,11 +309,11 @@ public class Menu {
     }
 
 
-    private Reservation checkActiveReservation(String dniUser){
-        if(showStatusReservation(Hotel.getStatusReservations(Hotel.getPassengerReservations(dniUser),Status.ACTIVE))) {
-            printOut.println("Choose the active reservation you want to check");
+    private Reservation checkStatusReservation(String dniUser, Status status){
+        if(showReservationByStatus(Hotel.getStatusReservations(Hotel.getPassengerReservations(dniUser),status))) {
+            printOut.println("Choose the reservation you want to check");
             int index = scan.nextInt();
-            return Hotel.getStatusReservations(Hotel.getPassengerReservations(dniUser), Status.ACTIVE).get(index - 1);
+            return Hotel.getStatusReservations(Hotel.getPassengerReservations(dniUser), status).get(index - 1);
         }
         return null;
     }
@@ -341,6 +342,26 @@ public class Menu {
         }
     }
 
+    private int showStatusReservation(){
+        int i=1;
+        printOut.println("Choose number of status");
+        for(Status status : Status.values()){
+            printOut.println(i+" -"+status);
+            i++;
+        }
+        int x = scan.nextInt();
+        return x;
+    }
+    private Status chooseStatusReservation(int pos){
+        int i=1;
+        for(Status status : Status.values()){
+            if(pos == i){
+                return status;
+            }
+            i++;
+        }
+        return null;
+    }
 
 
 
@@ -360,9 +381,14 @@ public class Menu {
                         Hotel.getPassengerReservations(dniUser).forEach(ob -> printOut.println(ob.toString()));
                         break;
                     case 3:
-                        Reservation reservationChosen = checkActiveReservation(dniUser);
-                        printOut.println(reservationChosen.toString());
-                        reservationChosenMenu(reservationChosen);
+                        if(Hotel.getPassengerReservations(dniUser).size() > 0) {
+                            Status status = chooseStatusReservation(showStatusReservation());
+                            Reservation reservationChosen = checkStatusReservation(dniUser,status);
+                            if(reservationChosen != null && reservationChosen.getStatus() != Status.CANCELLED) {
+                                printOut.println(reservationChosen.toString());
+                                reservationChosenMenu(reservationChosen);
+                            }
+                        }
                         break;
                     case 4:
                         exit=true;
