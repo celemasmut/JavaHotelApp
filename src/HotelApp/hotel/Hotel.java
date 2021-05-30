@@ -49,24 +49,22 @@ public class Hotel {
         usersList.add(userToAdd);
         return true;
     }
-    protected static boolean changeStateOfRoom(Reservation reservation)
+    protected static boolean changeStateOfRoom(Passenger passengerToRoom,Room roomToReserve, State state)
     {
         int posInList;
-        int posInListOfPassenger;
 
 
-        posInListOfPassenger=searchPassengerInList(reservation.getDniPassenger());
-        if (posInListOfPassenger>-1)
+        if (passengerToRoom!=null)
         {
-            posInList=roomsList.indexOf(reservation.getRoomToReserve());
-            roomsList.get(posInList).setStateRoom(State.OCCUPIED);
-            roomsList.get(posInList).setOccupant((Passenger) usersList.get(posInListOfPassenger));
+            posInList=roomsList.indexOf(roomToReserve);
+            roomsList.get(posInList).setStateRoom(state);
+            roomsList.get(posInList).setOccupant(passengerToRoom);
             return true;
 
         }
         return false;
     }
-    protected static int searchPassengerInList (String dni)
+    protected static Passenger searchPassengerInList (String dni)
     {
        int posToReturn=-1;
        for (User user:usersList)
@@ -76,11 +74,11 @@ public class Hotel {
                if (((Passenger) user).getDni().equalsIgnoreCase(dni))
                {
                    posToReturn=usersList.indexOf(user);
-                   return posToReturn;
+                   return (Passenger) usersList.get(posToReturn);
                }
            }
        }
-       return posToReturn;
+       return null;
     }
     protected static void showListOfRoom()
     {
