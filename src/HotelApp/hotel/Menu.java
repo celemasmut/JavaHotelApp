@@ -385,7 +385,8 @@ public class Menu {
             scan.nextLine();
             //reservar
             Reservation newReserv = toReserveRoom(arrival, setDayOfExit(arrival,dayOfStay), numberOfRoom, chooseMealPlan(),dniUser);
-            result=changeStateOfRoom(newReserv);
+            Passenger passengerToRoom = searchPassengerInList(dniUser);
+            result=changeStateOfRoom(passengerToRoom,newReserv.getRoomToReserve(),State.OCCUPIED);
 
 
         }else if (option==2){

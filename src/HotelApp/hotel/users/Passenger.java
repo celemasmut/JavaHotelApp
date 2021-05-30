@@ -47,6 +47,13 @@ public class Passenger extends User  {
         this.homeAddress = homeAddress;
     }
 
-
-
+    @Override
+    public String toString() {
+        return "Passenger{" +
+                "name='" + name + '\'' +
+                ", dni='" + dni + '\'' +
+                ", hometown='" + hometown + '\'' +
+                ", homeAddress='" + homeAddress + '\'' +
+                '}';
+    }
 }
