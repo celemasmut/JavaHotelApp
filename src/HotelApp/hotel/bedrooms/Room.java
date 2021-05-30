@@ -11,7 +11,7 @@ public abstract class  Room {
     private State stateRoom;
     private int numberOfBeds;
     private double price;
-    private List<ProductToConsume>consumed;
+    private List<ProductToConsume>consumed =new ArrayList<>();
 
 
     public Room() { }
@@ -67,9 +67,6 @@ public abstract class  Room {
         return consumed;
     }
 
-    public void setConsumed() {
-        this.consumed = new ArrayList<>();
-    }
 
     public void addConsumption(ProductToConsume consumption){
         consumed.add(consumption);

@@ -54,7 +54,6 @@ public class Main {
         Hotel.addUserToList(adminPrueba);
 
 
-
         Menu menu = new Menu();
         menu.initiate();
 

@@ -124,10 +124,10 @@ public class Hotel {
         return  statusReservation;
     }
 
-    protected static boolean canceledReservation(Reservation canceled){
+    protected static boolean toCancelReservation(Reservation canceledReservation){
         if(reservationsList.size() > 0) {
             for (Reservation reservation : reservationsList) {
-                if (reservation.equals(canceled)) {
+                if (reservation.equals(canceledReservation)) {
                     reservation.setStatus(Status.CANCELLED);
                     return true;
                 }
