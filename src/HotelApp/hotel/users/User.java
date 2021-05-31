@@ -3,14 +3,24 @@ package HotelApp.hotel.users;
 import java.io.Serializable;
 import java.util.Objects;
 
+<<<<<<< HEAD
 public abstract class User implements Serializable {
+=======
+public abstract class User  {
+    private static int idStatic = 0;
+>>>>>>> master
     private int id;
     private String loginName;
     private String password;
 
     public User(String loginName, String password) {
+        id = getId();
         this.loginName = loginName;
         this.password = password;
+    }
+
+    public int getId() {
+        return id = idStatic++;
     }
 
     public String getLoginName() {
