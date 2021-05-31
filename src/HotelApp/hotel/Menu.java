@@ -349,6 +349,8 @@ public class Menu {
             printOut.println("Choose the reservation you want to check");
             int index = scan.nextInt();
             return Hotel.getStatusReservations(Hotel.getPassengerReservations(dniUser), status).get(index - 1);
+<<<<<<< HEAD
+=======
         }
         return null;
     }
@@ -396,10 +398,61 @@ public class Menu {
                 return status;
             }
             i++;
+>>>>>>> 8dcf174f7fb66e5a193aaae9394f7a9598644208
         }
         return null;
     }
 
+<<<<<<< HEAD
+    private void showProductToConsume(){
+        int i=1;
+        for(ProductToConsume prod : ProductToConsume.values()){
+            printOut.println(i +"-"+prod + " price: $"+ prod.getPrice());
+            i++;
+        }
+    }
+
+    private int chooseAnItemProduct() {
+        showProductToConsume();
+        printOut.println("Choose item ");
+        int op = scan.nextInt();
+        return op;
+    }
+     private void addAnItemToList(Reservation actualReservation,int index){
+        if(actualReservation.getStatus().equals(Status.ACTIVE)) {
+            int i = 1;
+            for (ProductToConsume prod : ProductToConsume.values()) {
+                if (index == i) {
+                    actualReservation.getRoomToReserve().addConsumption(prod);
+                }
+                i++;
+            }
+        }
+    }
+
+    private int showStatusReservation(){
+        int i=1;
+        printOut.println("Choose number of status");
+        for(Status status : Status.values()){
+            printOut.println(i+" -"+status);
+            i++;
+        }
+        int x = scan.nextInt();
+        return x;
+    }
+    private Status chooseStatusReservation(int pos){
+        int i=1;
+        for(Status status : Status.values()){
+            if(pos == i){
+                return status;
+            }
+            i++;
+        }
+        return null;
+    }
+
+=======
+>>>>>>> 8dcf174f7fb66e5a193aaae9394f7a9598644208
 
 
     private void passenger(){
