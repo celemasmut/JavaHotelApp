@@ -2,7 +2,7 @@ package HotelApp.hotel.users;
 
 import java.util.Objects;
 
-public abstract class User  {
+public abstract class User{
     private int id;
     private String loginName;
     private String password;
