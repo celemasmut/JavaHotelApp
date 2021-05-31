@@ -16,14 +16,12 @@ import static HotelApp.hotel.Hotel.*;
 
 public class Menu {
     private PrintStream printOut;
-    private User user;
 
     Scanner scan = new Scanner(System.in);
 
 
     public Menu(){
         printOut = System.out;
-        user = null;
     }
 
     private void showFirstMenu(){
@@ -634,10 +632,8 @@ public class Menu {
     }
 
     private void admin(){
-<<<<<<< HEAD
         for(User user : Hotel.getUsersList())
         printOut.println(user.toString());
-=======
         boolean exit=false;
         int option;
         while (!exit)
@@ -666,7 +662,6 @@ public class Menu {
 
         }
     }
->>>>>>> master
 
     private void showAdminMenu()
     {
