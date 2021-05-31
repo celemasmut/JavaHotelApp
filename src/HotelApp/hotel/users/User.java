@@ -1,8 +1,9 @@
 package HotelApp.hotel.users;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public abstract class User{
+public abstract class User implements Serializable {
     private int id;
     private String loginName;
     private String password;

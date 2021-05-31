@@ -3,6 +3,7 @@ import java.util.Scanner;
 
 import HotelApp.hotel.bedrooms.Room;
 import HotelApp.hotel.bedrooms.State;
+import HotelApp.hotel.data.DataFile;
 import HotelApp.hotel.users.Admin;
 import HotelApp.hotel.users.Passenger;
 import HotelApp.hotel.users.Receptionist;
@@ -161,6 +162,10 @@ public class Hotel {
             }
         }
         return null;
+    }
+
+    protected static void backUp (){
+        DataFile.userToJson(usersList);
     }
 
     /*protected static boolean existenceInTheList(User userToSearch)

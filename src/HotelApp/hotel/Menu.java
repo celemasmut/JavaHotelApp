@@ -1,6 +1,7 @@
 package HotelApp.hotel;
 
 import HotelApp.hotel.bedrooms.*;
+import HotelApp.hotel.data.DataFile;
 import HotelApp.hotel.users.Passenger;
 import HotelApp.hotel.users.User;
 
@@ -41,9 +42,11 @@ public class Menu {
                     register();
                     break;
                 case 2:
+                    DataFile.readUserFile();
                     login();
                     break;
                 case 3:
+                    backUp();
                     leave();
                     break;
                 default:
@@ -542,6 +545,8 @@ public class Menu {
     }
 
     private void admin(){
+        for(User user : Hotel.getUsersList())
+        printOut.println(user.toString());
 
     }
 

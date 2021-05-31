@@ -5,6 +5,7 @@ import HotelApp.hotel.MealPlan;
 import HotelApp.hotel.Menu;
 import HotelApp.hotel.Reservation;
 import HotelApp.hotel.bedrooms.*;
+import HotelApp.hotel.data.DataFile;
 import HotelApp.hotel.users.Admin;
 import HotelApp.hotel.users.Passenger;
 import HotelApp.hotel.users.Receptionist;
@@ -31,10 +32,11 @@ public class Main {
         Hotel.addRoomToList(droom);
         Hotel.addRoomToList(fmroom);
         Hotel.addRoomToList(knroom);
+        DataFile.readUserFile();
 
         //seteo pasajeros para que no sea engorroso agregar siempre si o si
 
-        Passenger pasajerito1 = new Passenger("prueba","1234hola","kiko","11111","mdp","mdp123");
+      /*  Passenger pasajerito1 = new Passenger("prueba","1234hola","kiko","11111","mdp","mdp123");
         Passenger pasajerito2 = new Passenger("test2","00012","tested","123243","mdp","mdq543");
 
         //seteo dos recepcionistas tambien . Luego los usuarios van a ser levantados desde los archivos y esto del main se elimina.
@@ -51,7 +53,7 @@ public class Main {
         Hotel.addUserToList(pasajerito2);
         Hotel.addUserToList(receptionist1);
         Hotel.addUserToList(receptionist2);
-        Hotel.addUserToList(adminPrueba);
+        Hotel.addUserToList(adminPrueba);*/
 
 
         Menu menu = new Menu();
