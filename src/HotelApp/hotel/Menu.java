@@ -1,6 +1,7 @@
 package HotelApp.hotel;
 
 import HotelApp.hotel.bedrooms.*;
+import HotelApp.hotel.users.Admin;
 import HotelApp.hotel.users.Passenger;
 import HotelApp.hotel.users.Receptionist;
 import HotelApp.hotel.users.User;
@@ -45,8 +46,6 @@ public class Menu {
                     login();
                     break;
                 case 3:
-                    leave();
-                    break;
                 default:
                     printOut.println("Wrong option");
                     break;
@@ -140,28 +139,22 @@ public class Menu {
     }
 
     private void login(){
-        int op;
-        do{
-            showLoginMenu();
-            op = scan.nextInt();
-            switch (op){
-                case 1:
-                    passenger();
-                    break;
-                case 2:
-                    receptionist();
-                    break;
-                case 3:
-                    admin();
-                    break;
-                default:
-                    printOut.println("Good Bye");
-                    break;
-            }
-        }while (op != 4);
+        User userToLogin=userLogin();
+        if (userToLogin instanceof Passenger)
+        {
+            passenger(((Passenger) userToLogin).getDni());
+        }else if (userToLogin instanceof Receptionist)
+        {
+            receptionist();
+        }
+        if (userToLogin instanceof Admin)
+        {
+            admin();
+        }
+
     }
 
-    private String userLogin ()
+    private User userLogin ()
     {
         String exist=null;
         Scanner scan = new Scanner (System.in);
@@ -170,16 +163,26 @@ public class Menu {
 
         printOut.println("Insert user name:");
         userName=scan.nextLine();
-        userName.toLowerCase();
         printOut.println("Insert password:");
         password=scan.nextLine();
-        exist=searchUserInList(userName,password);
-        if (exist==null)
+        ///exist=searchUserInList(userName,password);
+        for (User userAux:Hotel.getUsersList())
         {
-            printOut.println("There is no match in user, try again or register");
-
+            if(userAux instanceof Passenger &&userName.equals(userAux.getLoginName())&&password.equals(userAux.getPassword()))
+            {
+                return userAux;
+            }
+            else if(userAux instanceof Receptionist  &&userName.equals(userAux.getLoginName())&&password.equals(userAux.getPassword()))
+            {
+                return userAux;
+            }
+            if (userAux instanceof Admin  &&userName.equals(userAux.getLoginName())&&password.equals(userAux.getPassword()))
+            {
+                return userAux;
+            }
         }
-        return exist;
+
+        return null;
     }
 
     private String searchUserInList(String userName,String password)
@@ -197,6 +200,46 @@ public class Menu {
         return null;
     }
 
+
+    private void passengerMenu(){
+        printOut.println("1 - To book a room");
+        printOut.println("2 - See all your reservations");
+        printOut.println("3 - Check a reservation");
+    }
+
+
+
+
+    private void passenger(String dniUser){
+        if(dniUser!=null) {
+            boolean exit = false;
+            do{
+                passengerMenu();
+                int op = scan.nextInt();
+                switch (op){
+                    case 1:
+                        toBookARoom(dniUser);
+                        break;
+                    case 2:
+                        Hotel.getPassengerReservations(dniUser).forEach(ob -> printOut.println(ob.toString()));
+                        break;
+                    case 3:
+                        if(Hotel.getPassengerReservations(dniUser).size() > 0) {
+                            Status status = chooseStatusReservation(showStatusReservation());
+                            Reservation reservationChosen = checkStatusReservation(dniUser,status);
+                            if(reservationChosen != null && reservationChosen.getStatus() != Status.CANCELLED) {
+                                printOut.println(reservationChosen.toString());
+                                reservationChosenMenu(reservationChosen);
+                            }
+                        }
+                        break;
+                    case 4:
+                        exit=true;
+                        break;
+                }
+            }while (!exit);
+        }
+    }
     private void seeRoomFree(int option){
         for(Room room : Hotel.getRoomsList()){
             if( room.getStateRoom().equals(State.FREE)){
@@ -296,23 +339,17 @@ public class Menu {
     }
 
     private boolean showReservationByStatus(List<Reservation> statusTypeReservation){
-       if(statusTypeReservation.size() > 0) {
-           printOut.println(" Your reservations");
-           int i = 1;
-           for (Reservation reserv : statusTypeReservation) {
+        if(statusTypeReservation.size() > 0) {
+            printOut.println(" Your reservations");
+            int i = 1;
+            for (Reservation reserv : statusTypeReservation) {
 
-               printOut.println(i + " - " + reserv.toString());
-               i++;
-           }
-           return true;
-       }
-       return false;
-    }
-
-    private void passengerMenu(){
-        printOut.println("1 - To book a room");
-        printOut.println("2 - See all your reservations");
-        printOut.println("3 - Check a reservation");
+                printOut.println(i + " - " + reserv.toString());
+                i++;
+            }
+            return true;
+        }
+        return false;
     }
 
     private void toBookARoom(String dniUser){
@@ -354,31 +391,6 @@ public class Menu {
         return null;
     }
 
-    /*private void showProductToConsume(){
-        int i=1;
-        for(ProductToConsume prod : ProductToConsume.values()){
-            printOut.println(i +"-"+prod + " price: $"+ prod.getPrice());
-            i++;
-        }
-    }
-
-    private int chooseAnItemProduct() {
-        showProductToConsume();
-        printOut.println("Choose item ");
-        int op = scan.nextInt();
-        return op;
-    }
-     private void addAnItemToList(Reservation actualReservation,int index){
-        if(actualReservation.getStatus().equals(Status.ACTIVE)) {
-            int i = 1;
-            for (ProductToConsume prod : ProductToConsume.values()) {
-                if (index == i) {
-                    actualReservation.getRoomToReserve().addConsumption(prod);
-                }
-                i++;
-            }
-        }
-    }*/
 
     private int showStatusReservation(){
         int i=1;
@@ -417,7 +429,7 @@ public class Menu {
         int op = scan.nextInt();
         return op;
     }
-     private void addAnItemToList(Reservation actualReservation,int index){
+    private void addAnItemToList(Reservation actualReservation,int index){
         if(actualReservation.getStatus().equals(Status.ACTIVE)) {
             int i = 1;
             for (ProductToConsume prod : ProductToConsume.values()) {
@@ -429,62 +441,6 @@ public class Menu {
         }
     }
 
-    /*private int showStatusReservation(){
-        int i=1;
-        printOut.println("Choose number of status");
-        for(Status status : Status.values()){
-            printOut.println(i+" -"+status);
-            i++;
-        }
-        int x = scan.nextInt();
-        return x;
-    }
-    private Status chooseStatusReservation(int pos){
-        int i=1;
-        for(Status status : Status.values()){
-            if(pos == i){
-                return status;
-            }
-            i++;
-        }
-        return null;
-    }*/
-
-
-
-
-    private void passenger(){
-        String dniUser;
-        dniUser=userLogin();
-        if(dniUser!=null) {
-            boolean exit = false;
-            do{
-                passengerMenu();
-                int op = scan.nextInt();
-                switch (op){
-                    case 1:
-                        toBookARoom(dniUser);
-                        break;
-                    case 2:
-                        Hotel.getPassengerReservations(dniUser).forEach(ob -> printOut.println(ob.toString()));
-                        break;
-                    case 3:
-                        if(Hotel.getPassengerReservations(dniUser).size() > 0) {
-                            Status status = chooseStatusReservation(showStatusReservation());
-                            Reservation reservationChosen = checkStatusReservation(dniUser,status);
-                            if(reservationChosen != null && reservationChosen.getStatus() != Status.CANCELLED) {
-                                printOut.println(reservationChosen.toString());
-                                reservationChosenMenu(reservationChosen);
-                            }
-                        }
-                        break;
-                    case 4:
-                        exit=true;
-                        break;
-                }
-            }while (!exit);
-        }
-    }
     private void showReservationChosenMenu(){
         printOut.println("1 - Cancel a reservation");
         printOut.println("2 - Add an order");
@@ -527,17 +483,68 @@ public class Menu {
         }
      }
 
-    private void showRecepcionistMenu()
-    {
-        printOut.println("1_Check in");
-        printOut.println("2_Reservation");
-        printOut.println("3_Check out");
-        printOut.println("4_Show consumition of room");
-        printOut.println("5_Exit");
-    }
+
     private LocalDate chooseDate(){
 
         return LocalDate.now();
+    }
+
+
+    private void showRecepcionistMenu()
+    {
+        printOut.println("1_Check in");
+        printOut.println("2_Check out");
+        printOut.println("3_Show consumition of room");
+        printOut.println("4_Reservation");
+        printOut.println("5_Exit");
+    }
+    private void receptionist(){
+        boolean exit=false;
+        int option;
+        String dniUser;
+        String roomNumber;
+        while (!exit)
+        {
+            showRecepcionistMenu();
+            option=scan.nextInt();
+            switch (option)
+            {
+                case 1:
+                    checkIn();
+                    showListOfRoom();
+                    break;
+                case 2:
+                    checkOut();
+                    showReservation();
+                    break;
+                case 3:
+                    printOut.println("Enter room number:");
+                    scan.nextLine();
+                    roomNumber=scan.nextLine();
+                    showConsumeOfRoom(roomNumber);
+                    break;
+                case 4:
+                    printOut.println("Enter DNI of passenger:");
+                    scan.nextLine();
+                    dniUser=scan.nextLine();
+                    if(Hotel.getPassengerReservations(dniUser).size() > 0) {
+                        Status status = chooseStatusReservation(showStatusReservation());
+                        Reservation reservationChosen = checkStatusReservation(dniUser,status);
+                        if(reservationChosen != null && reservationChosen.getStatus() != Status.CANCELLED) {
+                            printOut.println(reservationChosen.toString());
+                            reservationChosenMenu(reservationChosen);
+                        }
+                    }
+                    else
+                        printOut.println("This passenger does not have a reservation");
+                    break;
+                case 5:
+                    exit=true;
+                    break;
+
+            }
+
+        }
     }
     private void checkIn(){
         int option=0;
@@ -567,7 +574,7 @@ public class Menu {
         }else if (option==2){
             printOut.println("Insert DNI :");
             scan.nextLine();
-             dniUser= scan.next();
+            dniUser= scan.next();
             Reservation reservToActivate=searchReservationInList(dniUser);
             if (reservToActivate!=null)
             {
@@ -598,38 +605,31 @@ public class Menu {
 
         }
     }
-    private void receptionist(){
-        boolean exit=false;
-        int option;
-        while (!exit)
+    private void showConsumeOfRoom(String roomNumber)
+    {
+        double totalPrice=0;
+        printOut.println("Product:");
+        for (Room roomToConsume:Hotel.getRoomsList())
         {
-            showRecepcionistMenu();
-            option=scan.nextInt();
-            switch (option)
+            if(roomNumber.equalsIgnoreCase(roomToConsume.getRoomNumber())&& roomToConsume.getConsumed()!=null)
             {
-                case 1:
-                    checkIn();
-                    showListOfRoom();
-                    break;
-                case 2:
-                    ///reservation();
-                    break;
-                case 3:
-                    checkOut();
-                    showReservation();
-                    break;
-                case 4:
-                    ///showConsumitionOfRoom();
-                    break;
-                case 5:
-                    leave();
-                    break;
+                for (ProductToConsume productToConsumeForRoom : roomToConsume.getConsumed())
+                {
+                printOut.println(productToConsumeForRoom);
+                totalPrice=totalPrice+productToConsumeForRoom.getPrice();
 
+                }
             }
-
         }
     }
-
+    private void showAdminMenu()
+    {
+        printOut.println("1_Register receptionist ");
+        printOut.println("2_Register passanger");
+        printOut.println("3_Check in");
+        printOut.println("4_Check out");
+        printOut.println("5_Exit");
+    }
     private void admin(){
         boolean exit=false;
         int option;
@@ -652,7 +652,7 @@ public class Menu {
                     ///showConsumitionOfRoom();
                     break;
                 case 5:
-                    leave();
+                    exit=true;
                     break;
 
             }
@@ -660,16 +660,7 @@ public class Menu {
         }
     }
 
-    private void showAdminMenu()
-    {
-        printOut.println("1_Register receptionist ");
-        printOut.println("2_Register passanger");
-        printOut.println("3_Check in");
-        printOut.println("4_Check out");
-        printOut.println("5_Exit");
-    }
 
-    private void leave(){
 
-    }
+
 }
