@@ -3,6 +3,7 @@ package HotelApp;
 import HotelApp.hotel.Hotel;
 import HotelApp.hotel.MealPlan;
 import HotelApp.hotel.Menu;
+import HotelApp.hotel.Reservation;
 import HotelApp.hotel.bedrooms.*;
 import HotelApp.hotel.users.Admin;
 import HotelApp.hotel.users.Passenger;
@@ -23,6 +24,7 @@ public class Main {
         FamilyRoom fmroom = new FamilyRoom("4",State.FREE,3, 850);
 
         KingRoom knroom = new KingRoom("5",State.FREE,1,1500);
+
 
         Hotel.addRoomToList(sroom1);
         Hotel.addRoomToList(sroom2);
@@ -50,7 +52,6 @@ public class Main {
         Hotel.addUserToList(receptionist1);
         Hotel.addUserToList(receptionist2);
         Hotel.addUserToList(adminPrueba);
-
 
 
         Menu menu = new Menu();

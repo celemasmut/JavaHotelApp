@@ -49,24 +49,22 @@ public class Hotel {
         usersList.add(userToAdd);
         return true;
     }
-    protected static boolean changeStateOfRoom(Reservation reservation)
+
+    protected static boolean changeStateOfRoom(Passenger passengerToRoom,Room roomToReserve, State state)
     {
         int posInList;
-        int posInListOfPassenger;
 
 
-        posInListOfPassenger=searchPassengerInList(reservation.getDniPassenger());
-        if (posInListOfPassenger>-1)
-        {
-            posInList=roomsList.indexOf(reservation.getRoomToReserve());
-            roomsList.get(posInList).setStateRoom(State.OCCUPIED);
-            roomsList.get(posInList).setOccupant((Passenger) usersList.get(posInListOfPassenger));
+
+            posInList=roomsList.indexOf(roomToReserve);
+            roomsList.get(posInList).setStateRoom(state);
+            roomsList.get(posInList).setOccupant(passengerToRoom);
             return true;
 
-        }
-        return false;
+
     }
-    protected static int searchPassengerInList (String dni)
+
+    protected static Passenger searchPassengerInList (String dni)
     {
        int posToReturn=-1;
        for (User user:usersList)
@@ -76,11 +74,22 @@ public class Hotel {
                if (((Passenger) user).getDni().equalsIgnoreCase(dni))
                {
                    posToReturn=usersList.indexOf(user);
-                   return posToReturn;
+                   return (Passenger) usersList.get(posToReturn);
                }
            }
        }
-       return posToReturn;
+       return null;
+    }
+    protected static Reservation searchReservation (String dniPassenger)
+    {
+        for (Reservation reservation:reservationsList)
+        {
+            if (dniPassenger.equalsIgnoreCase(reservation.getDniPassenger()))
+            {
+                return reservation;
+            }
+        }
+        return null;
     }
     protected static void showListOfRoom()
     {
@@ -115,16 +124,43 @@ public class Hotel {
         return  statusReservation;
     }
 
-    protected static boolean canceledReservation(Reservation canceled){
+    protected static boolean toCancelReservation(Reservation canceledReservation){
         if(reservationsList.size() > 0) {
             for (Reservation reservation : reservationsList) {
-                if (reservation.equals(canceled)) {
+                if (reservation.equals(canceledReservation)) {
                     reservation.setStatus(Status.CANCELLED);
                     return true;
                 }
             }
         }
         return false;
+    }
+    protected static boolean deleteReservationInList(Reservation reservationToDelete)
+    {
+        if (reservationToDelete!=null){
+        int posInList=reservationsList.indexOf(reservationToDelete);
+        reservationsList.get(posInList).setStatus(Status.COMPLETED);
+        return true;
+        }
+        return false;
+    }
+    protected static void showReservation()
+    {
+        for (Reservation reservation:reservationsList)
+        {
+            System.out.println(reservation.toString());
+        }
+    }
+    protected static Reservation searchReservationInList (String dniPassenger)
+    {
+        for (Reservation reservationAux:reservationsList)
+        {
+            if (dniPassenger.equalsIgnoreCase(reservationAux.getDniPassenger()))
+            {
+                return reservationAux;
+            }
+        }
+        return null;
     }
 
     /*protected static boolean existenceInTheList(User userToSearch)
