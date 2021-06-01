@@ -1,6 +1,8 @@
 package HotelApp.hotel.users;
 
 
+import java.io.Serializable;
+
 public class Passenger extends User  {
     private String name;
     private String dni;

@@ -1,0 +1,17 @@
+[ {
+  "id" : 7,
+  "loginName" : "prueba",
+  "password" : "1234hola",
+  "name" : "kiko",
+  "dni" : "11111",
+  "homeAddress" : "mdp123",
+  "source" : "mdp"
+}, {
+  "id" : 8,
+  "loginName" : "test2",
+  "password" : "00012",
+  "name" : "tested",
+  "dni" : "123243",
+  "homeAddress" : "mdq543",
+  "source" : "mdp"
+} ]

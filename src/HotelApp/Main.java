@@ -8,9 +8,12 @@ import HotelApp.hotel.users.Admin;
 import HotelApp.hotel.users.Passenger;
 import HotelApp.hotel.users.Receptionist;
 
+import javax.xml.crypto.Data;
+
 public class Main {
     public static void main(String[] args) {
         Hotel hotelPrueba= new Hotel();
+        Data data;
 
 
         //seteo hasta que tengamos los archivos las lista se debe levantar desde hotel con el archivo
@@ -33,8 +36,8 @@ public class Main {
 
         //seteo pasajeros para que no sea engorroso agregar siempre si o si
 
-        Passenger pasajerito1 = new Passenger("prueba","1234hola","kiko","11111","mdp","mdp123");
-        Passenger pasajerito2 = new Passenger("test2","00012","tested","123243","mdp","mdq543");
+       /* Passenger pasajerito1 = new Passenger("prueba","1234hola","kiko","11111","mdp","mdp123");
+        Passenger pasajerito2 = new Passenger("test2","00012","tested","123243","mdp","mdq543");*/
 
         //seteo dos recepcionistas tambien . Luego los usuarios van a ser levantados desde los archivos y esto del main se elimina.
 
@@ -46,13 +49,12 @@ public class Main {
 
         //ahora agrego a la lista
 
-        Hotel.addPassengerToList(pasajerito1);
-        Hotel.addPassengerToList(pasajerito2);
+       /* Hotel.addPassengerToList(pasajerito1);
+        Hotel.addPassengerToList(pasajerito2);*/
         Hotel.addReceptionistToList(receptionist1);
         Hotel.addReceptionistToList(receptionist2);
         Hotel.addAdminToList(adminPrueba);
-        DataFile.hotelToJson(hotelPrueba);
-
+       // DataFile.hotelToJson(Hotel.getPassengerList());
 
 
         Menu menu = new Menu();

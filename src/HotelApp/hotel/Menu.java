@@ -1,6 +1,7 @@
 package HotelApp.hotel;
 
 import HotelApp.hotel.bedrooms.*;
+import HotelApp.hotel.data.DataFile;
 import HotelApp.hotel.users.Admin;
 import HotelApp.hotel.users.Passenger;
 import HotelApp.hotel.users.Receptionist;
@@ -16,12 +17,19 @@ import static HotelApp.hotel.Hotel.*;
 
 public class Menu {
     private PrintStream printOut;
+    private DataFile data;
 
     Scanner scan = new Scanner(System.in);
 
 
+
     public Menu(){
         printOut = System.out;
+        data = new DataFile();
+        data.hotelToJson(Hotel.getRoomsList(),"rooms.json");
+        data.hotelToJson(Hotel.getEmployees().getAdmins(),"admins.json");
+        data.hotelToJson(Hotel.getEmployees().getReceptionistList(),"receptionist.json");
+
     }
 
     private void showFirstMenu(){
@@ -32,6 +40,7 @@ public class Menu {
 
 
     public void initiate(){
+
         int op;
         do{
             showFirstMenu();

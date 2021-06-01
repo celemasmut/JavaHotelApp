@@ -1,0 +1,36 @@
+[ {
+  "occupant" : null,
+  "roomNumber" : "1",
+  "stateRoom" : "FREE",
+  "numberOfBeds" : 1,
+  "price" : 500.0,
+  "consumed" : [ ]
+}, {
+  "occupant" : null,
+  "roomNumber" : "2",
+  "stateRoom" : "OCCUPIED",
+  "numberOfBeds" : 1,
+  "price" : 500.0,
+  "consumed" : [ ]
+}, {
+  "occupant" : null,
+  "roomNumber" : "3",
+  "stateRoom" : "IN_MAINTENANCE",
+  "numberOfBeds" : 2,
+  "price" : 750.0,
+  "consumed" : [ ]
+}, {
+  "occupant" : null,
+  "roomNumber" : "4",
+  "stateRoom" : "FREE",
+  "numberOfBeds" : 3,
+  "price" : 850.0,
+  "consumed" : [ ]
+}, {
+  "occupant" : null,
+  "roomNumber" : "5",
+  "stateRoom" : "FREE",
+  "numberOfBeds" : 1,
+  "price" : 1500.0,
+  "consumed" : [ ]
+} ]

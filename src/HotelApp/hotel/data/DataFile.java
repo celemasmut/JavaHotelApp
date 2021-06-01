@@ -1,7 +1,10 @@
 package HotelApp.hotel.data;
 
 import HotelApp.hotel.Hotel;
+import HotelApp.hotel.users.Passenger;
 import HotelApp.hotel.users.User;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
@@ -10,35 +13,38 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DataFile {
+public class DataFile <T>{
 
-    public static void hotelToJson(Hotel hotel){
+    public DataFile() {
+    }
+
+    //hacerlo generico
+    public void hotelToJson(List<T> user,String fileName){
        try{
-            File file = new File("users_file.json");
+            File file = new File(fileName);
             if(!file.exists()){
                 file.createNewFile();
             }
             ObjectMapper mapper = new ObjectMapper();
-                mapper.writeValue(file,hotel);
+           mapper.writerWithDefaultPrettyPrinter().writeValue(file,user);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
 
-    //por ahora la idea es levantar el hotel
 
-  /*  public static List<User> readUserFile(){
+    public static List<User> readUserFile(){
         List<User> users = new ArrayList<>();
         try{
-            File file = new File("users_file.json");
+            File file = new File("passenger.json");
             if(file.exists()) {
                 ObjectMapper mapper = new ObjectMapper();
-                users = mapper.readValue(file, mapper.getTypeFactory().constructCollectionType(List.class, User.class));
+                users = mapper.readValue(file, mapper.getTypeFactory().constructCollectionType(List.class, Passenger.class));
             }
             } catch (IOException e) {
             e.printStackTrace();
         }
         return users;
-    }*/
+    }
 }

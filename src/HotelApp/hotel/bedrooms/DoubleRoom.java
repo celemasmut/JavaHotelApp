@@ -8,10 +8,6 @@ public class DoubleRoom extends Room{
         super(roomNumber, stateRoom, numberOfBeds, price);
     }
 
-    @Override
-    public void showConsumptions() {
-
-    }
 
     @Override
     public String toString() {

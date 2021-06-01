@@ -1,4 +1,5 @@
 package HotelApp.hotel;
+import java.io.Serializable;
 import java.util.Scanner;
 
 import HotelApp.hotel.bedrooms.Room;
@@ -7,10 +8,11 @@ import HotelApp.hotel.data.DataFile;
 import HotelApp.hotel.users.*;
 
 
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Hotel {
+public class Hotel implements Serializable {
     private static Employee employees;
     private static List<Passenger>passengerList;
     private static List <Room> roomsList;
@@ -56,7 +58,7 @@ public class Hotel {
         return reservationsList;
     }
 
-    protected static void addReservation( Reservation reservation){
+    public static void addReservation( Reservation reservation){
         reservationsList.add(reservation);
     }
 
@@ -145,10 +147,10 @@ public class Hotel {
         return  statusReservation;
     }
 
-    protected static boolean changeStatusReservation(Reservation reservationToDelete,Status status)
+    protected static boolean changeStatusReservation(Reservation reservation,Status status)
     {
-        if (reservationToDelete!=null){
-            int posInList=reservationsList.indexOf(reservationToDelete);
+        if (reservation!=null){
+            int posInList=reservationsList.indexOf(reservation);
             reservationsList.get(posInList).setStatus(status);
             return true;
         }

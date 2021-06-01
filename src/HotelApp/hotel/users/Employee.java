@@ -1,11 +1,12 @@
 package HotelApp.hotel.users;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Employee {
-    List<Receptionist> receptionistList ;
-    List<Admin> admins ;
+public class Employee implements Serializable {
+    private List<Receptionist> receptionistList ;
+    private List<Admin> admins ;
 
     public Employee() {
         this.receptionistList = new ArrayList<>();
