@@ -26,6 +26,7 @@ public class Hotel implements Serializable {
     }
 
 
+
     public static List<Room> getRoomsList() {
         return roomsList;
     }

@@ -1,0 +1,18 @@
+{
+  "receptionistList" : [ {
+    "id" : 5,
+    "loginName" : "recep1",
+    "password" : "1234",
+    "fileNumber" : 1
+  }, {
+    "id" : 6,
+    "loginName" : "recep2",
+    "password" : "0987",
+    "fileNumber" : 3
+  } ],
+  "admins" : [ {
+    "id" : 7,
+    "loginName" : "admin",
+    "password" : "admin"
+  } ]
+}

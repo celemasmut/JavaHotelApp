@@ -1,6 +1,7 @@
 package HotelApp.hotel.data;
 
 import HotelApp.hotel.Hotel;
+import HotelApp.hotel.users.Employee;
 import HotelApp.hotel.users.Passenger;
 import HotelApp.hotel.users.User;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
@@ -31,20 +32,32 @@ public class DataFile <T>{
             e.printStackTrace();
         }
     }
-
-
-
-    public static List<User> readUserFile(){
-        List<User> users = new ArrayList<>();
+    public void employeeToJson(Employee user, String fileName){
         try{
-            File file = new File("passenger.json");
+            File file = new File(fileName);
+            if(!file.exists()){
+                file.createNewFile();
+            }
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.writerWithDefaultPrettyPrinter().writeValue(file,user);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    public  List<T> readFile(T o,String nameFile){
+        List<T> passengerList = new ArrayList<>();
+        try{
+            File file = new File(nameFile);
             if(file.exists()) {
                 ObjectMapper mapper = new ObjectMapper();
-                users = mapper.readValue(file, mapper.getTypeFactory().constructCollectionType(List.class, Passenger.class));
+                passengerList = mapper.readValue(file, mapper.getTypeFactory().constructCollectionType(List.class, o.getClass()));
             }
             } catch (IOException e) {
             e.printStackTrace();
         }
-        return users;
+        return passengerList;
     }
 }

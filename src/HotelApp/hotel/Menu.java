@@ -26,9 +26,9 @@ public class Menu {
     public Menu(){
         printOut = System.out;
         data = new DataFile();
-        data.hotelToJson(Hotel.getRoomsList(),"rooms.json");
-        data.hotelToJson(Hotel.getEmployees().getAdmins(),"admins.json");
-        data.hotelToJson(Hotel.getEmployees().getReceptionistList(),"receptionist.json");
+      //  data.hotelToJson(Hotel.getRoomsList(),"rooms.json");
+        data.employeeToJson(Hotel.getEmployees(),"employees.json");
+      //  Hotel.setPassengerList(data.readFile(,"passenger.json"));
 
     }
 
