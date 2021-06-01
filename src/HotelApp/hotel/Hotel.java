@@ -55,27 +55,24 @@ public class Hotel {
     {
         int posInList;
 
-
-
             posInList=roomsList.indexOf(roomToReserve);
             roomsList.get(posInList).setStateRoom(state);
             roomsList.get(posInList).setOccupant(passengerToRoom);
             return true;
 
-
     }
 
     protected static Passenger searchPassengerInList (String dni)
     {
-       int posToReturn=-1;
+     //  int posToReturn=-1;
        for (User user:usersList)
        {
            if (user instanceof Passenger)
            {
                if (((Passenger) user).getDni().equalsIgnoreCase(dni))
                {
-                   posToReturn=usersList.indexOf(user);
-                   return (Passenger) usersList.get(posToReturn);
+                  // posToReturn=usersList.indexOf(user);
+                   return (Passenger) user;//usersList.get(posToReturn);
                }
            }
        }
@@ -94,10 +91,7 @@ public class Hotel {
     }
     protected static void showListOfRoom()
     {
-        for (Room roomAux:roomsList)
-        {
-            System.out.println(roomAux.toString());
-        }
+       roomsList.forEach(room -> System.out.println(room.toString()));
     }
 
     protected static List<Reservation> getPassengerReservations(String dni){
@@ -125,32 +119,18 @@ public class Hotel {
         return  statusReservation;
     }
 
-    protected static boolean toCancelReservation(Reservation canceledReservation){
-        if(reservationsList.size() > 0) {
-            for (Reservation reservation : reservationsList) {
-                if (reservation.equals(canceledReservation)) {
-                    reservation.setStatus(Status.CANCELLED);
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-    protected static boolean deleteReservationInList(Reservation reservationToDelete)
+    protected static boolean changeStatusReservation(Reservation reservationToDelete,Status status)
     {
         if (reservationToDelete!=null){
-        int posInList=reservationsList.indexOf(reservationToDelete);
-        reservationsList.get(posInList).setStatus(Status.COMPLETED);
-        return true;
+            int posInList=reservationsList.indexOf(reservationToDelete);
+            reservationsList.get(posInList).setStatus(status);
+            return true;
         }
         return false;
     }
     protected static void showReservation()
     {
-        for (Reservation reservation:reservationsList)
-        {
-            System.out.println(reservation.toString());
-        }
+        reservationsList.forEach(reservation -> System.out.println(reservation.toString()));
     }
     protected static Reservation searchReservationInList (String dniPassenger)
     {
@@ -165,7 +145,6 @@ public class Hotel {
     }
 
     protected static void backUp (){
-        DataFile.userToJson(usersList);
     }
 
     /*protected static boolean existenceInTheList(User userToSearch)
