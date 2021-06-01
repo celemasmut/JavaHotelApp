@@ -54,10 +54,10 @@ public class Menu {
     }
 
     private boolean validatePassengerDni(String dni){
-        if(Hotel.getUsersList().size() > 0 ){
-            for (User user : Hotel.getUsersList()){
+        if(Hotel.getPassengerList().size() > 0 ){
+            for (Passenger user : Hotel.getPassengerList()){
                 if(user instanceof Passenger){
-                    if(((Passenger) user).getDni().equals(dni)) {
+                    if( user.getDni().equals(dni)) {
                         return true;
                     }
                 }
@@ -87,7 +87,7 @@ public class Menu {
             scan.nextLine();
             String password = scan.next();
 
-            Hotel.addUserToList(new Passenger(userName,password,name,dni,homeTown,homeAddress));
+            Hotel.addPassengerToList(new Passenger(userName,password,name,dni,homeTown,homeAddress));
             printOut.println("New Passenger registered");
             return dni;
         }
@@ -109,16 +109,16 @@ public class Menu {
             String password = scan.next();
             Receptionist receptionist = new Receptionist(loginName,password);
             receptionist.setFileNumber(fileNumber);
-            Hotel.addUserToList(receptionist);
+            Hotel.addReceptionistToList(receptionist);
             printOut.println("New Receptionist registered");
         }
     }
 
     public boolean validateRecepcionist(int fileNumber){
-        if(Hotel.getUsersList().size() > 0 ){
-            for (User user : Hotel.getUsersList()){
+        if(Hotel.getEmployees().getReceptionistList().size() > 0 ){
+            for (Receptionist user : Hotel.getEmployees().getReceptionistList()){
                 if(user instanceof Receptionist){
-                    if(((Receptionist) user).getFileNumber()==(fileNumber)) {
+                    if( user.getFileNumber()==(fileNumber)) {
                         printOut.println("true");
                         return true;
                     }
@@ -156,7 +156,7 @@ public class Menu {
 
     private User userLogin ()
     {
-        String exist=null;
+        User loggedUser;
         Scanner scan = new Scanner (System.in);
         String userName;
         String password;
@@ -165,36 +165,28 @@ public class Menu {
         userName=scan.nextLine();
         printOut.println("Insert password:");
         password=scan.nextLine();
-        ///exist=searchUserInList(userName,password);
-        for (User userAux:Hotel.getUsersList())
-        {
-            if(userAux instanceof Passenger &&userName.equals(userAux.getLoginName())&&password.equals(userAux.getPassword()))
-            {
-                return userAux;
-            }
-            else if(userAux instanceof Receptionist  &&userName.equals(userAux.getLoginName())&&password.equals(userAux.getPassword()))
-            {
-                return userAux;
-            }
-            if (userAux instanceof Admin  &&userName.equals(userAux.getLoginName())&&password.equals(userAux.getPassword()))
-            {
-                return userAux;
-            }
-        }
-
-        return null;
+        loggedUser=searchUserInList(userName,password);
+        return loggedUser;
     }
 
-    private String searchUserInList(String userName,String password)
+    private User searchUserInList(String userName,String password)
     {
-        for (User aux:Hotel.getUsersList())
+        for (Passenger aux:Hotel.getPassengerList())
         {
-            if (aux instanceof Passenger)
-            {
-                if (userName.equalsIgnoreCase(aux.getLoginName()) && password.equals(aux.getPassword())){
-                    return ((Passenger) aux).getDni();
-                }
-
+            if (userName.equalsIgnoreCase(aux.getLoginName()) && password.equals(aux.getPassword())){
+                return (Passenger) aux;
+            }
+        }
+        for (Receptionist aux:Hotel.getEmployees().getReceptionistList())
+        {
+            if (userName.equalsIgnoreCase(aux.getLoginName()) && password.equals(aux.getPassword())){
+                return (Receptionist)aux;
+            }
+        }
+        for (Admin aux:Hotel.getEmployees().getAdmins())
+        {
+            if (userName.equalsIgnoreCase(aux.getLoginName()) && password.equals(aux.getPassword())){
+                return (Admin)aux;
             }
         }
         return null;
@@ -473,7 +465,6 @@ public class Menu {
                         break;
                     case 3:
                         checkPassengerConsumptions(reservationChosen);
-                        Hotel.getRoomsList().forEach(room -> printOut.println(room.toString()));
                         break;
                     case 4:
                         exit =true;
@@ -632,8 +623,6 @@ public class Menu {
         printOut.println("5_Exit");
     }
     private void admin(){
-        for(User user : Hotel.getUsersList())
-        printOut.println(user.toString());
         boolean exit=false;
         int option;
         while (!exit)

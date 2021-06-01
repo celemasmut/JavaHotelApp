@@ -5,7 +5,7 @@ import HotelApp.hotel.users.Passenger;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class  Room {
+public class  Room {
     private Passenger occupant;
     private String roomNumber;
     private State stateRoom;
@@ -71,9 +71,6 @@ public abstract class  Room {
     public void addConsumption(ProductToConsume consumption){
         consumed.add(consumption);
     }
-
-    public abstract void showConsumptions ();
-
 
 
     @Override

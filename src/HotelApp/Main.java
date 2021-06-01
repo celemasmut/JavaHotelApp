@@ -1,9 +1,7 @@
 package HotelApp;
 
 import HotelApp.hotel.Hotel;
-import HotelApp.hotel.MealPlan;
 import HotelApp.hotel.Menu;
-import HotelApp.hotel.Reservation;
 import HotelApp.hotel.bedrooms.*;
 import HotelApp.hotel.data.DataFile;
 import HotelApp.hotel.users.Admin;
@@ -48,11 +46,11 @@ public class Main {
 
         //ahora agrego a la lista
 
-        Hotel.addUserToList(pasajerito1);
-        Hotel.addUserToList(pasajerito2);
-        Hotel.addUserToList(receptionist1);
-        Hotel.addUserToList(receptionist2);
-        Hotel.addUserToList(adminPrueba);
+        Hotel.addPassengerToList(pasajerito1);
+        Hotel.addPassengerToList(pasajerito2);
+        Hotel.addReceptionistToList(receptionist1);
+        Hotel.addReceptionistToList(receptionist2);
+        Hotel.addAdminToList(adminPrueba);
         DataFile.hotelToJson(hotelPrueba);
 
 

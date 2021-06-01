@@ -4,32 +4,52 @@ import java.util.Scanner;
 import HotelApp.hotel.bedrooms.Room;
 import HotelApp.hotel.bedrooms.State;
 import HotelApp.hotel.data.DataFile;
-import HotelApp.hotel.users.Admin;
-import HotelApp.hotel.users.Passenger;
-import HotelApp.hotel.users.Receptionist;
-import HotelApp.hotel.users.User;
+import HotelApp.hotel.users.*;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Hotel {
-    private static List <User> usersList;;
+    private static Employee employees;
+    private static List<Passenger>passengerList;
     private static List <Room> roomsList;
     private static List<Reservation> reservationsList;
 
     public Hotel() {
-        this.usersList = new ArrayList<>();
+        this.employees = new Employee();
+        this.passengerList = new ArrayList<>();
         this.roomsList = new ArrayList<>();
         this.reservationsList = new ArrayList<>();
     }
 
-    public static List<User> getUsersList() {
-        return usersList;
-    }
 
     public static List<Room> getRoomsList() {
         return roomsList;
+    }
+
+    public static Employee getEmployees() {
+        return employees;
+    }
+
+    public static void setEmployees(Employee employees) {
+        Hotel.employees = employees;
+    }
+
+    public static List<Passenger> getPassengerList() {
+        return passengerList;
+    }
+
+    public static void setPassengerList(List<Passenger> passengerList) {
+        Hotel.passengerList = passengerList;
+    }
+
+    public static void setRoomsList(List<Room> roomsList) {
+        Hotel.roomsList = roomsList;
+    }
+
+    public static void setReservationsList(List<Reservation> reservationsList) {
+        Hotel.reservationsList = reservationsList;
     }
 
     public static List<Reservation> getReservationsList() {
@@ -46,9 +66,17 @@ public class Hotel {
 
 
 // esto sera por ahora publico solo por que no tenemos los archivos para levantarlos. luego sera protected.
-    public static boolean addUserToList (User userToAdd){
-        usersList.add(userToAdd);
+    public static boolean addPassengerToList(Passenger passenger){
+        passengerList.add(passenger);
         return true;
+    }
+
+    public static void addReceptionistToList(Receptionist receptionist){
+        employees.addReceptionistList(receptionist);
+    }
+
+    public static void addAdminToList(Admin admin){
+        employees.addAdmins(admin);
     }
 
     protected static boolean changeStateOfRoom(Passenger passengerToRoom,Room roomToReserve, State state)
@@ -64,15 +92,13 @@ public class Hotel {
 
     protected static Passenger searchPassengerInList (String dni)
     {
-     //  int posToReturn=-1;
-       for (User user:usersList)
+       for (Passenger user:passengerList)
        {
            if (user instanceof Passenger)
            {
-               if (((Passenger) user).getDni().equalsIgnoreCase(dni))
+               if (user.getDni().equalsIgnoreCase(dni))
                {
-                  // posToReturn=usersList.indexOf(user);
-                   return (Passenger) user;//usersList.get(posToReturn);
+                   return user;
                }
            }
        }
