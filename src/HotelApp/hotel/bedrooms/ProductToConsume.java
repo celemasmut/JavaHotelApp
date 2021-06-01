@@ -16,4 +16,5 @@ public enum ProductToConsume {
     public double getPrice() {
         return price;
     }
+
 }
