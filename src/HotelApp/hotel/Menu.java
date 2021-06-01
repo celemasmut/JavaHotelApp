@@ -2,7 +2,11 @@ package HotelApp.hotel;
 
 import HotelApp.hotel.bedrooms.*;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import HotelApp.hotel.data.DataFile;
+=======
+import HotelApp.hotel.users.Admin;
+>>>>>>> master
 =======
 import HotelApp.hotel.users.Admin;
 >>>>>>> master
@@ -50,9 +54,12 @@ public class Menu {
                     break;
                 case 3:
 <<<<<<< HEAD
+<<<<<<< HEAD
                     backUp();
                     leave();
                     break;
+=======
+>>>>>>> master
 =======
 >>>>>>> master
                 default:
