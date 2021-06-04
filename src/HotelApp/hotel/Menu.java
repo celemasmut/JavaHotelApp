@@ -63,13 +63,11 @@ public class Menu {
         }while (op != 3);
     }
 
-    private boolean validatePassengerDni(String dni){
-        if(Hotel.getUsersList().size() > 0 ){
-            for (User user : Hotel.getUsersList()){
-                if(user instanceof Passenger){
-                    if(((Passenger) user).getDni().equals(dni)) {
-                        return true;
-                    }
+    private boolean validatePassengerDni(String dni) {
+        if (Hotel.getPassengerList().size() > 0) {
+            for (Passenger user : Hotel.getPassengerList()) {
+                if (user.getDni().equals(dni)) {
+                    return true;
                 }
             }
         }
@@ -97,7 +95,7 @@ public class Menu {
             scan.nextLine();
             String password = scan.next();
 
-            Hotel.addUserToList(new Passenger(userName,password,name,dni,homeTown,homeAddress));
+            Hotel.addPassenger(new Passenger(userName,password,name,dni,homeTown,homeAddress));
             printOut.println("New Passenger registered");
             return dni;
         }
@@ -119,23 +117,20 @@ public class Menu {
             String password = scan.next();
             Receptionist receptionist = new Receptionist(loginName,password);
             receptionist.setFileNumber(fileNumber);
-            Hotel.addUserToList(receptionist);
+            Hotel.addRecepcionists(receptionist);
             printOut.println("New Receptionist registered");
         }
     }
 
     public boolean validateRecepcionist(int fileNumber){
-        if(Hotel.getUsersList().size() > 0 ){
-            for (User user : Hotel.getUsersList()){
-                if(user instanceof Receptionist){
-                    if(((Receptionist) user).getFileNumber()==(fileNumber)) {
+        if(Hotel.getReceptionistsList().size() > 0 ){
+            for (Receptionist user : Hotel.getReceptionistsList()){
+                    if(user.getFileNumber()==(fileNumber)) {
                         System.out.println("true");
                         return true;
                     }
                 }
             }
-        }
-        System.out.println("false");
         return false;
     }
 
@@ -175,41 +170,23 @@ public class Menu {
         userName=scan.nextLine();
         printOut.println("Insert password:");
         password=scan.nextLine();
-        ///exist=searchUserInList(userName,password);
-        for (User userAux:Hotel.getUsersList())
-        {
-            if(userAux instanceof Passenger &&userName.equals(userAux.getLoginName())&&password.equals(userAux.getPassword()))
-            {
-                return userAux;
-            }
-            else if(userAux instanceof Receptionist  &&userName.equals(userAux.getLoginName())&&password.equals(userAux.getPassword()))
-            {
-                return userAux;
-            }
-            if (userAux instanceof Admin  &&userName.equals(userAux.getLoginName())&&password.equals(userAux.getPassword()))
-            {
-                return userAux;
+        for (Passenger aux: getPassengerList()) {
+            if (userName.equals(aux.getLoginName()) && password.equals(aux.getPassword())) {
+                return aux;
             }
         }
-
-        return null;
-    }
-
-    private String searchUserInList(String userName,String password)
-    {
-        for (User aux:Hotel.getUsersList())
-        {
-            if (aux instanceof Passenger)
-            {
-                if (userName.equalsIgnoreCase(aux.getLoginName()) && password.equals(aux.getPassword())){
-                    return ((Passenger) aux).getDni();
-                }
-
+        for(Receptionist aux : getReceptionistsList()) {
+            if (userName.equals(aux.getLoginName()) && password.equals(aux.getPassword())) {
+                return aux;
+            }
+        }
+        for(Admin aux : getAdminsList()) {
+            if (userName.equals(aux.getLoginName()) && password.equals(aux.getPassword())) {
+                return aux;
             }
         }
         return null;
     }
-
 
     private void passengerMenu(){
         printOut.println("1 - To book a room");

@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Hotel {
-    private static List <User> usersList;;
     private static List <Passenger> passengerList;;
     private static List <Receptionist> receptionistsList;
     private static List <Admin> adminsList;
@@ -21,16 +20,11 @@ public class Hotel {
     private static List<Reservation> reservationsList;
 
     public Hotel() {
-        this.usersList = new ArrayList<>();
         this.roomsList = new ArrayList<>();
         this.reservationsList = new ArrayList<>();
         this.passengerList= new ArrayList<>();
         this.adminsList = new ArrayList<>();
         this.receptionistsList=new ArrayList<>();
-    }
-
-    public static List<User> getUsersList() {
-        return usersList;
     }
 
     public static List<Room> getRoomsList() {
@@ -47,10 +41,6 @@ public class Hotel {
 
     public static void addRoomToList(Room room){
         roomsList.add(room);
-    }
-
-    public static void setUsersList(List<User> usersList) {
-        Hotel.usersList = usersList;
     }
 
     public static List<Passenger> getPassengerList() {
@@ -85,11 +75,6 @@ public class Hotel {
         Hotel.reservationsList = reservationsList;
     }
 
-    // esto sera por ahora publico solo por que no tenemos los archivos para levantarlos. luego sera protected.
-    public static boolean addUserToList (User userToAdd){
-        usersList.add(userToAdd);
-        return true;
-    }
     public static boolean addPassenger (Passenger passengerToAdd)
     {
         return passengerList.add(passengerToAdd);
@@ -119,19 +104,11 @@ public class Hotel {
 
     protected static Passenger searchPassengerInList (String dni)
     {
-       int posToReturn=-1;
-       for (User user:usersList)
-       {
-           if (user instanceof Passenger)
-           {
-               if (((Passenger) user).getDni().equalsIgnoreCase(dni))
-               {
-                   posToReturn=usersList.indexOf(user);
-                   return (Passenger) usersList.get(posToReturn);
-               }
-           }
-       }
-       return null;
+       return (passengerList
+               .stream()
+               .filter(passenger -> passenger.getDni().equals(dni))
+               .findFirst()
+               .get());
     }
     protected static Reservation searchReservation (String dniPassenger)
     {

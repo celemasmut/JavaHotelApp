@@ -59,6 +59,7 @@ public class Main {
 
         Menu menu = new Menu();
         menu.initiate();
+        DataFile.writeJsonBookings(Hotel.getReservationsList(),"booking.json");
 
 
     }

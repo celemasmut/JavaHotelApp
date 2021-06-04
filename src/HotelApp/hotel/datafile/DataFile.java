@@ -1,4 +1,5 @@
 package HotelApp.hotel.datafile;
+import HotelApp.hotel.Reservation;
 import HotelApp.hotel.bedrooms.Room;
 import HotelApp.hotel.users.Admin;
 import HotelApp.hotel.users.Passenger;
@@ -13,6 +14,19 @@ import java.util.List;
 
 public class DataFile  {
     public DataFile() {
+    }
+
+    public static void writeJsonBookings(List<Reservation> reservationList,String nameFile){
+        try{
+            File file = new File(nameFile);
+            if(!file.exists()){
+                file.createNewFile();
+            }
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.writeValue(file,reservationList);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     public static void writeJsonPassenger(List<Passenger> user, String fileName)
@@ -30,7 +44,7 @@ public class DataFile  {
 
 
     }
-    public static void writeJsonRecepcionist(List<Receptionist> user,String fileName)
+    public static void writeJsonReceptionist(List<Receptionist> user,String fileName)
     {
         try{
             File file = new File(fileName);
@@ -68,6 +82,20 @@ public class DataFile  {
         }catch (IOException e){
             e.printStackTrace();
         }
+    }
+
+    public static List<Reservation> readReservationJson(String fileName){
+        List<Reservation> reservationList = new ArrayList<>();
+        try{
+            File file = new File(fileName);
+            if(file.exists()){
+                ObjectMapper mapper = new ObjectMapper();
+                reservationList = mapper.readValue(file,mapper.getTypeFactory().constructCollectionType(List.class,Reservation.class));
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return reservationList;
     }
 
     public static List<Room> readRoomJson(String fileName){
