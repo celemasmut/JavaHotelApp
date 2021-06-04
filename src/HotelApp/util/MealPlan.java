@@ -1,4 +1,4 @@
-package HotelApp.hotel;
+package HotelApp.util;
 
 public enum MealPlan {
     EP (": European Plan - Only room, without any meal",0),

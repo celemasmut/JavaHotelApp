@@ -1,6 +1,6 @@
-package HotelApp.hotel.bedrooms;
+package HotelApp.model.bedrooms;
 
-import HotelApp.hotel.users.Passenger;
+import HotelApp.model.bedrooms.users.Passenger;
 
 import java.util.ArrayList;
 import java.util.List;

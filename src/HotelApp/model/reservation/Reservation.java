@@ -1,16 +1,16 @@
-package HotelApp.hotel;
+package HotelApp.model.bedrooms;
 
-import HotelApp.hotel.bedrooms.Room;
-import HotelApp.hotel.bedrooms.State;
+import HotelApp.model.bedrooms.Room;
+import HotelApp.util.LocalDateDeserializer;
+import HotelApp.util.LocalDateSerializer;
+import HotelApp.util.MealPlan;
+import HotelApp.util.Status;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-
 
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 public class Reservation {
 

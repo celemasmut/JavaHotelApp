@@ -1,6 +1,4 @@
-package HotelApp.hotel.bedrooms;
-
-import HotelApp.hotel.users.Passenger;
+package HotelApp.model.bedrooms;
 
 public class DoubleRoom extends Room{
 

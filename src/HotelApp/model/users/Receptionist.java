@@ -1,4 +1,4 @@
-package HotelApp.hotel.users;
+package HotelApp.model.bedrooms.users;
 
 
 public class Receptionist extends User{

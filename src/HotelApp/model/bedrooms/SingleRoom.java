@@ -1,7 +1,5 @@
-package HotelApp.hotel.bedrooms;
+package HotelApp.model.bedrooms;
 
-
-import HotelApp.hotel.users.Passenger;
 
 public class SingleRoom extends Room{
 

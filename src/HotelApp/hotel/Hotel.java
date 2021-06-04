@@ -1,12 +1,12 @@
 package HotelApp.hotel;
-import java.util.Scanner;
 
-import HotelApp.hotel.bedrooms.Room;
-import HotelApp.hotel.bedrooms.State;
-import HotelApp.hotel.users.Admin;
-import HotelApp.hotel.users.Passenger;
-import HotelApp.hotel.users.Receptionist;
-import HotelApp.hotel.users.User;
+import HotelApp.model.bedrooms.Reservation;
+import HotelApp.model.bedrooms.Room;
+import HotelApp.model.bedrooms.State;
+import HotelApp.model.bedrooms.users.Admin;
+import HotelApp.model.bedrooms.users.Passenger;
+import HotelApp.model.bedrooms.users.Receptionist;
+import HotelApp.util.Status;
 
 
 import java.util.ArrayList;

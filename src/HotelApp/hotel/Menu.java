@@ -1,11 +1,16 @@
 package HotelApp.hotel;
 
-import HotelApp.hotel.bedrooms.*;
-import HotelApp.hotel.datafile.DataFile;
-import HotelApp.hotel.users.Admin;
-import HotelApp.hotel.users.Passenger;
-import HotelApp.hotel.users.Receptionist;
-import HotelApp.hotel.users.User;
+import HotelApp.model.bedrooms.*;
+import HotelApp.datafile.DataFile;
+import HotelApp.model.bedrooms.ProductToConsume;
+import HotelApp.model.bedrooms.Reservation;
+import HotelApp.model.bedrooms.State;
+import HotelApp.model.bedrooms.users.Admin;
+import HotelApp.model.bedrooms.users.Passenger;
+import HotelApp.model.bedrooms.users.Receptionist;
+import HotelApp.model.bedrooms.users.User;
+import HotelApp.util.MealPlan;
+import HotelApp.util.Status;
 
 import java.io.PrintStream;
 import java.time.LocalDate;

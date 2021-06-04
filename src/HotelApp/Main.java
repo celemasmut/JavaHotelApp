@@ -1,14 +1,8 @@
 package HotelApp;
 
 import HotelApp.hotel.Hotel;
-import HotelApp.hotel.MealPlan;
 import HotelApp.hotel.Menu;
-import HotelApp.hotel.Reservation;
-import HotelApp.hotel.bedrooms.*;
-import HotelApp.hotel.datafile.DataFile;
-import HotelApp.hotel.users.Admin;
-import HotelApp.hotel.users.Passenger;
-import HotelApp.hotel.users.Receptionist;
+import HotelApp.datafile.DataFile;
 
 public class Main {
     public static void main(String[] args) {
