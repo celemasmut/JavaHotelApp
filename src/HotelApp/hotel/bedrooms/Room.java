@@ -5,19 +5,23 @@ import HotelApp.hotel.users.Passenger;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class  Room {
+public class  Room {
     private Passenger occupant;
-    private String roomNumber;
+    private int roomNumber;
     private State stateRoom;
     private int numberOfBeds;
     private double price;
     private List<ProductToConsume>consumed =new ArrayList<>();
+    private static int count = 1;
+
+
+
 
 
     public Room() { }
 
-    public Room(String roomNumber, State stateRoom, int numberOfBeds, double price) {
-        this.roomNumber = roomNumber;
+    public Room( State stateRoom, int numberOfBeds, double price) {
+        this.roomNumber = count++;
         this.stateRoom = stateRoom;
         this.numberOfBeds = numberOfBeds;
         this.price = price;
@@ -31,13 +35,10 @@ public abstract class  Room {
         this.occupant = occupant;
     }
 
-    public String getRoomNumber() {
+    public int getRoomNumber() {
         return roomNumber;
     }
 
-    public void setRoomNumber(String roomNumber) {
-        this.roomNumber = roomNumber;
-    }
 
     public State getStateRoom() {
         return stateRoom;
@@ -72,7 +73,6 @@ public abstract class  Room {
         consumed.add(consumption);
     }
 
-    public abstract void showConsumptions ();
 
 
 

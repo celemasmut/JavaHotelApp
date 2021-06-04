@@ -5,6 +5,7 @@ import HotelApp.hotel.MealPlan;
 import HotelApp.hotel.Menu;
 import HotelApp.hotel.Reservation;
 import HotelApp.hotel.bedrooms.*;
+import HotelApp.hotel.datafile.DataFile;
 import HotelApp.hotel.users.Admin;
 import HotelApp.hotel.users.Passenger;
 import HotelApp.hotel.users.Receptionist;
@@ -16,14 +17,14 @@ public class Main {
 
         //seteo hasta que tengamos los archivos las lista se debe levantar desde hotel con el archivo
 
-        SingleRoom sroom1 = new SingleRoom("1", State.FREE,1,500);
-        SingleRoom sroom2 = new SingleRoom("2", State.OCCUPIED,1,500);
+   /*     SingleRoom sroom1 = new SingleRoom( State.FREE,1,500);
+        SingleRoom sroom2 = new SingleRoom( State.OCCUPIED,1,500);
 
-        DoubleRoom droom = new DoubleRoom("3",State.IN_MAINTENANCE, 2, 750);
+        DoubleRoom droom = new DoubleRoom(State.IN_MAINTENANCE, 2, 750);
 
-        FamilyRoom fmroom = new FamilyRoom("4",State.FREE,3, 850);
+        FamilyRoom fmroom = new FamilyRoom(State.FREE,3, 850);
 
-        KingRoom knroom = new KingRoom("5",State.FREE,1,1500);
+        KingRoom knroom = new KingRoom(State.FREE,1,1500);
 
 
         Hotel.addRoomToList(sroom1);
@@ -31,6 +32,7 @@ public class Main {
         Hotel.addRoomToList(droom);
         Hotel.addRoomToList(fmroom);
         Hotel.addRoomToList(knroom);
+        DataFile.writeJsonRooms(Hotel.getRoomsList(),"room.json");*/
 
         //seteo pasajeros para que no sea engorroso agregar siempre si o si
 
@@ -53,6 +55,7 @@ public class Main {
         Hotel.addRecepcionists(receptionist2);
         Hotel.addAdmin(adminPrueba);*/
 
+        Hotel.setRoomsList(DataFile.readRoomJson("room.json"));
 
         Menu menu = new Menu();
         menu.initiate();

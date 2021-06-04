@@ -17,21 +17,22 @@ import static HotelApp.hotel.Hotel.*;
 
 public class Menu {
     private PrintStream printOut;
-    private DataFile data= new DataFile();
 
     Scanner scan = new Scanner(System.in);
 
 
     public Menu(){
-      /*  data.writeJsonPassenger(Hotel.getPassengerList(),"passenger.json");
-        data.writeJsonAdmin(Hotel.getAdminsList(),"admin.json");
-        data.writeJsonRecepcionist(Hotel.getReceptionistsList(),"receptionist.json");*/
-        Hotel.setPassengerList(data.readPassengerJson("passenger.json"));
-        Hotel.setAdminsList(data.readAdminJson("admin.json"));
-        Hotel.setReceptionistsList(data.readReceptionistJson("receptionist.json"));
-        Hotel.showPassenger();
-        Hotel.showAdmins();
-        Hotel.showReceptionist();
+      /*  DataFile.writeJsonPassenger(Hotel.getPassengerList(),"passenger.json");
+        DataFile.writeJsonAdmin(Hotel.getAdminsList(),"admin.json");
+        DataFile.writeJsonRecepcionist(Hotel.getReceptionistsList(),"receptionist.json");*/
+        setPassengerList(DataFile.readPassengerJson("passenger.json"));
+        setAdminsList(DataFile.readAdminJson("admin.json"));
+        setReceptionistsList(DataFile.readReceptionistJson("receptionist.json"));
+        setRoomsList(DataFile.readRoomJson("room.json"));
+        showPassenger();
+        showAdmins();
+        showReceptionist();
+        showListOfRoom();
         printOut = System.out;
     }
 
@@ -310,10 +311,10 @@ public class Menu {
         return arrival.plusDays(daysOfStay);
     }
 
-    private Reservation toReserveRoom( LocalDate arrival,LocalDate exit,String roomNumberChoosed,MealPlan plan,String dniUser){
+    private Reservation toReserveRoom( LocalDate arrival,LocalDate exit,int roomNumberChoosed,MealPlan plan,String dniUser){
         Reservation reservation=null;
         for(Room room : Hotel.getRoomsList()){
-            if(room.getRoomNumber().equals(roomNumberChoosed)){
+            if(room.getRoomNumber() == roomNumberChoosed){
                 reservation = new Reservation(room,arrival, exit,plan,dniUser);
             }
         }
@@ -369,7 +370,7 @@ public class Menu {
         optionOfRoom=scan.nextInt();
         seeRoomFree(optionOfRoom);
         printOut.println("Insert number of room you want to book ");
-        String room = scan.next();
+        int room = scan.nextInt();
         scan.nextLine();
         Reservation newReserv = toReserveRoom(arrival, setDayOfExit(arrival,dayOfStay), room, chooseMealPlan(),dniUser);
         confirmReservation(newReserv, dayOfStay);
@@ -511,7 +512,7 @@ public class Menu {
         boolean exit=false;
         int option;
         String dniUser;
-        String roomNumber;
+        int roomNumber;
         while (!exit)
         {
             showRecepcionistMenu();
@@ -529,7 +530,7 @@ public class Menu {
                 case 3:
                     printOut.println("Enter room number:");
                     scan.nextLine();
-                    roomNumber=scan.nextLine();
+                    roomNumber=scan.nextInt();
                     showConsumeOfRoom(roomNumber);
                     break;
                 case 4:
@@ -558,7 +559,7 @@ public class Menu {
     private void checkIn(){
         int option=0;
         int optionOfRoom=0;
-        String numberOfRoom;
+        int numberOfRoom;
         String dniUser;
         boolean result;
         printOut.println("wants to make the entry of a passenger. Enter 1 or if you want to enter a reservation enter 2");
@@ -572,7 +573,7 @@ public class Menu {
             optionOfRoom=scan.nextInt();
             seeRoomFree(optionOfRoom);
             printOut.println("Insert number of room you want to reserve ");
-            numberOfRoom =scan.next();
+            numberOfRoom =scan.nextInt();
             scan.nextLine();
             //reservar
             Reservation newReserv = toReserveRoom(arrival, setDayOfExit(arrival,dayOfStay), numberOfRoom, chooseMealPlan(),dniUser);
@@ -614,13 +615,13 @@ public class Menu {
 
         }
     }
-    private void showConsumeOfRoom(String roomNumber)
+    private void showConsumeOfRoom(int roomNumber)
     {
         double totalPrice=0;
         printOut.println("Product:");
         for (Room roomToConsume:Hotel.getRoomsList())
         {
-            if(roomNumber.equalsIgnoreCase(roomToConsume.getRoomNumber())&& roomToConsume.getConsumed()!=null)
+            if(roomNumber == roomToConsume.getRoomNumber() && roomToConsume.getConsumed()!=null)
             {
                 for (ProductToConsume productToConsumeForRoom : roomToConsume.getConsumed())
                 {

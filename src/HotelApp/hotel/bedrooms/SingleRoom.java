@@ -5,14 +5,10 @@ import HotelApp.hotel.users.Passenger;
 
 public class SingleRoom extends Room{
 
-    public SingleRoom(String roomNumber, State stateRoom, int numberOfBeds, double price) {
-        super(roomNumber, stateRoom, numberOfBeds, price);
+    public SingleRoom(State stateRoom, int numberOfBeds, double price) {
+        super( stateRoom, numberOfBeds, price);
     }
 
-    @Override
-    public void showConsumptions() {
-
-    }
 
     @Override
     public String toString() {
