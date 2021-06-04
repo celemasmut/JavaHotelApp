@@ -219,7 +219,7 @@ public class Hotel {
     {
         for (Passenger passenger:passengerList)
         {
-            passenger.toString();
+            System.out.println(passenger.toString());
         }
     }
 

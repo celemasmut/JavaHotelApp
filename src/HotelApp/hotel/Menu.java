@@ -25,10 +25,10 @@ public class Menu {
 
 
     public Menu(){
-        ///data.writeJsonPassenger(Hotel.getPassengerList(),"passengerArchi.json5");
+        /*data.writeJsonPassenger(Hotel.getPassengerList(),"passenger.json");
         data.writeJsonAdmin(Hotel.getAdminsList(),"admin.json");
-        data.writeJsonRecepcionist(Hotel.getReceptionistsList(),"recepcionist.json");
-        Hotel.setPassengerList(data.readJsonUser("passengerArchi.json5"));
+        data.writeJsonRecepcionist(Hotel.getReceptionistsList(),"receptionist.json");*/
+        Hotel.setPassengerList(data.readJsonUser("passenger.json"));
         Hotel.showPassenger();
         printOut = System.out;
     }

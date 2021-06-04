@@ -59,17 +59,11 @@ public class DataFile  {
     {
         List<Passenger> userList=new ArrayList<>();
         ObjectMapper mapper= new ObjectMapper();
-
-
         try{
             File file =new File(nameFile);
-
-            if (!file.exists())
+            if (file.exists())
             {
-
-                Passenger passenger=mapper.readValue(file,Passenger.class);
-                passenger.toString();
-                userList.add(passenger);
+                userList=mapper.readValue(file,mapper.getTypeFactory().constructCollectionType(List.class,Passenger.class));
             }
         }catch(IOException e)
         {
