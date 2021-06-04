@@ -34,7 +34,7 @@ public class Main {
 
         //seteo pasajeros para que no sea engorroso agregar siempre si o si
 
-        Passenger pasajerito1 = new Passenger("prueba","1234hola","kiko","11111","mdp","mdp123");
+     /*   Passenger pasajerito1 = new Passenger("prueba","1234hola","kiko","11111","mdp","mdp123");
         Passenger pasajerito2 = new Passenger("test2","00012","tested","123243","mdp","mdq543");
 
         //seteo dos recepcionistas tambien . Luego los usuarios van a ser levantados desde los archivos y esto del main se elimina.
@@ -51,7 +51,7 @@ public class Main {
         Hotel.addPassenger(pasajerito2);
         Hotel.addRecepcionists(receptionist1);
         Hotel.addRecepcionists(receptionist2);
-        Hotel.addAdmin(adminPrueba);
+        Hotel.addAdmin(adminPrueba);*/
 
 
         Menu menu = new Menu();

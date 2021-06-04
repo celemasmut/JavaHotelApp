@@ -55,7 +55,7 @@ public class DataFile  {
             e.printStackTrace();
         }
     }
-    public static List <Passenger> readJsonUser(String nameFile)
+    public static List <Passenger> readPassengerJson(String nameFile)
     {
         List<Passenger> userList=new ArrayList<>();
         ObjectMapper mapper= new ObjectMapper();
@@ -69,6 +69,40 @@ public class DataFile  {
         {
             e.printStackTrace();
         }
+
         return userList;
+    }
+
+    public static List <Receptionist> readReceptionistJson(String nameFile)
+    {
+        List<Receptionist> recepList=new ArrayList<>();
+        try{
+            File file =new File(nameFile);
+            if (file.exists())
+            {
+                ObjectMapper mapper= new ObjectMapper();
+                recepList=mapper.readValue(file,mapper.getTypeFactory().constructCollectionType(List.class,Receptionist.class));
+            }
+        }catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+        return recepList;
+    }
+    public static List <Admin> readAdminJson(String nameFile)
+    {
+        List<Admin> adminList=new ArrayList<>();
+        ObjectMapper mapper= new ObjectMapper();
+        try{
+            File file =new File(nameFile);
+            if (file.exists())
+            {
+                adminList=mapper.readValue(file,mapper.getTypeFactory().constructCollectionType(List.class,Admin.class));
+            }
+        }catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+        return adminList;
     }
 }

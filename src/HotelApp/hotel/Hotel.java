@@ -223,6 +223,23 @@ public class Hotel {
         }
     }
 
+    protected static void showAdmins()
+    {
+        for (Admin admin:adminsList)
+        {
+            System.out.println(admin.toString());
+        }
+    }
+
+    protected static void showReceptionist()
+    {
+        for (Receptionist receptionist:receptionistsList)
+        {
+            System.out.println(receptionist.toString());
+        }
+    }
+
+
     /*protected static boolean existenceInTheList(User userToSearch)
     {
         for (User aux:usersList)

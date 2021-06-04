@@ -12,24 +12,26 @@ import java.time.LocalDate;
 
 import java.util.List;
 import java.util.Scanner;
-import java.util.zip.DataFormatException;
 
 import static HotelApp.hotel.Hotel.*;
 
 public class Menu {
     private PrintStream printOut;
-    private User user;
     private DataFile data= new DataFile();
 
     Scanner scan = new Scanner(System.in);
 
 
     public Menu(){
-        /*data.writeJsonPassenger(Hotel.getPassengerList(),"passenger.json");
+      /*  data.writeJsonPassenger(Hotel.getPassengerList(),"passenger.json");
         data.writeJsonAdmin(Hotel.getAdminsList(),"admin.json");
         data.writeJsonRecepcionist(Hotel.getReceptionistsList(),"receptionist.json");*/
-        Hotel.setPassengerList(data.readJsonUser("passenger.json"));
+        Hotel.setPassengerList(data.readPassengerJson("passenger.json"));
+        Hotel.setAdminsList(data.readAdminJson("admin.json"));
+        Hotel.setReceptionistsList(data.readReceptionistJson("receptionist.json"));
         Hotel.showPassenger();
+        Hotel.showAdmins();
+        Hotel.showReceptionist();
         printOut = System.out;
     }
 

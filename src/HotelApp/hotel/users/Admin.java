@@ -7,5 +7,11 @@ public class Admin extends User {
         super(loginName, password);
     }
 
+    @Override
+    public String toString() {
+        return "Admin{" +
+                "user= '" +this.getLoginName()+'\''+
+                '}';
+    }
 }
 

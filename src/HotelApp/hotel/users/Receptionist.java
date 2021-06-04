@@ -19,4 +19,12 @@ public class Receptionist extends User{
     public void setFileNumber(int fileNumber) {
         this.fileNumber = fileNumber;
     }
+
+    @Override
+    public String toString() {
+        return "Receptionist{" +
+                "user= '" +this.getLoginName() + '\''+
+                ", fileNumber= '" + fileNumber +'\''+
+                '}';
+    }
 }
