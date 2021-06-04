@@ -2,15 +2,28 @@ package HotelApp.hotel;
 
 import HotelApp.hotel.bedrooms.Room;
 import HotelApp.hotel.bedrooms.State;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+
+
 
 import java.time.LocalDate;
 import java.util.UUID;
 
 public class Reservation {
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
+    private LocalDate arrivalDay;
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
+    private LocalDate dayOfExit;
+
     private String dniPassenger;
     private Room roomToReserve;
-    private LocalDate arrivalDay;
-    private LocalDate dayOfExit;
     private MealPlan plan;
     private Status status;
 

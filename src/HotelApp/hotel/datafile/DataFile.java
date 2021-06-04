@@ -6,6 +6,7 @@ import HotelApp.hotel.users.Passenger;
 import HotelApp.hotel.users.Receptionist;
 import HotelApp.hotel.users.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,6 +24,7 @@ public class DataFile  {
                 file.createNewFile();
             }
             ObjectMapper mapper = new ObjectMapper();
+            mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS,false);
             mapper.writeValue(file,reservationList);
         }catch (IOException e){
             e.printStackTrace();

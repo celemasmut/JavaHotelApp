@@ -1,1 +1,1 @@
-[{"dniPassenger":"123243","roomToReserve":{"occupant":null,"roomNumber":2,"stateRoom":"RESERVED","numberOfBeds":1,"price":500.0,"consumed":[]},"arrivalDay"
+[{"arrivalDay":"2022-02-03","dayOfExit":"2022-02-05","dniPassenger":"123243","roomToReserve":{"occupant":null,"roomNumber":1,"stateRoom":"RESERVED","numberOfBeds":1,"price":500.0,"consumed":[]},"plan":"CP","status":"CONFIRMED"}]
