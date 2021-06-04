@@ -1,9 +1,9 @@
 package HotelApp.datafile;
-import HotelApp.model.bedrooms.Reservation;
+import HotelApp.model.reservation.Reservation;
 import HotelApp.model.bedrooms.Room;
-import HotelApp.model.bedrooms.users.Admin;
-import HotelApp.model.bedrooms.users.Passenger;
-import HotelApp.model.bedrooms.users.Receptionist;
+import HotelApp.model.users.Admin;
+import HotelApp.model.users.Passenger;
+import HotelApp.model.users.Receptionist;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 

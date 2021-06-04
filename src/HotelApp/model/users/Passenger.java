@@ -1,7 +1,7 @@
-package HotelApp.model.bedrooms.users;
+package HotelApp.model.users;
 
 
-public class Passenger extends User  {
+public class Passenger extends User {
     private String name;
     private String dni;
     private String hometown;

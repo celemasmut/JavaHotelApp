@@ -1,5 +1,6 @@
 package HotelApp.model.bedrooms;
 
+import HotelApp.util.State;
 
 public class KingRoom extends Room {
 

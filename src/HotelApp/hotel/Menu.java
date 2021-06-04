@@ -2,13 +2,14 @@ package HotelApp.hotel;
 
 import HotelApp.model.bedrooms.*;
 import HotelApp.datafile.DataFile;
-import HotelApp.model.bedrooms.ProductToConsume;
-import HotelApp.model.bedrooms.Reservation;
-import HotelApp.model.bedrooms.State;
-import HotelApp.model.bedrooms.users.Admin;
-import HotelApp.model.bedrooms.users.Passenger;
-import HotelApp.model.bedrooms.users.Receptionist;
-import HotelApp.model.bedrooms.users.User;
+import HotelApp.util.ProductToConsume;
+import HotelApp.model.reservation.Reservation;
+import HotelApp.util.ProductToConsume;
+import HotelApp.util.State;
+import HotelApp.model.users.Admin;
+import HotelApp.model.users.Passenger;
+import HotelApp.model.users.Receptionist;
+import HotelApp.model.users.User;
 import HotelApp.util.MealPlan;
 import HotelApp.util.Status;
 
@@ -30,10 +31,10 @@ public class Menu {
       /*  DataFile.writeJsonPassenger(Hotel.getPassengerList(),"passenger.json");
         DataFile.writeJsonAdmin(Hotel.getAdminsList(),"admin.json");
         DataFile.writeJsonRecepcionist(Hotel.getReceptionistsList(),"receptionist.json");*/
-        setPassengerList(DataFile.readPassengerJson("passenger.json"));
-        setAdminsList(DataFile.readAdminJson("admin.json"));
-        setReceptionistsList(DataFile.readReceptionistJson("receptionist.json"));
-        setRoomsList(DataFile.readRoomJson("room.json"));
+        setPassengerList(DataFile.readPassengerJson("files/passenger.json"));
+        setAdminsList(DataFile.readAdminJson("files/admin.json"));
+        setReceptionistsList(DataFile.readReceptionistJson("files/receptionist.json"));
+        setRoomsList(DataFile.readRoomJson("files/room.json"));
         showPassenger();
         showAdmins();
         showReceptionist();

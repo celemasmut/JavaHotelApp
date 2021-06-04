@@ -1,4 +1,4 @@
-package HotelApp.model.bedrooms;
+package HotelApp.model.reservation;
 
 import HotelApp.model.bedrooms.Room;
 import HotelApp.util.LocalDateDeserializer;

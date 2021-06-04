@@ -1,4 +1,4 @@
-package HotelApp.model.bedrooms;
+package HotelApp.util;
 
 public enum ProductToConsume {
     MINIBAR(5000),

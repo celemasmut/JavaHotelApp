@@ -1,4 +1,4 @@
-package HotelApp.model.bedrooms.users;
+package HotelApp.model.users;
 
 
 public class Admin extends User {

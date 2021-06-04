@@ -1,4 +1,4 @@
-package HotelApp.model.bedrooms.users;
+package HotelApp.model.users;
 
 import java.util.Objects;
 
