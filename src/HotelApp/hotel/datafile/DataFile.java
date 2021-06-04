@@ -1,0 +1,80 @@
+package HotelApp.hotel.datafile;
+import HotelApp.hotel.users.Admin;
+import HotelApp.hotel.users.Passenger;
+import HotelApp.hotel.users.Receptionist;
+import HotelApp.hotel.users.User;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class DataFile  {
+    public DataFile() {
+    }
+
+    public static void writeJsonPassenger(List<Passenger> user, String fileName)
+    {
+        try{
+            File file = new File(fileName);
+            if(!file.exists()){
+                file.createNewFile();
+            }
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.writeValue(file,user);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+    public static void writeJsonRecepcionist(List<Receptionist> user,String fileName)
+    {
+        try{
+            File file = new File(fileName);
+            if(!file.exists()){
+                file.createNewFile();
+            }
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.writeValue(file,user);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void writeJsonAdmin(List<Admin> user,String fileName)
+    {
+        try{
+            File file = new File(fileName);
+            if(!file.exists()){
+                file.createNewFile();
+            }
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.writeValue(file,user);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public static List <Passenger> readJsonUser(String nameFile)
+    {
+        List<Passenger> userList=new ArrayList<>();
+        ObjectMapper mapper= new ObjectMapper();
+
+
+        try{
+            File file =new File(nameFile);
+
+            if (!file.exists())
+            {
+
+                Passenger passenger=mapper.readValue(file,Passenger.class);
+                passenger.toString();
+                userList.add(passenger);
+            }
+        }catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+        return userList;
+    }
+}

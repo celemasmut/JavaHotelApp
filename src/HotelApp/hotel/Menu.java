@@ -1,6 +1,7 @@
 package HotelApp.hotel;
 
 import HotelApp.hotel.bedrooms.*;
+import HotelApp.hotel.datafile.DataFile;
 import HotelApp.hotel.users.Admin;
 import HotelApp.hotel.users.Passenger;
 import HotelApp.hotel.users.Receptionist;
@@ -11,19 +12,25 @@ import java.time.LocalDate;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.zip.DataFormatException;
 
 import static HotelApp.hotel.Hotel.*;
 
 public class Menu {
     private PrintStream printOut;
     private User user;
+    private DataFile data= new DataFile();
 
     Scanner scan = new Scanner(System.in);
 
 
     public Menu(){
+        ///data.writeJsonPassenger(Hotel.getPassengerList(),"passengerArchi.json5");
+        data.writeJsonAdmin(Hotel.getAdminsList(),"admin.json");
+        data.writeJsonRecepcionist(Hotel.getReceptionistsList(),"recepcionist.json");
+        Hotel.setPassengerList(data.readJsonUser("passengerArchi.json5"));
+        Hotel.showPassenger();
         printOut = System.out;
-        user = null;
     }
 
     private void showFirstMenu(){

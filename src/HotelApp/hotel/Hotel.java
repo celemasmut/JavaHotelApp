@@ -14,6 +14,9 @@ import java.util.List;
 
 public class Hotel {
     private static List <User> usersList;;
+    private static List <Passenger> passengerList;;
+    private static List <Receptionist> receptionistsList;
+    private static List <Admin> adminsList;
     private static List <Room> roomsList;
     private static List<Reservation> reservationsList;
 
@@ -21,6 +24,9 @@ public class Hotel {
         this.usersList = new ArrayList<>();
         this.roomsList = new ArrayList<>();
         this.reservationsList = new ArrayList<>();
+        this.passengerList= new ArrayList<>();
+        this.adminsList = new ArrayList<>();
+        this.receptionistsList=new ArrayList<>();
     }
 
     public static List<User> getUsersList() {
@@ -43,13 +49,60 @@ public class Hotel {
         roomsList.add(room);
     }
 
+    public static void setUsersList(List<User> usersList) {
+        Hotel.usersList = usersList;
+    }
 
-// esto sera por ahora publico solo por que no tenemos los archivos para levantarlos. luego sera protected.
+    public static List<Passenger> getPassengerList() {
+        return passengerList;
+    }
+
+    public static void setPassengerList(List<Passenger> passengerList) {
+        Hotel.passengerList = passengerList;
+    }
+
+    public static List<Receptionist> getReceptionistsList() {
+        return receptionistsList;
+    }
+
+    public static void setReceptionistsList(List<Receptionist> receptionistsList) {
+        Hotel.receptionistsList = receptionistsList;
+    }
+
+    public static List<Admin> getAdminsList() {
+        return adminsList;
+    }
+
+    public static void setAdminsList(List<Admin> adminsList) {
+        Hotel.adminsList = adminsList;
+    }
+
+    public static void setRoomsList(List<Room> roomsList) {
+        Hotel.roomsList = roomsList;
+    }
+
+    public static void setReservationsList(List<Reservation> reservationsList) {
+        Hotel.reservationsList = reservationsList;
+    }
+
+    // esto sera por ahora publico solo por que no tenemos los archivos para levantarlos. luego sera protected.
     public static boolean addUserToList (User userToAdd){
         usersList.add(userToAdd);
         return true;
     }
+    public static boolean addPassenger (Passenger passengerToAdd)
+    {
+        return passengerList.add(passengerToAdd);
 
+    }
+    public static boolean addAdmin(Admin adminToAdd)
+    {
+        return adminsList.add(adminToAdd);
+    }
+    public static boolean addRecepcionists (Receptionist receptionistToAdd)
+    {
+        return receptionistsList.add(receptionistToAdd);
+    }
     protected static boolean changeStateOfRoom(Passenger passengerToRoom,Room roomToReserve, State state)
     {
         int posInList;
@@ -161,6 +214,13 @@ public class Hotel {
             }
         }
         return null;
+    }
+    protected static void showPassenger()
+    {
+        for (Passenger passenger:passengerList)
+        {
+            passenger.toString();
+        }
     }
 
     /*protected static boolean existenceInTheList(User userToSearch)

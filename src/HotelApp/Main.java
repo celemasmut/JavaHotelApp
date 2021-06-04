@@ -47,11 +47,11 @@ public class Main {
 
         //ahora agrego a la lista
 
-        Hotel.addUserToList(pasajerito1);
-        Hotel.addUserToList(pasajerito2);
-        Hotel.addUserToList(receptionist1);
-        Hotel.addUserToList(receptionist2);
-        Hotel.addUserToList(adminPrueba);
+        Hotel.addPassenger(pasajerito1);
+        Hotel.addPassenger(pasajerito2);
+        Hotel.addRecepcionists(receptionist1);
+        Hotel.addRecepcionists(receptionist2);
+        Hotel.addAdmin(adminPrueba);
 
 
         Menu menu = new Menu();

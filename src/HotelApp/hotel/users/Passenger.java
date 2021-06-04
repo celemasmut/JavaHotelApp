@@ -7,6 +7,10 @@ public class Passenger extends User  {
     private String hometown;
     private String homeAddress;
 
+    public Passenger(){
+        super();
+    }
+
     public Passenger(String loginName, String password, String name, String dni, String hometown, String homeAddress) {
         super(loginName, password);
         this.name = name;
