@@ -1,5 +1,6 @@
 package HotelApp.hotel;
 
+import HotelApp.datafile.DataFile;
 import HotelApp.datafile.SaveInfoUsers;
 import HotelApp.model.bedrooms.*;
 import HotelApp.model.reservation.Reservation;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import static HotelApp.datafile.DataFile.readInfo;
+import static HotelApp.datafile.DataFile.writeInfo;
 import static HotelApp.hotel.Hotel.*;
 
 public class Menu {
@@ -28,17 +30,8 @@ public class Menu {
 
     public Menu(){
         SaveInfoUsers saveinfo = new SaveInfoUsers();
-      /*  DataFile.writeJsonPassenger(Hotel.getPassengerList(),"passenger.json");
-        DataFile.writeJsonAdmin(Hotel.getAdminsList(),"admin.json");
-        DataFile.writeJsonRecepcionist(Hotel.getReceptionistsList(),"receptionist.json");*/
-        /*setPassengerList(DataFile.readPassengerJson("files/passenger.json"));
-        setAdminsList(DataFile.readAdminJson("files/admin.json"));
-        setReceptionistsList(DataFile.readReceptionistJson("files/receptionist.json"));
-        setRoomsList(DataFile.readRoomJson("files/room.json"));*/
-        /*saveinfo.addAdmins(getAdminsList());
-        saveinfo.addPassenger(getPassengerList());
-        saveinfo.addRecepcionist(getReceptionistsList());
-        writeInfo(saveinfo,"files/users.json");*/
+        setRoomsList(DataFile.readRoomJson("files/room.json"));
+        writeInfo(saveinfo,"files/users.json");
         saveinfo=readInfo("files/users.json");
         addToList(saveinfo);
         /*showPassenger();
