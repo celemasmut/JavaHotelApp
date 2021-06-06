@@ -1,7 +1,5 @@
 package HotelApp.hotel;
 
-import HotelApp.hotel.Hotel;
-import HotelApp.hotel.Menu;
 import HotelApp.datafile.DataFile;
 
 public class Main {
@@ -49,7 +47,7 @@ public class Main {
         Hotel.addRecepcionists(receptionist2);
         Hotel.addAdmin(adminPrueba);*/
 
-        hotelPrueba.setRoomsList(DataFile.readRoomJson("files/room.json"));
+        ///hotelPrueba.setRoomsList(DataFile.readRoomJson("files/room.json"));
 
         Menu menu = new Menu();
         menu.initiate();

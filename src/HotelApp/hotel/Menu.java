@@ -1,24 +1,23 @@
 package HotelApp.hotel;
 
+import HotelApp.datafile.SaveInfoUsers;
 import HotelApp.model.bedrooms.*;
-import HotelApp.datafile.DataFile;
-import HotelApp.util.ProductToConsume;
 import HotelApp.model.reservation.Reservation;
-import HotelApp.util.ProductToConsume;
-import HotelApp.util.State;
 import HotelApp.model.users.Admin;
 import HotelApp.model.users.Passenger;
 import HotelApp.model.users.Receptionist;
 import HotelApp.model.users.User;
 import HotelApp.util.MealPlan;
+import HotelApp.util.ProductToConsume;
+import HotelApp.util.State;
 import HotelApp.util.Status;
 
 import java.io.PrintStream;
 import java.time.LocalDate;
-
 import java.util.List;
 import java.util.Scanner;
 
+import static HotelApp.datafile.DataFile.readInfo;
 import static HotelApp.hotel.Hotel.*;
 
 public class Menu {
@@ -28,17 +27,25 @@ public class Menu {
 
 
     public Menu(){
+        SaveInfoUsers saveinfo = new SaveInfoUsers();
       /*  DataFile.writeJsonPassenger(Hotel.getPassengerList(),"passenger.json");
         DataFile.writeJsonAdmin(Hotel.getAdminsList(),"admin.json");
         DataFile.writeJsonRecepcionist(Hotel.getReceptionistsList(),"receptionist.json");*/
-        setPassengerList(DataFile.readPassengerJson("files/passenger.json"));
+        /*setPassengerList(DataFile.readPassengerJson("files/passenger.json"));
         setAdminsList(DataFile.readAdminJson("files/admin.json"));
         setReceptionistsList(DataFile.readReceptionistJson("files/receptionist.json"));
-        setRoomsList(DataFile.readRoomJson("files/room.json"));
+        setRoomsList(DataFile.readRoomJson("files/room.json"));*/
+        /*saveinfo.addAdmins(getAdminsList());
+        saveinfo.addPassenger(getPassengerList());
+        saveinfo.addRecepcionist(getReceptionistsList());
+        writeInfo(saveinfo,"files/users.json");*/
+        saveinfo=readInfo("files/users.json");
+        addToList(saveinfo.getListAdmin(),saveinfo.getListRecepcionist(),saveinfo.getListPassenger());
         showPassenger();
         showAdmins();
         showReceptionist();
-        showListOfRoom();
+        ///showUsers();
+        //showListOfRoom();
         printOut = System.out;
     }
 
@@ -176,20 +183,11 @@ public class Menu {
         userName=scan.nextLine();
         printOut.println("Insert password:");
         password=scan.nextLine();
-        for (Passenger aux: getPassengerList()) {
-            if (userName.equals(aux.getLoginName()) && password.equals(aux.getPassword())) {
-                return aux;
-            }
+        for (User aux: getUserList()) {
+        if (userName.equals(aux.getLoginName()) && password.equals(aux.getPassword()))
+        {
+            return aux;
         }
-        for(Receptionist aux : getReceptionistsList()) {
-            if (userName.equals(aux.getLoginName()) && password.equals(aux.getPassword())) {
-                return aux;
-            }
-        }
-        for(Admin aux : getAdminsList()) {
-            if (userName.equals(aux.getLoginName()) && password.equals(aux.getPassword())) {
-                return aux;
-            }
         }
         return null;
     }

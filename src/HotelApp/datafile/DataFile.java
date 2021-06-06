@@ -1,6 +1,7 @@
 package HotelApp.datafile;
-import HotelApp.model.reservation.Reservation;
+
 import HotelApp.model.bedrooms.Room;
+import HotelApp.model.reservation.Reservation;
 import HotelApp.model.users.Admin;
 import HotelApp.model.users.Passenger;
 import HotelApp.model.users.Receptionist;
@@ -164,4 +165,34 @@ public class DataFile  {
         }
         return adminList;
     }
+    public static void writeInfo (SaveInfoUsers infoToSave, String fileName)
+    {
+        try{
+            File file = new File((fileName));
+            if(!file.exists()){
+                file.createNewFile();
+            }
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.writeValue(file,infoToSave);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+    public static SaveInfoUsers readInfo(String fileName)
+    {
+        SaveInfoUsers infoToRead = new SaveInfoUsers();
+        ObjectMapper mapper= new ObjectMapper();
+        try
+        {
+            File file =new File(fileName);
+            if (file.exists())
+            {
+                infoToRead=mapper.readValue(file,SaveInfoUsers.class);
+            }
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+        return infoToRead;
+    }
 }
+
