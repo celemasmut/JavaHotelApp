@@ -1,5 +1,6 @@
 package HotelApp.hotel;
 
+import HotelApp.datafile.SaveInfoUsers;
 import HotelApp.model.bedrooms.Room;
 import HotelApp.model.reservation.Reservation;
 import HotelApp.model.users.Admin;
@@ -14,18 +15,12 @@ import java.util.List;
 
 public class Hotel {
     private static List <User> userList;
-    private static List <Passenger> passengerList;;
-    private static List <Receptionist> receptionistsList;
-    private static List <Admin> adminsList;
     private static List <Room> roomsList;
     private static List<Reservation> reservationsList;
 
     public Hotel() {
         this.roomsList = new ArrayList<>();
         this.reservationsList = new ArrayList<>();
-        this.passengerList= new ArrayList<>();
-        this.adminsList = new ArrayList<>();
-        this.receptionistsList=new ArrayList<>();
         this.userList=new ArrayList<>();
     }
 
@@ -45,33 +40,11 @@ public class Hotel {
         roomsList.add(room);
     }
 
-    public static List<Passenger> getPassengerList() {
-        return passengerList;
-    }
-
-    public static void setPassengerList(List<Passenger> passengerList) {
-        Hotel.passengerList = passengerList;
-    }
-
-    public static List<Receptionist> getReceptionistsList() {
-        return receptionistsList;
-    }
-
-    public static void setReceptionistsList(List<Receptionist> receptionistsList) {
-        Hotel.receptionistsList = receptionistsList;
-    }
-
-    public static List<Admin> getAdminsList() {
-        return adminsList;
-    }
 
     public static List<User> getUserList() {
         return userList;
     }
 
-    public static void setAdminsList(List<Admin> adminsList) {
-        Hotel.adminsList = adminsList;
-    }
 
     public static void setRoomsList(List<Room> roomsList) {
         Hotel.roomsList = roomsList;
@@ -83,19 +56,19 @@ public class Hotel {
 
     public static boolean addPassenger (Passenger passengerToAdd)
     {
-        userList.add(passengerToAdd);
-        return passengerList.add(passengerToAdd);
+
+        return userList.add(passengerToAdd);
 
     }
     public static boolean addAdmin(Admin adminToAdd)
     {
-        userList.add(adminToAdd);
-        return adminsList.add(adminToAdd);
+
+        return userList.add(adminToAdd);
     }
     public static boolean addRecepcionists (Receptionist receptionistToAdd)
     {
-        userList.add(receptionistToAdd);
-        return receptionistsList.add(receptionistToAdd);
+
+        return userList.add(receptionistToAdd);
     }
     protected static boolean changeStateOfRoom(Passenger passengerToRoom,Room roomToReserve, State state)
     {
@@ -113,11 +86,15 @@ public class Hotel {
 
     protected static Passenger searchPassengerInList (String dni)
     {
-       return (passengerList
-               .stream()
-               .filter(passenger -> passenger.getDni().equals(dni))
-               .findFirst()
-               .get());
+       for (User userAux:userList)
+       {
+           if (userAux instanceof Passenger)
+           {
+               if (((Passenger) userAux).getDni().equals(dni))
+                   return (Passenger) userAux;
+           }
+       }
+       return null;
     }
     protected static Reservation searchReservation (String dniPassenger)
     {
@@ -201,29 +178,7 @@ public class Hotel {
         }
         return null;
     }
-    protected static void showPassenger()
-    {
-        for (Passenger passenger:passengerList)
-        {
-            System.out.println(passenger.toString());
-        }
-    }
 
-    protected static void showAdmins()
-    {
-        for (Admin admin:adminsList)
-        {
-            System.out.println(admin.toString());
-        }
-    }
-
-    protected static void showReceptionist()
-    {
-        for (Receptionist receptionist:receptionistsList)
-        {
-            System.out.println(receptionist.toString());
-        }
-    }
     protected static void showUsers()
     {
         for (User receptionist:userList)
@@ -231,22 +186,22 @@ public class Hotel {
             System.out.println(receptionist.toString());
         }
     }
-    protected  static void addToList(List<Admin> adminNewList,List<Receptionist> receptionistsNewList,List<Passenger> passengerNewList)
+    protected  static void addToList(SaveInfoUsers infoToAdd)
     {
-        for (Admin adminToAdd:adminNewList)
+        for (Admin adminToAdd:infoToAdd.getListAdmin())
         {
             userList.add(adminToAdd);
-            adminsList.add(adminToAdd);
+
         }
-        for (Passenger passengerToAdd:passengerNewList)
+        for (Passenger passengerToAdd:infoToAdd.getListPassenger())
         {
             userList.add(passengerToAdd);
-            passengerList.add(passengerToAdd);
+
         }
-        for (Receptionist receptionistToAdd:receptionistsNewList)
+        for (Receptionist receptionistToAdd:infoToAdd.getListRecepcionist())
         {
             userList.add(receptionistToAdd);
-            receptionistsList.add(receptionistToAdd);
+
         }
     }
 

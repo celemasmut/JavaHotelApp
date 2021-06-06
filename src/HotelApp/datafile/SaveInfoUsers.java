@@ -3,6 +3,7 @@ package HotelApp.datafile;
 import HotelApp.model.users.Admin;
 import HotelApp.model.users.Passenger;
 import HotelApp.model.users.Receptionist;
+import HotelApp.model.users.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,25 +43,23 @@ public class SaveInfoUsers {
         this.listRecepcionist = listRecepcionist;
     }
 
-    public void addAdmins(List<Admin> usersToAdd)
+    public void addUsers(List<User> usersToAdd)
     {
-        for (Admin user:usersToAdd)
+        for (User userAux:usersToAdd)
         {
-            listAdmin.add(user);
+            if (userAux instanceof Admin)
+            {
+                listAdmin.add((Admin) userAux);
+            }
+            else if (userAux instanceof Passenger)
+            {
+                listPassenger.add((Passenger) userAux);
+            }
+            if (userAux instanceof Receptionist)
+            {
+                listRecepcionist.add((Receptionist) userAux);
+            }
         }
     }
-    public void addPassenger(List<Passenger> usersToAdd)
-    {
-        for (Passenger user:usersToAdd)
-        {
-            listPassenger.add(user);
-        }
-    }
-    public void addRecepcionist(List<Receptionist> usersToAdd)
-    {
-        for (Receptionist user:usersToAdd)
-        {
-            listRecepcionist.add(user);
-        }
-    }
+
 }

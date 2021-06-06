@@ -40,10 +40,10 @@ public class Menu {
         saveinfo.addRecepcionist(getReceptionistsList());
         writeInfo(saveinfo,"files/users.json");*/
         saveinfo=readInfo("files/users.json");
-        addToList(saveinfo.getListAdmin(),saveinfo.getListRecepcionist(),saveinfo.getListPassenger());
-        showPassenger();
+        addToList(saveinfo);
+        /*showPassenger();
         showAdmins();
-        showReceptionist();
+        showReceptionist();*/
         ///showUsers();
         //showListOfRoom();
         printOut = System.out;
@@ -77,10 +77,13 @@ public class Menu {
     }
 
     private boolean validatePassengerDni(String dni) {
-        if (Hotel.getPassengerList().size() > 0) {
-            for (Passenger user : Hotel.getPassengerList()) {
-                if (user.getDni().equals(dni)) {
+        if (Hotel.getUserList().size() > 0) {
+            for (User user : Hotel.getUserList()) {
+                if (user instanceof Passenger)
+                {
+                if (((Passenger) user).getDni().equals(dni)) {
                     return true;
+                }
                 }
             }
         }
@@ -136,13 +139,16 @@ public class Menu {
     }
 
     public boolean validateRecepcionist(int fileNumber){
-        if(Hotel.getReceptionistsList().size() > 0 ){
-            for (Receptionist user : Hotel.getReceptionistsList()){
-                    if(user.getFileNumber()==(fileNumber)) {
+        if(Hotel.getUserList().size() > 0 ){
+            for (User user : Hotel.getUserList()){
+                if (user instanceof Receptionist)
+                {
+                    if(((Receptionist) user).getFileNumber()==(fileNumber)) {
                         System.out.println("true");
                         return true;
                     }
                 }
+            }
             }
         return false;
     }
