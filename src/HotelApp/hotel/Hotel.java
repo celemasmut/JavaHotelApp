@@ -185,39 +185,5 @@ public class Hotel {
 
     }
 
-    /*@Override
-    public boolean addToList(User userToAdd) {
-        return userList.add(userToAdd);
-    }
-
-    @Override
-    public boolean deleteFromList(User user) {
-        return userList.remove(user);
-    }
-
-    @Override
-    public int searchInList(String name) {
-        for (User userAux : userList) {
-            if (name.equals(userAux.getLoginName())) {
-                return userList.indexOf(userAux);
-            }
-        }
-        return -1;
-    }
-
-    @Override
-    public void showList(List<User> listUsers) {
-        for (User userAux : listUsers) {
-            if (userAux instanceof Admin) {
-                userAux.toString();
-            } else if (userAux instanceof Passenger) {
-                userAux.toString();
-            }
-            if (userAux instanceof Receptionist) {
-                userAux.toString();
-            }
-        }
-    }*/
-
 
 }

@@ -14,7 +14,9 @@ import HotelApp.util.State;
 import HotelApp.util.Status;
 
 import java.io.PrintStream;
+import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -43,18 +45,36 @@ public class Menu {
         printOut = System.out;
     }
 
-    private void showFirstMenu(){
+    private int toCaptureInt(int options){
+        int input =-1;
+        do{
+            try{
+                input= scan.nextInt();
+                if(input <= 0 || input > options){
+                    printOut.println("Wrong option");
+                    input=-1;
+                }
+            }catch (InputMismatchException e){
+                printOut.println("Insert an optional number");
+                scan.next();
+                input=-1;
+            }
+        }while (input == -1);
+        return input;
+    }
+
+    private int showFirstMenu(){
         printOut.println("1- Register");
         printOut.println("2- Login");
         printOut.println("3- Leave");
+        return 3;
     }
 
 
     public void initiate(){
         int op;
         do{
-            showFirstMenu();
-            op= scan.nextInt();
+            op= toCaptureInt(showFirstMenu());
             switch (op){
                 case 1:
                     register();
@@ -149,18 +169,19 @@ public class Menu {
 
 
 
-    private void showLoginMenu(){
+    private int showLoginMenu(){
         printOut.println("1- Passenger");
         printOut.println("2- Receptionist");
         printOut.println("3- Admin");
         printOut.println("4- Exit");
+        return 4;
     }
 
     private void login(){
         User userToLogin=userLogin();
         if (userToLogin instanceof Passenger)
         {
-            passenger(((Passenger) userToLogin).getDni());
+            passenger((Passenger) userToLogin);
         }else if (userToLogin instanceof Receptionist)
         {
             receptionist();
@@ -174,8 +195,6 @@ public class Menu {
 
     private User userLogin ()
     {
-        String exist=null;
-        Scanner scan = new Scanner (System.in);
         String userName;
         String password;
 
@@ -192,32 +211,33 @@ public class Menu {
         return null;
     }
 
-    private void passengerMenu(){
+    private int passengerMenu(){
         printOut.println("1 - To book a room");
         printOut.println("2 - See all your reservations");
         printOut.println("3 - Check a reservation");
+        return 3;
     }
 
 
 
 
-    private void passenger(String dniUser){
-        if(dniUser!=null) {
+    private void passenger(Passenger passenger){
+        if(passenger!=null) {
             boolean exit = false;
             do{
                 passengerMenu();
                 int op = scan.nextInt();
                 switch (op){
                     case 1:
-                        toBookARoom(dniUser);
+                        toBookARoom(passenger.getDni());
                         break;
                     case 2:
-                        Hotel.getPassengerReservations(dniUser).forEach(ob -> printOut.println(ob.toString()));
+                        Hotel.getPassengerReservations(passenger.getDni()).forEach(ob -> printOut.println(ob.toString()));
                         break;
                     case 3:
-                        if(Hotel.getPassengerReservations(dniUser).size() > 0) {
+                        if(Hotel.getPassengerReservations(passenger.getDni()).size() > 0) {
                             Status status = chooseStatusReservation(showStatusReservation());
-                            Reservation reservationChosen = checkStatusReservation(dniUser,status);
+                            Reservation reservationChosen = checkStatusReservation(passenger.getDni(),status);
                             if(reservationChosen != null && reservationChosen.getStatus() != Status.CANCELLED) {
                                 printOut.println(reservationChosen.toString());
                                 reservationChosenMenu(reservationChosen);
@@ -246,17 +266,17 @@ public class Menu {
         }
     }
 
-    private void showMealPlan(){
+    private int showMealPlan(){
         int i=1;
         for(MealPlan mealPlan : MealPlan.values()){
             printOut.println(i +" - " + mealPlan +" " + mealPlan.getDescription());
             i++;
         }
+        return i;
     }
 
     private MealPlan chooseMealPlan(){
-        showMealPlan();
-        int op= scan.nextInt();
+        int op= toCaptureInt(showMealPlan());
         scan.nextLine();
         int i=1;
         for(MealPlan plan : MealPlan.values()){
@@ -270,26 +290,72 @@ public class Menu {
 
     private LocalDate chooseArrivalDate(){
         printOut.println("Choose the arrival date yyyy/MM/dd");
-        printOut.println("Year : ");
-        int year = scan.nextInt();
-
-        printOut.println("Month : ");
-        int month = scan.nextInt();
-
-        printOut.println("Day : ");
-        int day = scan.nextInt();
-
+        int month=0;
+        int year=0;
+        int day=0;
+        boolean flag= true;
+        do {
+            printOut.println("Year : ");
+            try {
+                year = scan.nextInt();
+                if (year < 2021 || year > 2024) {
+                    printOut.println("not acceptable year");
+                    flag = false;
+                }
+            } catch (InputMismatchException e) {
+                year = 0;
+            }
+            if (flag) {
+                try {
+                    printOut.println("Month : ");
+                    month = scan.nextInt();
+                    if (month < 1 || month > 12) {
+                        printOut.println("not acceptable month");
+                        flag = false;
+                    }
+                } catch (InputMismatchException e) {
+                    month = 0;
+                }
+                if (flag) {
+                    try {
+                        printOut.println("Day : ");
+                        day = scan.nextInt();
+                        if (day < 1 || day > 30) {
+                            printOut.println("not acceptable day");
+                            flag = false;
+                        }
+                    } catch (InputMismatchException e) {
+                        month = 0;
+                    }
+                }
+            }
+        }while (!flag);
 
         return LocalDate.of(year,month,day);
     }
 
     private int setDaysOfStay(){
         printOut.println("Days of Stay:");
-        return scan.nextInt();
+        int days=0;
+        try{
+            days=scan.nextInt();
+            if(days < 1 || days > 30){
+                printOut.println("not acceptable count of day");
+            }
+        }catch (InputMismatchException e){
+            days=0;
+        }
+        return days;
     }
 
     private LocalDate setDayOfExit(LocalDate arrival,int daysOfStay){
-        return arrival.plusDays(daysOfStay);
+        LocalDate exitDay= null;
+        try {
+            exitDay = arrival.plusDays(daysOfStay);
+        }catch (DateTimeException e){
+
+        }
+        return exitDay;
     }
 
     private Reservation toReserveRoom( LocalDate arrival,LocalDate exit,int roomNumberChoosed,MealPlan plan,String dniUser){
@@ -306,7 +372,7 @@ public class Menu {
         printOut.println(reserv.toString());
         printOut.println(" Is a total of $"+reserv.totalPriceReservation(dayOfStay));
         printOut.println("Confirm pay : \n 1-Confirm \n 2-No Confirm");
-        int confirm = scan.nextInt();
+        int confirm = toCaptureInt(2);
         if(confirm == 1){
             reserv.getRoomToReserve().setStateRoom(State.RESERVED);
             reserv.setStatus(Status.CONFIRMED);
@@ -321,34 +387,34 @@ public class Menu {
         }
     }
 
-    private void showTypeOfRooms(){
+    private int showTypeOfRooms(){
         printOut.println("Insert number of type Room:");
         printOut.println("1_ Single Room");
         printOut.println("2_ Double Room");
         printOut.println("3_ Family Room");
         printOut.println("4_ King Room");
+        return 4;
     }
 
-    private boolean showReservationByStatus(List<Reservation> statusTypeReservation){
+    private int showReservationByStatus(List<Reservation> statusTypeReservation){
+        int i=0;
         if(statusTypeReservation.size() > 0) {
             printOut.println(" Your reservations");
-            int i = 1;
+            i = 1;
             for (Reservation reserv : statusTypeReservation) {
 
                 printOut.println(i + " - " + reserv.toString());
                 i++;
             }
-            return true;
         }
-        return false;
+        return i;
     }
 
     private void toBookARoom(String dniUser){
         int optionOfRoom=0;
         int dayOfStay = setDaysOfStay();
         LocalDate arrival = chooseArrivalDate();
-        showTypeOfRooms();
-        optionOfRoom=scan.nextInt();
+        optionOfRoom=toCaptureInt(showTypeOfRooms());
         seeRoomFree(optionOfRoom);
         printOut.println("Insert number of room you want to book ");
         int room = scan.nextInt();
@@ -360,7 +426,7 @@ public class Menu {
     private void confirmCancellation(Reservation reservationChosen){
         if(reservationChosen.getStatus().equals(Status.CONFIRMED)) {
             printOut.println("Confirm to cancel reservation ? \n 1- yes \n 2- No");
-            int i = scan.nextInt();
+            int i = toCaptureInt(2);
             if (i == 1) {
                 if (toCancelReservation(reservationChosen)) {
                     printOut.println("Reservation canceled");
@@ -373,9 +439,10 @@ public class Menu {
 
 
     private Reservation checkStatusReservation(String dniUser, Status status){
-        if(showReservationByStatus(Hotel.getStatusReservations(Hotel.getPassengerReservations(dniUser),status))) {
+        int cant = showReservationByStatus(Hotel.getStatusReservations(Hotel.getPassengerReservations(dniUser),status));
+        if(cant > 0) {
             printOut.println("Choose the reservation you want to check");
-            int index = scan.nextInt();
+            int index = toCaptureInt(cant);
             return Hotel.getStatusReservations(Hotel.getPassengerReservations(dniUser), status).get(index - 1);
 
         }
@@ -390,7 +457,7 @@ public class Menu {
             printOut.println(i+" -"+status);
             i++;
         }
-        int x = scan.nextInt();
+        int x = toCaptureInt(i);
         return x;
     }
     private Status chooseStatusReservation(int pos){
@@ -406,18 +473,19 @@ public class Menu {
     }
 
 
-    private void showProductToConsume(){
+    private int showProductToConsume(){
         int i=1;
         for(ProductToConsume prod : ProductToConsume.values()){
             printOut.println(i +"-"+prod + " price: $"+ prod.getPrice());
             i++;
         }
+        return i;
     }
 
     private int chooseAnItemProduct() {
-        showProductToConsume();
+        int cant = showProductToConsume();
         printOut.println("Choose item ");
-        int op = scan.nextInt();
+        int op = toCaptureInt(cant);
         return op;
     }
     private void addAnItemToList(Reservation actualReservation,int index){
@@ -432,10 +500,11 @@ public class Menu {
         }
     }
 
-    private void showReservationChosenMenu(){
+    private int showReservationChosenMenu(){
         printOut.println("1 - Cancel a reservation");
         printOut.println("2 - Add an order");
         printOut.println("3 - Check your consumptions");
+        return  3;
     }
     private void checkPassengerConsumptions(Reservation reservationChosen){
         if(reservationChosen.getRoomToReserve().getConsumed().size() > 0) {
@@ -452,8 +521,7 @@ public class Menu {
         if(reservationChosen != null){
             boolean exit = false;
             do{
-                showReservationChosenMenu();
-                int op = scan.nextInt();
+                int op = toCaptureInt(showReservationChosenMenu());
                 switch (op) {
                     case 1:
                         confirmCancellation(reservationChosen);
@@ -475,19 +543,14 @@ public class Menu {
      }
 
 
-    private LocalDate chooseDate(){
-
-        return LocalDate.now();
-    }
-
-
-    private void showRecepcionistMenu()
+    private int showRecepcionistMenu()
     {
         printOut.println("1_Check in");
         printOut.println("2_Check out");
         printOut.println("3_Show consumition of room");
         printOut.println("4_Reservation");
         printOut.println("5_Exit");
+        return 5;
     }
     private void receptionist(){
         boolean exit=false;
@@ -496,8 +559,7 @@ public class Menu {
         int roomNumber;
         while (!exit)
         {
-            showRecepcionistMenu();
-            option=scan.nextInt();
+            option=toCaptureInt(showRecepcionistMenu());
             switch (option)
             {
                 case 1:
@@ -511,9 +573,15 @@ public class Menu {
                 case 3:
                     printOut.println("Enter room number:");
                     scan.nextLine();
-                    roomNumber=scan.nextInt();
-                    showConsumeOfRoom(roomNumber);
-                    break;
+                    do {
+                        try {
+                            roomNumber = scan.nextInt();
+                            showConsumeOfRoom(roomNumber);
+                            break;
+                        } catch (InputMismatchException e) {
+                            roomNumber = 0;
+                        }
+                    }while (roomNumber == 0);
                 case 4:
                     printOut.println("Enter DNI of passenger:");
                     scan.nextLine();
@@ -544,17 +612,22 @@ public class Menu {
         String dniUser;
         boolean result;
         printOut.println("wants to make the entry of a passenger. Enter 1 or if you want to enter a reservation enter 2");
-        option=scan.nextInt();
+        option=toCaptureInt(2);
         if (option==1)
         {
             dniUser=register();
             int dayOfStay = setDaysOfStay();
             LocalDate arrival = LocalDate.now();
-            showTypeOfRooms();
-            optionOfRoom=scan.nextInt();
+            optionOfRoom=toCaptureInt(showTypeOfRooms());
             seeRoomFree(optionOfRoom);
             printOut.println("Insert number of room you want to reserve ");
-            numberOfRoom =scan.nextInt();
+            do {
+                try {
+                    numberOfRoom = scan.nextInt();
+                } catch (InputMismatchException e) {
+                    numberOfRoom = 0;
+                }
+            }while (numberOfRoom == 0);
             scan.nextLine();
             //reservar
             Reservation newReserv = toReserveRoom(arrival, setDayOfExit(arrival,dayOfStay), numberOfRoom, chooseMealPlan(),dniUser);
@@ -572,12 +645,9 @@ public class Menu {
                 Passenger passengerToRoom=searchPassengerInList(dniUser);
                 result=changeStateOfRoom(passengerToRoom,reservToActivate.getRoomToReserve(),State.OCCUPIED);
             }else {
-                printOut.println("No hay ninguna coincidencia con el DNI");
+                printOut.println("There is no coincidence with DNI");
             }
-
         }
-
-
     }
     private void checkOut()
     {
@@ -613,21 +683,21 @@ public class Menu {
             }
         }
     }
-    private void showAdminMenu()
+    private int showAdminMenu()
     {
         printOut.println("1_Register receptionist ");
         printOut.println("2_Register passanger");
         printOut.println("3_Check in");
         printOut.println("4_Check out");
         printOut.println("5_Exit");
+        return 5;
     }
     private void admin(){
         boolean exit=false;
         int option;
         while (!exit)
         {
-            showAdminMenu();
-            option=scan.nextInt();
+            option=toCaptureInt(showAdminMenu());
             switch (option)
             {
                 case 1:
