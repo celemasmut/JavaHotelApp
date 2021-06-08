@@ -225,8 +225,7 @@ public class Menu {
         if(passenger!=null) {
             boolean exit = false;
             do{
-                passengerMenu();
-                int op = scan.nextInt();
+                int op = toCaptureInt(passengerMenu());
                 switch (op){
                     case 1:
                         toBookARoom(passenger.getDni());
