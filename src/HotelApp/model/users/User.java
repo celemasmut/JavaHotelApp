@@ -7,7 +7,7 @@ public abstract class User  {
     private int id;
     private String loginName;
     private String password;
-    private int state = 0; //activo == 0
+    private int state = 1; //activo == 1
 
     public User(String loginName, String password) {
         id = getId();
@@ -40,7 +40,11 @@ public abstract class User  {
     }
 
     public int deleteLogic(){
-        return this.state = 1;
+        return this.state = 0; /// 0 == eliminado logico
+    }
+
+    public int getState() {
+        return state;
     }
 
     @Override

@@ -15,6 +15,7 @@ import HotelApp.util.Status;
 
 import java.io.PrintStream;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -68,20 +69,6 @@ public class Menu {
                     break;
             }
         }while (op != 3);
-    }
-
-    private boolean validatePassengerDni(String dni) {
-        if (Hotel.getUserGenericList().getList().size() > 0) {
-            for (User user : Hotel.getUserGenericList().getList()) {
-                if (user instanceof Passenger)
-                {
-                if (((Passenger) user).getDni().equals(dni)) {
-                    return true;
-                }
-                }
-            }
-        }
-        return false;
     }
 
     private String register(){
@@ -148,22 +135,88 @@ public class Menu {
     }
 
     public Receptionist findReceptionist(int fileNumber){
-        Receptionist find = new Receptionist();
+        Receptionist find = null;
         if(Hotel.getUserGenericList().getList().size() > 0 ){
             for (User user : Hotel.getUserGenericList().getList()){
                 if (user instanceof Receptionist)
                 {
                     if(((Receptionist) user).getFileNumber()==(fileNumber)) {
-                        find = getUserGenericList().getList().get(fileNumber);// todo
+                        int pos = findReceptionistInlist(fileNumber);
+                        find =(Receptionist) getUserGenericList().getList().get(pos);
                         return find;
                     }
                 }
             }
         }
-        return find = null;
+        return find;
     }
 
+    private int findReceptionistInlist(int fileNumber){
+        int pos = -1;
+        ///primero hago una lista de personas
+        List<Receptionist> receptionistList = new ArrayList<>();
+        for (User user : Hotel.getUserGenericList().getList()){
+            if (user instanceof Receptionist) {
+                receptionistList.add((Receptionist) user);
+            }
+        }
 
+        for(int i = 0; i < receptionistList.size() && pos==-1;i++){
+            if(receptionistList.get(i).getFileNumber() == fileNumber ){
+                pos = i;
+            }
+        }
+        return pos;
+    }
+
+    public Passenger findPassanger(String dniUser){
+        Passenger find = null;
+        if(Hotel.getUserGenericList().getList().size() > 0 ){
+            for (User user : Hotel.getUserGenericList().getList()){
+                if (user instanceof Passenger)
+                {
+                    if (((Passenger) user).getDni().equals(dniUser)) {
+                        int pos = findPassengerInlist(dniUser);
+                        find =(Passenger) getUserGenericList().getList().get(pos);
+                        return find;
+                    }
+                }
+            }
+        }
+        return find;
+    }
+
+    private int findPassengerInlist(String dniUser){
+    int pos = -1;
+    ///primero hago una lista de personas
+    List<Passenger> passengerList = new ArrayList<>();
+        for (User user : Hotel.getUserGenericList().getList()){
+            if (user instanceof Passenger) {
+               passengerList.add((Passenger)user);
+                }
+            }
+
+        for(int i = 0; i < passengerList.size() && pos==-1;i++){
+            if(passengerList.get(i).getDni().equals(dniUser)){
+                pos = i;
+                }
+            }
+    return pos;
+    }
+
+    private boolean validatePassengerDni(String dniUser) {
+        if (Hotel.getUserGenericList().getList().size() > 0) {
+            for (User user : Hotel.getUserGenericList().getList()) {
+                if (user instanceof Passenger)
+                {
+                    if (((Passenger) user).getDni().equals(dniUser)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 
     private void showLoginMenu(){
         printOut.println("1- Passenger");
@@ -839,24 +892,42 @@ public class Menu {
                 case 1:
                     printOut.println("Enter passenger dni");
                     String dniUser = scan.toString();
-                    showListReservation(dniUser);
-                    ///passenger
+                    Passenger find = findPassanger(dniUser);
+                    if(find != null){
+                        find.deleteLogic();
+                    }
+                    ///eliminar passenger
                     break;
                 case 2:
                     printOut.println("Enter receptionist file number");
                     int fileNumber = scan.nextInt();
-                    Receptionist find = findReceptionist(fileNumber);
-                    if(find != null){
-                        find.deleteLogic();
+                    Receptionist findReceptionist = findReceptionist(fileNumber);
+                    if(findReceptionist != null){
+                        findReceptionist.deleteLogic();
+                    }
+                    else{
+                        printOut.println("file number failed");
                     }
 
-                    //Recepcionista
+                    //eliminar Recepcionista
                     break;
                 case 3:
+                    showListUsersDeleted();
+                    ///mostrar lista de usuarios eliminados
+                    break;
+                case 4:
                     exit = true;
                     break;
             }
 
+        }
+    }
+
+    private void showListUsersDeleted(){
+        for(User user: Hotel.getUserGenericList().getList()){
+            if(user instanceof Passenger || user instanceof Receptionist && user.getState() == 0){//significa que esta eliminado
+                printOut.println(user);
+            }
         }
     }
 
