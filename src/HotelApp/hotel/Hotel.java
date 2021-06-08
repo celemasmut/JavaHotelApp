@@ -1,6 +1,8 @@
 package HotelApp.hotel;
 
 import HotelApp.datafile.SaveInfoUsers;
+import HotelApp.exception.ReservationNotFoundException;
+import HotelApp.exception.UserDoesNotExistException;
 import HotelApp.model.bedrooms.Room;
 import HotelApp.model.reservation.Reservation;
 import HotelApp.model.users.Admin;
@@ -84,11 +86,17 @@ public class Hotel {
         return null;
     }
 
-    protected static Reservation searchReservation(String dniPassenger) {
-        for (Reservation reservation : reservationGenericList.getList()) {
-            if (dniPassenger.equalsIgnoreCase(reservation.getDniPassenger())) {
-                return reservation;
+    protected static Reservation searchReservation(String dniPassenger) throws ReservationNotFoundException, UserDoesNotExistException {
+        if(reservationGenericList.getList().size() > 0) {
+            for (Reservation reservation : reservationGenericList.getList()) {
+                if (dniPassenger.equals(reservation.getDniPassenger())) {
+                    return reservation;
+                }else{
+                    throw new UserDoesNotExistException("The passenger does not exist");
+                }
             }
+        }else{
+            throw new ReservationNotFoundException();
         }
         return null;
     }

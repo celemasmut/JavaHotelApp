@@ -2,28 +2,23 @@ package HotelApp.datafile;
 
 import HotelApp.model.bedrooms.Room;
 import HotelApp.model.reservation.Reservation;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public interface Fileable {
-     void writeJsonBookings(List<Reservation> reservationList, String nameFile);
+     void writeJsonBookings(List<Reservation> reservationList, String nameFile)throws IOException;
 
-      void writeJsonRooms(List<Room> rooms, String fileName);
-
-
-     List<Reservation> readReservationJson(String fileName);
+      void writeJsonRooms(List<Room> rooms, String fileName)throws IOException;
 
 
-     List<Room> readRoomJson(String fileName);
+     List<Reservation> readReservationJson(String fileName)throws IOException;
 
-     void writeInfo (SaveInfoUsers infoToSave, String fileName);
 
-      SaveInfoUsers readInfo(String fileName);
+     List<Room> readRoomJson(String fileName)throws IOException;
+
+     void writeInfo (SaveInfoUsers infoToSave, String fileName)throws IOException;
+
+      SaveInfoUsers readInfo(String fileName)throws IOException;
 
 }
 

@@ -2,6 +2,9 @@ package HotelApp.hotel;
 
 import HotelApp.datafile.DataFile;
 import HotelApp.datafile.SaveInfoUsers;
+import HotelApp.exception.ReservationNotFoundException;
+import HotelApp.exception.UserAlreadyExistException;
+import HotelApp.exception.UserDoesNotExistException;
 import HotelApp.model.bedrooms.*;
 import HotelApp.model.reservation.Reservation;
 import HotelApp.model.users.Admin;
@@ -77,7 +80,11 @@ public class Menu {
             op= toCaptureInt(showFirstMenu());
             switch (op){
                 case 1:
-                    register();
+                    try {
+                        register();
+                    } catch (UserAlreadyExistException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case 2:
                     login();
@@ -104,7 +111,7 @@ public class Menu {
         return false;
     }
 
-    private String register(){
+    private String register() throws UserAlreadyExistException {
         printOut.println("Insert Name: ");
         String name = scan.next();
         printOut.println("Insert DNI :");
@@ -128,8 +135,9 @@ public class Menu {
             Hotel.addUser(new Passenger(userName,password,name,dni,homeTown,homeAddress));
             printOut.println("New Passenger registered");
             return dni;
+        }else{
+            throw new UserAlreadyExistException();
         }
-        return null;
     }
        ///unicamente lo puede registrar un administrador
     public void registerRecepcionist(){
@@ -608,13 +616,17 @@ public class Menu {
         int option=0;
         int optionOfRoom=0;
         int numberOfRoom;
-        String dniUser;
+        String dniUser="0";
         boolean result;
         printOut.println("wants to make the entry of a passenger. Enter 1 or if you want to enter a reservation enter 2");
         option=toCaptureInt(2);
         if (option==1)
         {
-            dniUser=register();
+            try {
+                dniUser=register();
+            } catch (UserAlreadyExistException e) {
+                e.printStackTrace();
+            }
             int dayOfStay = setDaysOfStay();
             LocalDate arrival = LocalDate.now();
             optionOfRoom=toCaptureInt(showTypeOfRooms());
@@ -655,7 +667,14 @@ public class Menu {
         printOut.println("Insert DNI :");
         scan.nextLine();
         dniPassenger=scan.next();
-        Reservation reservationCheckOut=searchReservation(dniPassenger);
+        Reservation reservationCheckOut= null;
+        try {
+            reservationCheckOut = searchReservation(dniPassenger);
+        } catch (ReservationNotFoundException e) {
+            e.printStackTrace();
+        } catch (UserDoesNotExistException e) {
+            e.printStackTrace();
+        }
         if (reservationCheckOut!=null)
         {
             Passenger passengerToCheckOut=searchPassengerInList(dniPassenger);
