@@ -2,9 +2,7 @@ package HotelApp.hotel;
 
 import HotelApp.datafile.DataFile;
 import HotelApp.datafile.SaveInfoUsers;
-import HotelApp.exception.ReservationNotFoundException;
-import HotelApp.exception.UserAlreadyExistException;
-import HotelApp.exception.UserDoesNotExistException;
+import HotelApp.exception.*;
 import HotelApp.model.bedrooms.*;
 import HotelApp.model.reservation.Reservation;
 import HotelApp.model.users.Admin;
@@ -43,7 +41,11 @@ public class Menu {
         saveinfo=dataFile.readInfo("files/users.json");
         addToList(saveinfo);
 
-        showUsers();
+        try {
+            showUsers();
+        } catch (UserDoesNotExistException e) {
+            e.printStackTrace();
+        }
         showListOfRoom();
         printOut = System.out;
     }
@@ -239,16 +241,28 @@ public class Menu {
                         toBookARoom(passenger.getDni());
                         break;
                     case 2:
-                        Hotel.getPassengerReservations(passenger.getDni()).forEach(ob -> printOut.println(ob.toString()));
+                        try {
+                            Hotel.getPassengerReservations(passenger.getDni()).forEach(ob -> printOut.println(ob.toString()));
+                        } catch (UserDoesNotExistException e) {
+                            e.printStackTrace();
+                        } catch (ReservationNotFoundException e) {
+                            e.printStackTrace();
+                        }
                         break;
                     case 3:
-                        if(Hotel.getPassengerReservations(passenger.getDni()).size() > 0) {
-                            Status status = chooseStatusReservation(showStatusReservation());
-                            Reservation reservationChosen = checkStatusReservation(passenger.getDni(),status);
-                            if(reservationChosen != null && reservationChosen.getStatus() != Status.CANCELLED) {
-                                printOut.println(reservationChosen.toString());
-                                reservationChosenMenu(reservationChosen);
+                        try {
+                            if(Hotel.getPassengerReservations(passenger.getDni()).size() > 0) {
+                                Status status = chooseStatusReservation(showStatusReservation());
+                                Reservation reservationChosen = checkStatusReservation(passenger.getDni(),status);
+                                if(reservationChosen != null && reservationChosen.getStatus() != Status.CANCELLED) {
+                                    printOut.println(reservationChosen.toString());
+                                    reservationChosenMenu(reservationChosen);
+                                }
                             }
+                        } catch (UserDoesNotExistException e) {
+                            e.printStackTrace();
+                        } catch (ReservationNotFoundException e) {
+                            e.printStackTrace();
                         }
                         break;
                     case 4:
@@ -403,7 +417,7 @@ public class Menu {
         return 4;
     }
 
-    private int showReservationByStatus(List<Reservation> statusTypeReservation){
+    private int showReservationByStatus(List<Reservation> statusTypeReservation)throws ReservationNotFoundException{
         int i=0;
         if(statusTypeReservation.size() > 0) {
             printOut.println(" Your reservations");
@@ -413,6 +427,8 @@ public class Menu {
                 printOut.println(i + " - " + reserv.toString());
                 i++;
             }
+        }else{
+            throw new ReservationNotFoundException();
         }
         return i;
     }
@@ -446,12 +462,24 @@ public class Menu {
 
 
     private Reservation checkStatusReservation(String dniUser, Status status){
-        int cant = showReservationByStatus(Hotel.getStatusReservations(Hotel.getPassengerReservations(dniUser),status));
+        int cant = 0;
+        try {
+            cant = showReservationByStatus(Hotel.getStatusReservations(Hotel.getPassengerReservations(dniUser),status));
+        } catch (ReservationNotFoundException e) {
+            e.printStackTrace();
+        } catch (UserDoesNotExistException e) {
+            e.printStackTrace();
+        }
         if(cant > 0) {
             printOut.println("Choose the reservation you want to check");
             int index = toCaptureInt(cant);
-            return Hotel.getStatusReservations(Hotel.getPassengerReservations(dniUser), status).get(index - 1);
-
+            try {
+                return Hotel.getStatusReservations(Hotel.getPassengerReservations(dniUser), status).get(index - 1);
+            } catch (UserDoesNotExistException e) {
+                e.printStackTrace();
+            } catch (ReservationNotFoundException e) {
+                e.printStackTrace();
+            }
         }
         return null;
     }
@@ -513,7 +541,7 @@ public class Menu {
         printOut.println("3 - Check your consumptions");
         return  3;
     }
-    private void checkPassengerConsumptions(Reservation reservationChosen){
+    private void checkPassengerConsumptions(Reservation reservationChosen) throws ProductNotFoundException{
         if(reservationChosen.getRoomToReserve().getConsumed().size() > 0) {
             double totalPrice =0;
             for (ProductToConsume prod : reservationChosen.getRoomToReserve().getConsumed()) {
@@ -522,6 +550,8 @@ public class Menu {
             }
             if(reservationChosen.getStatus().equals(Status.ACTIVE))
             printOut.println("Total price : $"+totalPrice);
+        }else{
+            throw new ProductNotFoundException();
         }
     }
      private void reservationChosenMenu(Reservation reservationChosen){
@@ -538,7 +568,11 @@ public class Menu {
                             addAnItemToList(reservationChosen, chooseAnItemProduct());
                         break;
                     case 3:
-                        checkPassengerConsumptions(reservationChosen);
+                        try {
+                            checkPassengerConsumptions(reservationChosen);
+                        } catch (ProductNotFoundException e) {
+                            e.printStackTrace();
+                        }
                         break;
                     case 4:
                         exit =true;
@@ -554,7 +588,7 @@ public class Menu {
     {
         printOut.println("1_Check in");
         printOut.println("2_Check out");
-        printOut.println("3_Show consumition of room");
+        printOut.println("3_Show consumption of room");
         printOut.println("4_Reservation");
         printOut.println("5_Exit");
         return 5;
@@ -563,7 +597,7 @@ public class Menu {
         boolean exit=false;
         int option;
         String dniUser;
-        int roomNumber;
+        int roomNumber=0;
         while (!exit)
         {
             option=toCaptureInt(showRecepcionistMenu());
@@ -575,7 +609,11 @@ public class Menu {
                     break;
                 case 2:
                     checkOut();
-                    showReservation();
+                    try {
+                        showReservation();
+                    } catch (ReservationNotFoundException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case 3:
                     printOut.println("Enter room number:");
@@ -587,22 +625,33 @@ public class Menu {
                             break;
                         } catch (InputMismatchException e) {
                             roomNumber = 0;
+                        } catch (RoomDoesNotExistException e) {
+                            e.printStackTrace();
+                            roomNumber = 0;
+                        } catch (ReservationNotFoundException e) {
+                            e.printStackTrace();
+                        } catch (ProductNotFoundException e) {
+                            e.printStackTrace();
                         }
                     }while (roomNumber == 0);
                 case 4:
                     printOut.println("Enter DNI of passenger:");
                     scan.nextLine();
                     dniUser=scan.nextLine();
-                    if(Hotel.getPassengerReservations(dniUser).size() > 0) {
-                        Status status = chooseStatusReservation(showStatusReservation());
-                        Reservation reservationChosen = checkStatusReservation(dniUser,status);
-                        if(reservationChosen != null && reservationChosen.getStatus() != Status.CANCELLED) {
-                            printOut.println(reservationChosen.toString());
-                            reservationChosenMenu(reservationChosen);
+                    try {
+                        if(Hotel.getPassengerReservations(dniUser).size() > 0) {
+                            Status status = chooseStatusReservation(showStatusReservation());
+                            Reservation reservationChosen = checkStatusReservation(dniUser,status);
+                            if(reservationChosen != null && reservationChosen.getStatus() != Status.CANCELLED) {
+                                printOut.println(reservationChosen.toString());
+                                reservationChosenMenu(reservationChosen);
+                            }
                         }
+                    } catch (UserDoesNotExistException e) {
+                        e.printStackTrace();
+                    } catch (ReservationNotFoundException e) {
+                        e.printStackTrace();
                     }
-                    else
-                        printOut.println("This passenger does not have a reservation");
                     break;
                 case 5:
                     exit=true;
@@ -684,21 +733,28 @@ public class Menu {
 
         }
     }
-    private void showConsumeOfRoom(int roomNumber)
+    private void showConsumeOfRoom(int roomNumber) throws ReservationNotFoundException, ProductNotFoundException, RoomDoesNotExistException
     {
         double totalPrice=0;
         printOut.println("Product:");
-        for (Room roomToConsume:Hotel.getRoomGenericList().getList())
-        {
-            if(roomNumber == roomToConsume.getRoomNumber() && roomToConsume.getConsumed()!=null)
-            {
-                for (ProductToConsume productToConsumeForRoom : roomToConsume.getConsumed())
-                {
-                printOut.println(productToConsumeForRoom);
-                totalPrice=totalPrice+productToConsumeForRoom.getPrice();
+        if(Hotel.getRoomGenericList().getList().size() > 0) {
+            for (Room roomToConsume : Hotel.getRoomGenericList().getList()) {
+                if (roomNumber == roomToConsume.getRoomNumber()) {
+                    if (roomToConsume.getConsumed() != null) {
+                        for (ProductToConsume productToConsumeForRoom : roomToConsume.getConsumed()) {
+                            printOut.println(productToConsumeForRoom);
+                            totalPrice = totalPrice + productToConsumeForRoom.getPrice();
 
+                        }
+                    } else {
+                        throw new RoomDoesNotExistException();
+                    }
+                }else{
+                    throw new ProductNotFoundException();
                 }
             }
+        }else{
+            throw new ReservationNotFoundException();
         }
     }
     private int showAdminMenu()

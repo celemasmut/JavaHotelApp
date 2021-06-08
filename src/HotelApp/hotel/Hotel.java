@@ -107,15 +107,19 @@ public class Hotel {
         }
     }
 
-    protected static List<Reservation> getPassengerReservations(String dni) {
+    protected static List<Reservation> getPassengerReservations(String dni) throws UserDoesNotExistException, ReservationNotFoundException {
         List<Reservation> passengerReservations = new ArrayList<>();
         if (reservationGenericList.getList().size() > 0) {
             for (Reservation reserv : reservationGenericList.getList()) {
                 if (reserv.getDniPassenger().equals(dni)) {
                     if (reserv.getStatus() != Status.CANCELLED)
                         passengerReservations.add(reserv);
+                }else{
+                    throw new UserDoesNotExistException("Passenger does not exist");
                 }
             }
+        }else{
+            throw new ReservationNotFoundException();
         }
         return passengerReservations;
     }
@@ -153,9 +157,13 @@ public class Hotel {
         return false;
     }
 
-    protected static void showReservation() {
-        for (Reservation reservation : reservationGenericList.getList()) {
-            System.out.println(reservation.toString());
+    protected static void showReservation() throws ReservationNotFoundException {
+        if(reservationGenericList.getList().size() > 0) {
+            for (Reservation reservation : reservationGenericList.getList()) {
+                System.out.println(reservation.toString());
+            }
+        }else{
+            throw new ReservationNotFoundException();
         }
     }
 
@@ -168,13 +176,17 @@ public class Hotel {
         return null;
     }
 
-    protected static void showUsers() {
+    protected static void showUsers()throws UserDoesNotExistException {
         int i = 0;
-        for (User userAux : userGenericList.getList()) {
-            i++;
-            System.out.println(userAux.toString());
+        if(userGenericList.getList().size() > 0) {
+            for (User userAux : userGenericList.getList()) {
+                i++;
+                System.out.println(userAux.toString());
+            }
+            System.out.println("Cantidad de usuarios:" + i);
+        }else{
+            throw new UserDoesNotExistException("There is not user to show");
         }
-        System.out.println("Cantidad de usuarios:" + i);
     }
 
     protected static void addToList(SaveInfoUsers infoToAdd) {
