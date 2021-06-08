@@ -65,13 +65,16 @@ public class Hotel {
     protected static boolean changeStateOfRoom(Passenger passengerToRoom, Room roomToReserve, State state) {
         int posInList;
 
-
         posInList = roomGenericList.getList().indexOf(roomToReserve);
         roomGenericList.getList().get(posInList).setStateRoom(state);
         roomGenericList.getList().get(posInList).setOccupant(passengerToRoom);
         return true;
+    }
 
-
+    protected static boolean changeStateOfRoomXNumber(int roomNumber, State state)
+    {
+        roomGenericList.getList().get(roomNumber).setStateRoom(state);
+        return true;
     }
 
     protected static Passenger searchPassengerInList(String dni) {
@@ -97,6 +100,43 @@ public class Hotel {
         for (Room roomAux : roomGenericList.getList()) {
             System.out.println(roomAux.toString());
         }
+    }
+
+    protected static void showListOfRoomXState() {
+        for (Room roomAux : roomGenericList.getList()) {
+            if (roomAux.getStateRoom().equals(State.FREE)) {
+                System.out.println("Free:");
+                System.out.println(roomAux.toString());
+            }
+        }
+
+        for (Room roomAux : roomGenericList.getList()) {
+            if (roomAux.getStateRoom().equals(State.RESERVED)) {
+                System.out.println(roomAux.toString());
+            }
+        }
+
+        for (Room roomAux : roomGenericList.getList()) {
+            if(roomAux.getStateRoom().equals(State.OCCUPIED)){
+                System.out.println(roomAux.toString());
+            }
+        }
+
+        for (Room roomAux : roomGenericList.getList()) {
+            if(roomAux.getStateRoom().equals(State.CLEANING)){
+                System.out.println(roomAux.toString());
+            }
+        }
+
+        for (Room roomAux : roomGenericList.getList()) {
+            if(roomAux.getStateRoom().equals(State.IN_MAINTENANCE)){
+                System.out.println(roomAux.toString());
+                System.out.println(roomAux.toString());
+
+            }
+        }
+
+
     }
 
     protected static List<Reservation> getPassengerReservations(String dni) {

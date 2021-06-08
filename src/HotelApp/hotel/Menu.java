@@ -147,6 +147,22 @@ public class Menu {
         return false;
     }
 
+    public Receptionist findReceptionist(int fileNumber){
+        Receptionist find = new Receptionist();
+        if(Hotel.getUserGenericList().getList().size() > 0 ){
+            for (User user : Hotel.getUserGenericList().getList()){
+                if (user instanceof Receptionist)
+                {
+                    if(((Receptionist) user).getFileNumber()==(fileNumber)) {
+                        find = getUserGenericList().getList().get(fileNumber);// todo
+                        return find;
+                    }
+                }
+            }
+        }
+        return find = null;
+    }
+
 
 
     private void showLoginMenu(){
@@ -198,6 +214,10 @@ public class Menu {
         printOut.println("3 - Check a reservation");
     }
 
+    private void showListReservation(String dniUser){
+        Hotel.getPassengerReservations(dniUser).forEach(ob -> printOut.println(ob.toString()));
+    }
+
 
 
 
@@ -212,7 +232,7 @@ public class Menu {
                         toBookARoom(dniUser);
                         break;
                     case 2:
-                        Hotel.getPassengerReservations(dniUser).forEach(ob -> printOut.println(ob.toString()));
+                        showListReservation(dniUser);
                         break;
                     case 3:
                         if(Hotel.getPassengerReservations(dniUser).size() > 0) {
@@ -613,37 +633,48 @@ public class Menu {
             }
         }
     }
-    private void showAdminMenu()
-    {
-        printOut.println("1_Register receptionist ");
-        printOut.println("2_Register passanger");
-        printOut.println("3_Check in");
-        printOut.println("4_Check out");
-        printOut.println("5_Exit");
+
+    private void showAdminMenu() {
+        printOut.println("1_Options of Register");
+        printOut.println("2_Functions of Receptionist");
+        printOut.println("3_Options of rooms");
+        printOut.println("4_Options of Reservation");
+        printOut.println("5_Delete users");
+        printOut.println("6_View user lists");
+        printOut.println("7_BackUp");
+        printOut.println("8_Exit");
     }
-    private void admin(){
-        boolean exit=false;
+
+    private void admin() {
+        boolean exit = false;
         int option;
-        while (!exit)
-        {
+        while (!exit) {
             showAdminMenu();
-            option=scan.nextInt();
-            switch (option)
-            {
+            option = scan.nextInt();
+            switch (option) {
                 case 1:
-                    registerRecepcionist();
+                    registerAll();
                     break;
                 case 2:
-                    ///reservation();
+                    receptionist();
                     break;
                 case 3:
-                    ///checkOut();
+                    optionsRooms();
                     break;
                 case 4:
-                    ///showConsumitionOfRoom();
+                    optionsOfReservas();
                     break;
                 case 5:
-                    exit=true;
+                    deleteUsers();
+                    break;
+                case 6:
+                    //backUp();
+                    break;
+                case 7:
+                    //backUp();
+                    break;
+                case 8:
+                    exit = true;
                     break;
 
             }
@@ -651,7 +682,183 @@ public class Menu {
         }
     }
 
+    public void registerAll(){
+        boolean exit = false;
+        int option;
+        while (!exit) {
+            showRegisterAllMenu();
+            option = scan.nextInt();
+            switch (option) {
+                case 1:
+                    registerRecepcionist();
+                    break;
+                case 2:
+                    register();
+                    break;
+                case 3:
+                    exit = true;
+                    break;
+            }
 
+        }
+    }
+    private void showRegisterAllMenu() {
+        printOut.println("1_Register receptionist ");
+        printOut.println("2_Register passanger");
+        printOut.println("3_Exit");
+    }
+
+    private void optionsRooms(){
+        boolean exit = false;
+        int option;
+        while (!exit) {
+            showAdminRoomMenu();
+            option = scan.nextInt();
+            switch (option) {
+                case 1:
+                    showListOfRoomXState();
+                    ///mostrar lista de habitaciones
+                    break;
+                case 2:
+                    int numberRoom;
+                    printOut.println("Enter room number");
+                    numberRoom = scan.nextInt();
+                    changeStateRoom(numberRoom);
+                    //cambiar el estado de la habitacion
+                    break;
+                case 3:
+                    exit = true;
+                    break;
+            }
+
+        }
+    }
+
+    private void showAdminRoomMenu() {
+        printOut.println("1_Show room list");
+        printOut.println("2_Change state of room");
+        printOut.println("3_Exit");
+    }
+
+    private void changeStateRoom(int numberRoom){
+        printOut.println("choose a state");
+        printOut.println("1-Free");
+        printOut.println("2-Reserved");
+        printOut.println("3-Occupied");
+        printOut.println("4-Cleaning");
+        printOut.println("5-In maintenance");
+        int numberState = scan.nextInt();
+        switch (numberState){
+            case 1:
+                changeStateOfRoomXNumber(numberRoom, State.FREE);
+                break;
+            case 2:
+                changeStateOfRoomXNumber(numberRoom, State.RESERVED);
+                break;
+            case 3:
+                changeStateOfRoomXNumber(numberRoom, State.OCCUPIED);
+                break;
+            case 4:
+                changeStateOfRoomXNumber(numberRoom, State.CLEANING);
+                break;
+            case 5:
+                changeStateOfRoomXNumber(numberRoom, State.IN_MAINTENANCE);
+                break;
+        }
+    }
+
+    private void optionsOfReservas(){
+        boolean exit = false;
+        int option;
+        printOut.println("Enter passenger dni");
+        String dniUser = scan.toString();
+        while (!exit) {
+            showAdminReservationMenu();
+            option = scan.nextInt();
+            switch (option) {
+                case 1:
+                    showListReservation(dniUser);
+                    ///mostrar lista de reservas de un cliente y su estado
+                    break;
+                case 2:
+                    printOut.println("Enter Reservation number");
+                    int reservationNumber = scan.nextInt();
+                    changeStatusOfReserve(dniUser, reservationNumber);
+                    //cambiar el estado de una reserva
+                    break;
+                case 3:
+                    exit = true;
+                    break;
+            }
+
+        }
+    }
+
+    private void showAdminReservationMenu() {
+        printOut.println("1_Show reservation list");
+        printOut.println("2_Change state of a reservation");
+        printOut.println("3_Exit");
+    }
+
+    private void changeStatusOfReserve(String dniUser, int reservationNumber){
+        printOut.println("choose a status");
+        printOut.println("1-Confirmed");
+        printOut.println("2-Cancelled");
+        printOut.println("3-Completed");
+        printOut.println("4-Active");
+        int numberStatus = scan.nextInt();
+        switch (numberStatus){
+            case 1:
+                statusOfReserveChange(reservationNumber, Status.CONFIRMED);
+                break;
+            case 2:
+                statusOfReserveChange(reservationNumber, Status.CANCELLED);
+                break;
+            case 3:
+                statusOfReserveChange(reservationNumber, Status.COMPLETED);
+                break;
+            case 4:
+                statusOfReserveChange(reservationNumber, Status.ACTIVE);
+                break;
+        }
+    }
+
+    protected static boolean statusOfReserveChange(int reservationNumber, Status status)
+    {
+        getReservationGenericList().getList().get(reservationNumber).setStatus(status);
+        return true;
+    }
+
+    private void deleteUsers(){
+        boolean exit = false;
+        int option;
+        while (!exit) {
+            showAdminReservationMenu();
+            option = scan.nextInt();
+            switch (option) {
+                case 1:
+                    printOut.println("Enter passenger dni");
+                    String dniUser = scan.toString();
+                    showListReservation(dniUser);
+                    ///passenger
+                    break;
+                case 2:
+                    printOut.println("Enter receptionist file number");
+                    int fileNumber = scan.nextInt();
+                    Receptionist find = findReceptionist(fileNumber);
+                    if(find != null){
+                        find.deleteLogic();
+                    }
+
+                    //Recepcionista
+                    break;
+                case 3:
+                    exit = true;
+                    break;
+            }
+
+        }
+    }
 
 
 }

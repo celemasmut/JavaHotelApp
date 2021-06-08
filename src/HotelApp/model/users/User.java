@@ -7,6 +7,7 @@ public abstract class User  {
     private int id;
     private String loginName;
     private String password;
+    private int state = 0; //activo == 0
 
     public User(String loginName, String password) {
         id = getId();
@@ -36,6 +37,10 @@ public abstract class User  {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int deleteLogic(){
+        return this.state = 1;
     }
 
     @Override
