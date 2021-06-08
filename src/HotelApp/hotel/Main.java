@@ -55,7 +55,7 @@ public class Main {
 
         Menu menu = new Menu();
         menu.initiate();
-        dataFile.writeJsonBookings(Hotel.getReservationsList(),"booking.json");
+        dataFile.writeJsonBookings(Hotel.getReservationGenericList().getList(),"booking.json");
 
 
     }

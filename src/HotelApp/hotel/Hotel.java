@@ -16,72 +16,66 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Hotel {
-    private static List<User> userList;
-    private static List<Room> roomsList;
-    private static List<Reservation> reservationsList;
-    private GenericList <User> userGenericList;
-    private GenericList <Room> roomGenericList;
-    private GenericList <Reservation> reservationGenericList;
+
+    private static GenericList <User> userGenericList;
+    private static GenericList <Room> roomGenericList;
+    private static GenericList <Reservation> reservationGenericList;
 
     public Hotel() {
-        this.roomsList = new ArrayList<>();
-        this.reservationsList = new ArrayList<>();
-        this.userList = new ArrayList<>();
+
+        this.userGenericList=new GenericList<>();
+        this.roomGenericList=new GenericList<>();
+        this.reservationGenericList=new GenericList<>();
 
     }
 
-    public static List<Room> getRoomsList() {
-        return roomsList;
+    public static GenericList<User> getUserGenericList() {
+        return userGenericList;
     }
 
-    public static List<Reservation> getReservationsList() {
-        return reservationsList;
+    public static void setUserGenericList(GenericList<User> userGenericList) {
+        Hotel.userGenericList = userGenericList;
     }
 
-    protected static void addReservation(Reservation reservation) {
-        reservationsList.add(reservation);
+    public static GenericList<Room> getRoomGenericList() {
+        return roomGenericList;
     }
 
-    public static void addRoomToList(Room room) {
-        roomsList.add(room);
+    public static void setRoom(List <Room> roomGenericList) {
+        Hotel.roomGenericList.setList((roomGenericList));
     }
 
-
-    public static List<User> getUserList() {
-        return userList;
+    public static GenericList<Reservation> getReservationGenericList() {
+        return reservationGenericList;
     }
 
-
-    public static void setRoomsList(List<Room> roomsList) {
-        Hotel.roomsList = roomsList;
+    public static void setReservationGenericList(GenericList<Reservation> reservationGenericList) {
+        Hotel.reservationGenericList = reservationGenericList;
     }
 
-    public static void setReservationsList(List<Reservation> reservationsList) {
-        Hotel.reservationsList = reservationsList;
+    protected static boolean addUser(User userToAdd)
+    {
+       return  userGenericList.addToList(userToAdd);
     }
-
-    protected static boolean addPassenger(Passenger passengerToAdd) {
-        return userList.add(passengerToAdd);
-    }
-
-    protected static boolean addRecepcionists(Receptionist receptionistToAdd) {
-        return userList.add(receptionistToAdd);
+    protected static boolean addReservation(Reservation reservationToAdd)
+    {
+        return reservationGenericList.addToList(reservationToAdd);
     }
 
     protected static boolean changeStateOfRoom(Passenger passengerToRoom, Room roomToReserve, State state) {
         int posInList;
 
 
-        posInList = roomsList.indexOf(roomToReserve);
-        roomsList.get(posInList).setStateRoom(state);
-        roomsList.get(posInList).setOccupant(passengerToRoom);
+        posInList = roomGenericList.getList().indexOf(roomToReserve);
+        roomGenericList.getList().get(posInList).setStateRoom(state);
+        roomGenericList.getList().get(posInList).setOccupant(passengerToRoom);
         return true;
 
 
     }
 
     protected static Passenger searchPassengerInList(String dni) {
-        for (User userAux : userList) {
+        for (User userAux : userGenericList.getList()) {
             if (userAux instanceof Passenger) {
                 if (((Passenger) userAux).getDni().equals(dni))
                     return (Passenger) userAux;
@@ -91,7 +85,7 @@ public class Hotel {
     }
 
     protected static Reservation searchReservation(String dniPassenger) {
-        for (Reservation reservation : reservationsList) {
+        for (Reservation reservation : reservationGenericList.getList()) {
             if (dniPassenger.equalsIgnoreCase(reservation.getDniPassenger())) {
                 return reservation;
             }
@@ -100,15 +94,15 @@ public class Hotel {
     }
 
     protected static void showListOfRoom() {
-        for (Room roomAux : roomsList) {
+        for (Room roomAux : roomGenericList.getList()) {
             System.out.println(roomAux.toString());
         }
     }
 
     protected static List<Reservation> getPassengerReservations(String dni) {
         List<Reservation> passengerReservations = new ArrayList<>();
-        if (reservationsList.size() > 0) {
-            for (Reservation reserv : reservationsList) {
+        if (reservationGenericList.getList().size() > 0) {
+            for (Reservation reserv : reservationGenericList.getList()) {
                 if (reserv.getDniPassenger().equals(dni)) {
                     if (reserv.getStatus() != Status.CANCELLED)
                         passengerReservations.add(reserv);
@@ -131,8 +125,8 @@ public class Hotel {
     }
 
     protected static boolean toCancelReservation(Reservation canceledReservation) {
-        if (reservationsList.size() > 0) {
-            for (Reservation reservation : reservationsList) {
+        if (reservationGenericList.getList().size() > 0) {
+            for (Reservation reservation : reservationGenericList.getList()) {
                 if (reservation.equals(canceledReservation)) {
                     reservation.setStatus(Status.CANCELLED);
                     return true;
@@ -144,21 +138,21 @@ public class Hotel {
 
     protected static boolean deleteReservationInList(Reservation reservationToDelete) {
         if (reservationToDelete != null) {
-            int posInList = reservationsList.indexOf(reservationToDelete);
-            reservationsList.get(posInList).setStatus(Status.COMPLETED);
+            int posInList = reservationGenericList.getList().indexOf(reservationToDelete);
+            reservationGenericList.getList().get(posInList).setStatus(Status.COMPLETED);
             return true;
         }
         return false;
     }
 
     protected static void showReservation() {
-        for (Reservation reservation : reservationsList) {
+        for (Reservation reservation : reservationGenericList.getList()) {
             System.out.println(reservation.toString());
         }
     }
 
     protected static Reservation searchReservationInList(String dniPassenger) {
-        for (Reservation reservationAux : reservationsList) {
+        for (Reservation reservationAux : reservationGenericList.getList()) {
             if (dniPassenger.equalsIgnoreCase(reservationAux.getDniPassenger())) {
                 return reservationAux;
             }
@@ -168,7 +162,7 @@ public class Hotel {
 
     protected static void showUsers() {
         int i = 0;
-        for (User userAux : userList) {
+        for (User userAux : userGenericList.getList()) {
             i++;
             System.out.println(userAux.toString());
         }
@@ -177,15 +171,15 @@ public class Hotel {
 
     protected static void addToList(SaveInfoUsers infoToAdd) {
         for (Admin adminToAdd : infoToAdd.getListAdmin()) {
-            userList.add(adminToAdd);
+            userGenericList.addToList(adminToAdd);
 
         }
         for (Passenger passengerToAdd : infoToAdd.getListPassenger()) {
-            userList.add(passengerToAdd);
+            userGenericList.addToList(passengerToAdd);
 
         }
         for (Receptionist receptionistToAdd : infoToAdd.getListRecepcionist()) {
-            userList.add(receptionistToAdd);
+            userGenericList.addToList(receptionistToAdd);
 
         }
 

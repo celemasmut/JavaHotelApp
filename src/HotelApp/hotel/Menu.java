@@ -32,7 +32,7 @@ public class Menu {
         DataFile dataFile= new DataFile();
 
         ///saveinfo.addUsers(getUserList());
-        setRoomsList(dataFile.readRoomJson("files/room.json"));
+        setRoom(dataFile.readRoomJson("files/room.json"));
 
         ///writeInfo(saveinfo,"files/users.json");
         saveinfo=dataFile.readInfo("files/users.json");
@@ -71,8 +71,8 @@ public class Menu {
     }
 
     private boolean validatePassengerDni(String dni) {
-        if (Hotel.getUserList().size() > 0) {
-            for (User user : Hotel.getUserList()) {
+        if (Hotel.getUserGenericList().getList().size() > 0) {
+            for (User user : Hotel.getUserGenericList().getList()) {
                 if (user instanceof Passenger)
                 {
                 if (((Passenger) user).getDni().equals(dni)) {
@@ -105,7 +105,7 @@ public class Menu {
             scan.nextLine();
             String password = scan.next();
 
-            Hotel.addPassenger(new Passenger(userName,password,name,dni,homeTown,homeAddress));
+            Hotel.addUser(new Passenger(userName,password,name,dni,homeTown,homeAddress));
             printOut.println("New Passenger registered");
             return dni;
         }
@@ -127,14 +127,14 @@ public class Menu {
             String password = scan.next();
             Receptionist receptionist = new Receptionist(loginName,password);
             receptionist.setFileNumber(fileNumber);
-            Hotel.addRecepcionists(receptionist);
+            Hotel.addUser(receptionist);
             printOut.println("New Receptionist registered");
         }
     }
 
     public boolean validateRecepcionist(int fileNumber){
-        if(Hotel.getUserList().size() > 0 ){
-            for (User user : Hotel.getUserList()){
+        if(Hotel.getUserGenericList().getList().size() > 0 ){
+            for (User user : Hotel.getUserGenericList().getList()){
                 if (user instanceof Receptionist)
                 {
                     if(((Receptionist) user).getFileNumber()==(fileNumber)) {
@@ -183,7 +183,7 @@ public class Menu {
         userName=scan.nextLine();
         printOut.println("Insert password:");
         password=scan.nextLine();
-        for (User aux: getUserList()) {
+        for (User aux: getUserGenericList().getList()) {
         if (userName.equals(aux.getLoginName()) && password.equals(aux.getPassword()))
         {
             return aux;
@@ -232,7 +232,7 @@ public class Menu {
         }
     }
     private void seeRoomFree(int option){
-        for(Room room : Hotel.getRoomsList()){
+        for(Room room : Hotel.getRoomGenericList().getList()){
             if( room.getStateRoom().equals(State.FREE)){
                 if(room instanceof SingleRoom&& option==1)
                     printOut.println(room.toString());
@@ -294,7 +294,7 @@ public class Menu {
 
     private Reservation toReserveRoom( LocalDate arrival,LocalDate exit,int roomNumberChoosed,MealPlan plan,String dniUser){
         Reservation reservation=null;
-        for(Room room : Hotel.getRoomsList()){
+        for(Room room : Hotel.getRoomGenericList().getList()){
             if(room.getRoomNumber() == roomNumberChoosed){
                 reservation = new Reservation(room,arrival, exit,plan,dniUser);
             }
@@ -311,7 +311,7 @@ public class Menu {
             reserv.getRoomToReserve().setStateRoom(State.RESERVED);
             reserv.setStatus(Status.CONFIRMED);
             Hotel.addReservation(reserv);
-            printOut.println(Hotel.getReservationsList().get(0).toString());//ver la utilidad al ejecutar. si solo muestra la reserva cambiar linea
+            printOut.println(Hotel.getReservationGenericList().getList().get(0).toString());//ver la utilidad al ejecutar. si solo muestra la reserva cambiar linea
         }else if(confirm == 2){
             reserv = null;
             printOut.println("The reservation is deleted");
@@ -600,7 +600,7 @@ public class Menu {
     {
         double totalPrice=0;
         printOut.println("Product:");
-        for (Room roomToConsume:Hotel.getRoomsList())
+        for (Room roomToConsume:Hotel.getRoomGenericList().getList())
         {
             if(roomNumber == roomToConsume.getRoomNumber() && roomToConsume.getConsumed()!=null)
             {

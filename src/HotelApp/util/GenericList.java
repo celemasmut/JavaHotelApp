@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GenericList<T> {
-    private List <T> list=new ArrayList<>();
+    private List <T> list;
 
-    public void addToList(T algo)
+    public GenericList()
     {
-        list.add(algo);
+        list=new ArrayList<>();
     }
 
     public List<T> getList() {
@@ -17,6 +17,24 @@ public class GenericList<T> {
 
     public void setList(List<T> list) {
         this.list = list;
+    }
+
+    public boolean addToList(T algo)
+    {
+       return list.add(algo);
+    }
+
+    public void deleteFromList(T toDelete)
+    {
+        list.remove(toDelete);
+    }
+
+    public void showList(String name)
+    {
+        for (T aux:list)
+        {
+            System.out.println(aux.toString());
+        }
     }
 
 }
