@@ -1,6 +1,7 @@
 package HotelApp.model.bedrooms;
 
 
+
 import HotelApp.model.users.Passenger;
 import HotelApp.util.State;
 import HotelApp.util.ProductToConsume;
@@ -8,7 +9,7 @@ import HotelApp.util.ProductToConsume;
 import java.util.ArrayList;
 import java.util.List;
 
-public class  Room {
+public class  Room  {
     private Passenger occupant;
     private int roomNumber;
     private State stateRoom;
@@ -90,4 +91,24 @@ public class  Room {
                 ", consumed=" + consumed +
                 '}';
     }
+
+    /*@Override
+    public boolean addToList(ProductToConsume algo) {
+        return false;
+    }
+
+    @Override
+    public boolean deleteFromList(ProductToConsume algo) {
+        return false;
+    }
+
+    @Override
+    public int searchInList(String name) {
+        return 0;
+    }
+
+    @Override
+    public void showList(List<ProductToConsume> list) {
+
+    }*/
 }

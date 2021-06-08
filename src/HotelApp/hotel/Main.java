@@ -1,9 +1,13 @@
 package HotelApp.hotel;
 
 import HotelApp.datafile.DataFile;
+import HotelApp.model.users.Admin;
+import HotelApp.model.users.Passenger;
+import HotelApp.model.users.Receptionist;
 
 public class Main {
     public static void main(String[] args) {
+        DataFile dataFile = new DataFile();
         Hotel hotelPrueba= new Hotel();
 
 
@@ -28,7 +32,7 @@ public class Main {
 
         //seteo pasajeros para que no sea engorroso agregar siempre si o si
 
-     /*   Passenger pasajerito1 = new Passenger("prueba","1234hola","kiko","11111","mdp","mdp123");
+        /*Passenger pasajerito1 = new Passenger("prueba","1234hola","kiko","11111","mdp","mdp123");
         Passenger pasajerito2 = new Passenger("test2","00012","tested","123243","mdp","mdq543");
 
         //seteo dos recepcionistas tambien . Luego los usuarios van a ser levantados desde los archivos y esto del main se elimina.
@@ -51,7 +55,7 @@ public class Main {
 
         Menu menu = new Menu();
         menu.initiate();
-        DataFile.writeJsonBookings(Hotel.getReservationsList(),"booking.json");
+        dataFile.writeJsonBookings(Hotel.getReservationsList(),"booking.json");
 
 
     }

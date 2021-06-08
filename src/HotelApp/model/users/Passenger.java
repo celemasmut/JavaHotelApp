@@ -1,11 +1,12 @@
 package HotelApp.model.users;
 
 
-public class Passenger extends User {
+public class Passenger extends User  {
     private String name;
     private String dni;
     private String hometown;
     private String homeAddress;
+
 
     public Passenger(){
         super();
@@ -17,6 +18,7 @@ public class Passenger extends User {
         this.dni = dni;
         this.hometown =hometown;
         this.homeAddress = homeAddress;
+
     }
 
     public String getName() {

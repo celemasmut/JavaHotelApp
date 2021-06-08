@@ -18,8 +18,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
-import static HotelApp.datafile.DataFile.readInfo;
-import static HotelApp.datafile.DataFile.writeInfo;
+
 import static HotelApp.hotel.Hotel.*;
 
 public class Menu {
@@ -30,15 +29,17 @@ public class Menu {
 
     public Menu(){
         SaveInfoUsers saveinfo = new SaveInfoUsers();
-        setRoomsList(DataFile.readRoomJson("files/room.json"));
-        writeInfo(saveinfo,"files/users.json");
-        saveinfo=readInfo("files/users.json");
+        DataFile dataFile= new DataFile();
+
+        ///saveinfo.addUsers(getUserList());
+        setRoomsList(dataFile.readRoomJson("files/room.json"));
+
+        ///writeInfo(saveinfo,"files/users.json");
+        saveinfo=dataFile.readInfo("files/users.json");
         addToList(saveinfo);
-        /*showPassenger();
-        showAdmins();
-        showReceptionist();*/
-        ///showUsers();
-        //showListOfRoom();
+
+        showUsers();
+        showListOfRoom();
         printOut = System.out;
     }
 

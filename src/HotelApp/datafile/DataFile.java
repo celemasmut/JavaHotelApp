@@ -13,11 +13,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DataFile  {
+public class DataFile implements Fileable  {
     public DataFile() {
     }
-
-    public static void writeJsonBookings(List<Reservation> reservationList,String nameFile){
+    @Override
+    public  void writeJsonBookings(List<Reservation> reservationList,String nameFile){
         try{
             File file = new File(nameFile);
             if(!file.exists()){
@@ -30,8 +30,8 @@ public class DataFile  {
             e.printStackTrace();
         }
     }
-
-    public static void writeJsonRooms(List<Room> rooms, String fileName){
+    @Override
+    public  void writeJsonRooms(List<Room> rooms, String fileName){
         try{
             File file = new File((fileName));
             if(!file.exists()){
@@ -43,8 +43,8 @@ public class DataFile  {
             e.printStackTrace();
         }
     }
-
-    public static List<Reservation> readReservationJson(String fileName){
+    @Override
+    public  List<Reservation> readReservationJson(String fileName){
         List<Reservation> reservationList = new ArrayList<>();
         try{
             File file = new File(fileName);
@@ -57,8 +57,8 @@ public class DataFile  {
         }
         return reservationList;
     }
-
-    public static List<Room> readRoomJson(String fileName){
+    @Override
+    public  List<Room> readRoomJson(String fileName){
         List<Room> roomList = new ArrayList<>();
         try {
             File file = new File(fileName);
@@ -70,11 +70,10 @@ public class DataFile  {
             e.printStackTrace();
         }
 
-        roomList.forEach(r->System.out.println(r.toString()));
         return roomList;
     }
-
-    public static void writeInfo (SaveInfoUsers infoToSave, String fileName)
+    @Override
+    public void writeInfo (SaveInfoUsers infoToSave, String fileName)
     {
         try{
             File file = new File((fileName));
@@ -87,7 +86,8 @@ public class DataFile  {
             e.printStackTrace();
         }
     }
-    public static SaveInfoUsers readInfo(String fileName)
+    @Override
+    public  SaveInfoUsers readInfo(String fileName)
     {
         SaveInfoUsers infoToRead = new SaveInfoUsers();
         ObjectMapper mapper= new ObjectMapper();
