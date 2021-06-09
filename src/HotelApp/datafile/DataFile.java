@@ -21,7 +21,7 @@ public class DataFile implements Fileable  {
                 file.createNewFile();
             }
             ObjectMapper mapper = new ObjectMapper();
-            mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS,false);
+           // mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS,false);
             mapper.writeValue(file,reservationList);
         }catch (IOException e){
             e.printStackTrace();

@@ -19,10 +19,7 @@ import java.io.PrintWriter;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-<<<<<<< HEAD
 import java.util.InputMismatchException;
-=======
->>>>>>> origin/ramaAdminFull
 import java.util.List;
 import java.util.Scanner;
 
@@ -45,13 +42,8 @@ public class Menu {
         ///writeInfo(saveinfo,"files/users.json");
         saveinfo=dataFile.readInfo("files/users.json");
         addToList(saveinfo);
+        setReservationGenericList(dataFile.readReservationJson("files/booking.json"));
 
-        try {
-            showUsers();
-        } catch (UserDoesNotExistException e) {
-            e.printStackTrace();
-        }
-        showListOfRoom();
         printOut = System.out;
     }
 
@@ -104,7 +96,6 @@ public class Menu {
         }while (op != 3);
     }
 
-<<<<<<< HEAD
     private boolean validatePassengerDni(String dni) {
         if (Hotel.getUserGenericList().getList().size() > 0) {
             for (User user : Hotel.getUserGenericList().getList()) {
@@ -120,9 +111,6 @@ public class Menu {
     }
 
     private String register() throws UserAlreadyExistException {
-=======
-    private String register(){
->>>>>>> origin/ramaAdminFull
         printOut.println("Insert Name: ");
         String name = scan.next();
         printOut.println("Insert DNI :");
@@ -256,19 +244,6 @@ public class Menu {
     return pos;
     }
 
-    private boolean validatePassengerDni(String dniUser) {
-        if (Hotel.getUserGenericList().getList().size() > 0) {
-            for (User user : Hotel.getUserGenericList().getList()) {
-                if (user instanceof Passenger)
-                {
-                    if (((Passenger) user).getDni().equals(dniUser)) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
 
     private int showLoginMenu(){
         printOut.println("1- Passenger");
@@ -316,15 +291,20 @@ public class Menu {
         printOut.println("1 - To book a room");
         printOut.println("2 - See all your reservations");
         printOut.println("3 - Check a reservation");
-        return 3;
+        printOut.println("4 - exit");
+
+        return 4;
     }
 
     private void showListReservation(String dniUser){
-        Hotel.getPassengerReservations(dniUser).forEach(ob -> printOut.println(ob.toString()));
+        try {
+            Hotel.getPassengerReservations(dniUser).forEach(ob -> printOut.println(ob.toString()));
+        }catch (UserDoesNotExistException e){
+            e.printStackTrace();
+        }catch (ReservationNotFoundException e){
+            e.printStackTrace();
+        }
     }
-
-
-
 
     private void passenger(Passenger passenger){
         if(passenger!=null) {
@@ -336,7 +316,6 @@ public class Menu {
                         toBookARoom(passenger.getDni());
                         break;
                     case 2:
-<<<<<<< HEAD
                         try {
                             Hotel.getPassengerReservations(passenger.getDni()).forEach(ob -> printOut.println(ob.toString()));
                         } catch (UserDoesNotExistException e) {
@@ -344,9 +323,7 @@ public class Menu {
                         } catch (ReservationNotFoundException e) {
                             e.printStackTrace();
                         }
-=======
-                        showListReservation(dniUser);
->>>>>>> origin/ramaAdminFull
+                        showListReservation(passenger.getDni());
                         break;
                     case 3:
                         try {
@@ -382,20 +359,28 @@ public class Menu {
     }
     private boolean isRoomAvailable(Room room,LocalDate arrival, LocalDate leave) {
         if (room != null) {
-            for (Reservation booking : Hotel.getReservationGenericList().getList()) {
-                if (room.equals(booking.getRoomToReserve())) {
-                    if (arrival.isBefore(booking.getArrivalDay()) && leave.isBefore(booking.getArrivalDay()) || leave.isEqual(booking.getArrivalDay())) {
-                      return true;
+            if (Hotel.getReservationGenericList().getList().size() > 0) {
+                for (Reservation booking : Hotel.getReservationGenericList().getList()) {
+                    if (room.equals(booking.getRoomToReserve())) {
+                        if (booking.getArrivalDay().isBefore(leave)) {
+                            return false;
+                        }
+                        if(booking.getDayOfExit().isAfter(arrival) && booking.getDayOfExit().isBefore(leave)){
+                            return false;
+                        }
+                        if((booking.getArrivalDay().isEqual(arrival) && booking.getDayOfExit().isEqual(leave))){
+                            return false;
+                        }
                     }
-                    if(arrival.isAfter(booking.getDayOfExit()) || arrival.isEqual(booking.getDayOfExit()))
-                        return true;
-                }else if(room.getStateRoom() == State.AVAILABLE){
-                    return true;
                 }
             }
+            if(room.getStateRoom() == State.AVAILABLE)
+                return true;
         }
         return false;
     }
+
+
     private int showMealPlan(){
         int i=1;
         for(MealPlan mealPlan : MealPlan.values()){
@@ -515,7 +500,7 @@ public class Menu {
         if(confirm == 1){
             reserv.setStatus(Status.CONFIRMED);
             Hotel.addReservation(reserv);
-            printOut.println(reserv);//ver la utilidad al ejecutar. si solo muestra la reserva cambiar linea
+            printOut.println(reserv);
         }else if(confirm == 2){
             reserv = null;
             printOut.println("The reservation is deleted");
@@ -525,14 +510,6 @@ public class Menu {
         }
     }
 
-    private int showTypeOfRooms(){
-        printOut.println("Insert number of type Room:");
-        printOut.println("1_ Single Room");
-        printOut.println("2_ Double Room");
-        printOut.println("3_ Family Room");
-        printOut.println("4_ King Room");
-        return 4;
-    }
 
     private int showReservationByStatus(List<Reservation> statusTypeReservation)throws ReservationNotFoundException{
         int i=0;
@@ -877,18 +854,8 @@ public class Menu {
             throw new ReservationNotFoundException();
         }
     }
-<<<<<<< HEAD
-    private int showAdminMenu()
-    {
-        printOut.println("1_Register receptionist ");
-        printOut.println("2_Register passanger");
-        printOut.println("3_Check in");
-        printOut.println("4_Check out");
-        printOut.println("5_Exit");
-        return 5;
-=======
 
-    private void showAdminMenu() {
+    private int showAdminMenu() {
         printOut.println("1_Options of Register");
         printOut.println("2_Functions of Receptionist");
         printOut.println("3_Options of rooms");
@@ -897,24 +864,15 @@ public class Menu {
         printOut.println("6_View user lists");
         printOut.println("7_BackUp");
         printOut.println("8_Exit");
->>>>>>> origin/ramaAdminFull
+        return 8;
     }
 
     private void admin() {
         boolean exit = false;
         int option;
-<<<<<<< HEAD
-        while (!exit)
-        {
-            option=toCaptureInt(showAdminMenu());
-            switch (option)
-            {
-=======
         while (!exit) {
-            showAdminMenu();
-            option = scan.nextInt();
+            option = toCaptureInt(showAdminMenu());
             switch (option) {
->>>>>>> origin/ramaAdminFull
                 case 1:
                     registerAll();
                     break;
@@ -941,9 +899,9 @@ public class Menu {
                     break;
 
             }
-
         }
     }
+
 
     public void registerAll(){
         boolean exit = false;
@@ -956,7 +914,11 @@ public class Menu {
                     registerRecepcionist();
                     break;
                 case 2:
-                    register();
+                    try {
+                        register();
+                    }catch (UserAlreadyExistException e){
+                        e.printStackTrace();
+                    }
                     break;
                 case 3:
                     exit = true;
@@ -1013,7 +975,7 @@ public class Menu {
         int numberState = scan.nextInt();
         switch (numberState){
             case 1:
-                changeStateOfRoomXNumber(numberRoom, State.FREE);
+                changeStateOfRoomXNumber(numberRoom, State.AVAILABLE);
                 break;
             case 2:
                 changeStateOfRoomXNumber(numberRoom, State.RESERVED);
@@ -1036,8 +998,7 @@ public class Menu {
         printOut.println("Enter passenger dni");
         String dniUser = scan.toString();
         while (!exit) {
-            showAdminReservationMenu();
-            option = scan.nextInt();
+            option = toCaptureInt(showAdminReservationMenu());
             switch (option) {
                 case 1:
                     showListReservation(dniUser);
@@ -1057,10 +1018,11 @@ public class Menu {
         }
     }
 
-    private void showAdminReservationMenu() {
+    private int showAdminReservationMenu() {
         printOut.println("1_Show reservation list");
         printOut.println("2_Change state of a reservation");
         printOut.println("3_Exit");
+        return 3;
     }
 
     private void changeStatusOfReserve(String dniUser, int reservationNumber){

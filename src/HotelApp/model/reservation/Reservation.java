@@ -26,6 +26,8 @@ public class Reservation {
     private MealPlan plan;
     private Status status;
 
+    public Reservation(){}
+
     public Reservation(Room roomToReserve, LocalDate arrivalDay, LocalDate dayOfExit, MealPlan plan,String dniPassenger) {
         this.dniPassenger=dniPassenger;
         this.roomToReserve = roomToReserve;

@@ -51,8 +51,8 @@ public class Hotel {
         return reservationGenericList;
     }
 
-    public static void setReservationGenericList(GenericList<Reservation> reservationGenericList) {
-        Hotel.reservationGenericList = reservationGenericList;
+    public static void setReservationGenericList(List<Reservation> reservationGenericList) {
+        Hotel.reservationGenericList.setList(reservationGenericList);
     }
 
     protected static boolean addUser(User userToAdd)
@@ -110,12 +110,9 @@ public class Hotel {
         }
     }
 
-<<<<<<< HEAD
-    protected static List<Reservation> getPassengerReservations(String dni) throws UserDoesNotExistException, ReservationNotFoundException {
-=======
-    protected static void showListOfRoomXState() {
+    protected static void showListOfRoomXState(){
         for (Room roomAux : roomGenericList.getList()) {
-            if (roomAux.getStateRoom().equals(State.FREE)) {
+            if (roomAux.getStateRoom().equals(State.AVAILABLE)) {
                 System.out.println("Free:");
                 System.out.println(roomAux.toString());
             }
@@ -150,8 +147,7 @@ public class Hotel {
 
     }
 
-    protected static List<Reservation> getPassengerReservations(String dni) {
->>>>>>> origin/ramaAdminFull
+    protected static List<Reservation> getPassengerReservations(String dni) throws UserDoesNotExistException, ReservationNotFoundException{
         List<Reservation> passengerReservations = new ArrayList<>();
         if (reservationGenericList.getList().size() > 0) {
             for (Reservation reserv : reservationGenericList.getList()) {
