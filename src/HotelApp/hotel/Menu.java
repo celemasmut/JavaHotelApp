@@ -15,6 +15,7 @@ import HotelApp.util.State;
 import HotelApp.util.Status;
 
 import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -208,11 +209,11 @@ public class Menu {
     {
         String userName;
         String password;
-
         printOut.println("Insert user name:");
-        userName=scan.nextLine();
+        userName=scan.next();
+        scan.nextLine();
         printOut.println("Insert password:");
-        password=scan.nextLine();
+        password=scan.next();
         for (User aux: getUserGenericList().getList()) {
         if (userName.equals(aux.getLoginName()) && password.equals(aux.getPassword()))
         {
@@ -291,10 +292,10 @@ public class Menu {
                     }
                     if(arrival.isAfter(booking.getDayOfExit()) || arrival.isEqual(booking.getDayOfExit()))
                         return true;
+                }else if(room.getStateRoom() == State.AVAILABLE){
+                    return true;
                 }
             }
-            if(room.getStateRoom().equals(State.AVAILABLE))
-                return true;
         }
         return false;
     }
@@ -320,6 +321,20 @@ public class Menu {
         return null;
     }
 
+    private int setInt(){
+        int i=0;
+        do {
+            try {
+                i = scan.nextInt();
+            } catch (InputMismatchException e) {
+                printOut.println("Error in the input, try again , set a number");
+                i = 0;
+                scan.next();
+            }
+        }while (i==0);
+        return i;
+    }
+
     private LocalDate chooseArrivalDate(){
         printOut.println("Choose the arrival date yyyy/MM/dd");
         int month=0;
@@ -328,54 +343,49 @@ public class Menu {
         boolean flag= true;
         do {
             printOut.println("Year : ");
-            try {
-                year = scan.nextInt();
-                if (year < 2021 || year > 2024) {
-                    printOut.println("not acceptable year");
-                    flag = false;
-                }
-            } catch (InputMismatchException e) {
-                year = 0;
+            year= setInt();
+            flag = true;
+            if (year < 2021 || year > 2024) {
+                printOut.println("not acceptable year");
+                flag = false;
             }
             if (flag) {
-                try {
-                    printOut.println("Month : ");
-                    month = scan.nextInt();
-                    if (month < 1 || month > 12) {
-                        printOut.println("not acceptable month");
-                        flag = false;
+                printOut.println("Month : ");
+                month = setInt();
+                flag = true;
+                if (month < 1 || month > 12) {
+                    printOut.println("not acceptable month");
+                    flag = false;
                     }
-                } catch (InputMismatchException e) {
-                    month = 0;
                 }
                 if (flag) {
-                    try {
-                        printOut.println("Day : ");
-                        day = scan.nextInt();
-                        if (day < 1 || day > 30) {
-                            printOut.println("not acceptable day");
-                            flag = false;
+                    printOut.println("Day : ");
+                    day = setInt();
+                    flag = true;
+                    if (day < 1 || day > 30) {
+                        printOut.println("not acceptable day");
+                        flag = false;
                         }
-                    } catch (InputMismatchException e) {
-                        month = 0;
                     }
-                }
-            }
-        }while (!flag);
-
+                }while (!flag);
         return LocalDate.of(year,month,day);
     }
 
     private int setDaysOfStay(){
         printOut.println("Days of Stay:");
         int days=0;
-        try{
-            days=scan.nextInt();
-            if(days < 1 || days > 30){
-                printOut.println("not acceptable count of day");
+        while(days == 0) {
+            try {
+                printOut.println("Days of Stay:");
+                days = scan.nextInt();
+                if (days < 1 || days > 30) {
+                    printOut.println("not acceptable count of day");
+                    days=0;
+                }
+            } catch (InputMismatchException e) {
+                days = 0;
+                scan.next();
             }
-        }catch (InputMismatchException e){
-            days=0;
         }
         return days;
     }
@@ -406,10 +416,9 @@ public class Menu {
         printOut.println("Confirm pay : \n 1-Confirm \n 2-No Confirm");
         int confirm = toCaptureInt(2);
         if(confirm == 1){
-            reserv.getRoomToReserve().setStateRoom(State.RESERVED);
             reserv.setStatus(Status.CONFIRMED);
             Hotel.addReservation(reserv);
-            printOut.println(Hotel.getReservationGenericList().getList().get(0).toString());//ver la utilidad al ejecutar. si solo muestra la reserva cambiar linea
+            printOut.println(reserv);//ver la utilidad al ejecutar. si solo muestra la reserva cambiar linea
         }else if(confirm == 2){
             reserv = null;
             printOut.println("The reservation is deleted");
@@ -445,7 +454,7 @@ public class Menu {
     }
 
     private void showAvailableRooms(List<Room> r){
-        r.forEach(room -> printOut.println(r));
+        r.forEach(room -> printOut.println(room));
     }
 
     private void toBookARoom(String dniUser){
