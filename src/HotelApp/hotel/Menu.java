@@ -174,21 +174,18 @@ public class Menu {
         return false;
     }
 
-    public Receptionist findReceptionist(int fileNumber){
-        Receptionist find = null;
+    public User findReceptionist(int fileNumber){
         if(Hotel.getUserGenericList().getList().size() > 0 ){
             for (User user : Hotel.getUserGenericList().getList()){
                 if (user instanceof Receptionist)
                 {
                     if(((Receptionist) user).getFileNumber()==(fileNumber)) {
-                        int pos = findReceptionistInlist(fileNumber);
-                        find =(Receptionist) getUserGenericList().getList().get(pos);
-                        return find;
+                        return user;
                     }
                 }
             }
         }
-        return find;
+        return null;
     }
 
     private int findReceptionistInlist(int fileNumber){
@@ -208,42 +205,6 @@ public class Menu {
         }
         return pos;
     }
-
-    public Passenger findPassanger(String dniUser){
-        Passenger find = null;
-        if(Hotel.getUserGenericList().getList().size() > 0 ){
-            for (User user : Hotel.getUserGenericList().getList()){
-                if (user instanceof Passenger)
-                {
-                    if (((Passenger) user).getDni().equals(dniUser)) {
-                        int pos = findPassengerInlist(dniUser);
-                        find =(Passenger) getUserGenericList().getList().get(pos);
-                        return find;
-                    }
-                }
-            }
-        }
-        return find;
-    }
-
-    private int findPassengerInlist(String dniUser){
-    int pos = -1;
-    ///primero hago una lista de personas
-    List<Passenger> passengerList = new ArrayList<>();
-        for (User user : Hotel.getUserGenericList().getList()){
-            if (user instanceof Passenger) {
-               passengerList.add((Passenger)user);
-                }
-            }
-
-        for(int i = 0; i < passengerList.size() && pos==-1;i++){
-            if(passengerList.get(i).getDni().equals(dniUser)){
-                pos = i;
-                }
-            }
-    return pos;
-    }
-
 
     private int showLoginMenu(){
         printOut.println("1- Passenger");
@@ -892,7 +853,7 @@ public class Menu {
                     //backUp();
                     break;
                 case 7:
-                    //backUp();
+                    backUp();
                     break;
                 case 8:
                     exit = true;
@@ -1058,13 +1019,13 @@ public class Menu {
         boolean exit = false;
         int option;
         while (!exit) {
-            showAdminReservationMenu();
+            showAdminDeletMenu();
             option = scan.nextInt();
             switch (option) {
                 case 1:
                     printOut.println("Enter passenger dni");
-                    String dniUser = scan.toString();
-                    Passenger find = findPassanger(dniUser);
+                    String dniUser = scan.next();
+                    Passenger find =searchPassengerInList(dniUser);
                     if(find != null){
                         find.deleteLogic();
                     }
@@ -1073,7 +1034,7 @@ public class Menu {
                 case 2:
                     printOut.println("Enter receptionist file number");
                     int fileNumber = scan.nextInt();
-                    Receptionist findReceptionist = findReceptionist(fileNumber);
+                    Receptionist findReceptionist =(Receptionist) findReceptionist(fileNumber);
                     if(findReceptionist != null){
                         findReceptionist.deleteLogic();
                     }
@@ -1095,12 +1056,26 @@ public class Menu {
         }
     }
 
+    private int showAdminDeletMenu() {
+        printOut.println("1_Delete Passenger");
+        printOut.println("2_Delete Receptionist");
+        printOut.println("3_Show Delete Users");
+        printOut.println("4_Exit");
+        return 3;
+    }
+
     private void showListUsersDeleted(){
         for(User user: Hotel.getUserGenericList().getList()){
-            if(user instanceof Passenger || user instanceof Receptionist && user.getState() == 0){//significa que esta eliminado
-                printOut.println(user);
+            if(user instanceof Passenger || user instanceof Receptionist){//significa que esta eliminado
+                if(user.getState() == 0){
+                    printOut.println(user);
+                }
             }
         }
+    }
+
+    private void backUp(){
+
     }
 
 

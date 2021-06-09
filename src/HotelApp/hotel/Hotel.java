@@ -139,11 +139,8 @@ public class Hotel {
         for (Room roomAux : roomGenericList.getList()) {
             if(roomAux.getStateRoom().equals(State.IN_MAINTENANCE)){
                 System.out.println(roomAux.toString());
-                System.out.println(roomAux.toString());
-
             }
         }
-
 
     }
 
