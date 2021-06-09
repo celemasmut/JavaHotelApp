@@ -17,6 +17,7 @@ import HotelApp.util.Status;
 import java.io.PrintStream;
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -272,21 +273,31 @@ public class Menu {
             }while (!exit);
         }
     }
-    private void seeRoomFree(int option){
+    private List<Room> getAvailableRooms(LocalDate arrival, LocalDate leave){
+        List<Room> availableRoomsList = new ArrayList<>();
         for(Room room : Hotel.getRoomGenericList().getList()){
-            if( room.getStateRoom().equals(State.FREE)){
-                if(room instanceof SingleRoom&& option==1)
-                    printOut.println(room.toString());
-                if(room instanceof DoubleRoom&& option==2)
-                    printOut.println(room.toString());
-                if(room instanceof FamilyRoom&&option==3)
-                    printOut.println(room.toString());
-                if(room instanceof KingRoom&&option==4)
-                    printOut.println(room.toString());
+            if(isRoomAvailable(room,arrival,leave)){
+                availableRoomsList.add(room);
             }
         }
+        return availableRoomsList;
     }
-
+    private boolean isRoomAvailable(Room room,LocalDate arrival, LocalDate leave) {
+        if (room != null) {
+            for (Reservation booking : Hotel.getReservationGenericList().getList()) {
+                if (room.equals(booking.getRoomToReserve())) {
+                    if (arrival.isBefore(booking.getArrivalDay()) && leave.isBefore(booking.getArrivalDay()) || leave.isEqual(booking.getArrivalDay())) {
+                      return true;
+                    }
+                    if(arrival.isAfter(booking.getDayOfExit()) || arrival.isEqual(booking.getDayOfExit()))
+                        return true;
+                }
+            }
+            if(room.getStateRoom().equals(State.AVAILABLE))
+                return true;
+        }
+        return false;
+    }
     private int showMealPlan(){
         int i=1;
         for(MealPlan mealPlan : MealPlan.values()){
@@ -433,16 +444,19 @@ public class Menu {
         return i;
     }
 
+    private void showAvailableRooms(List<Room> r){
+        r.forEach(room -> printOut.println(r));
+    }
+
     private void toBookARoom(String dniUser){
-        int optionOfRoom=0;
         int dayOfStay = setDaysOfStay();
         LocalDate arrival = chooseArrivalDate();
-        optionOfRoom=toCaptureInt(showTypeOfRooms());
-        seeRoomFree(optionOfRoom);
+        LocalDate dayOfLeave = setDayOfExit(arrival,dayOfStay);
+        showAvailableRooms(getAvailableRooms(arrival,dayOfLeave));
         printOut.println("Insert number of room you want to book ");
         int room = scan.nextInt();
         scan.nextLine();
-        Reservation newReserv = toReserveRoom(arrival, setDayOfExit(arrival,dayOfStay), room, chooseMealPlan(),dniUser);
+        Reservation newReserv = toReserveRoom(arrival, dayOfLeave, room, chooseMealPlan(),dniUser);
         confirmReservation(newReserv, dayOfStay);
     }
 
@@ -678,8 +692,8 @@ public class Menu {
             }
             int dayOfStay = setDaysOfStay();
             LocalDate arrival = LocalDate.now();
-            optionOfRoom=toCaptureInt(showTypeOfRooms());
-            seeRoomFree(optionOfRoom);
+            LocalDate dayOfLeave = setDayOfExit(arrival,dayOfStay);
+            showAvailableRooms(getAvailableRooms(arrival,dayOfLeave));
             printOut.println("Insert number of room you want to reserve ");
             do {
                 try {
@@ -690,7 +704,7 @@ public class Menu {
             }while (numberOfRoom == 0);
             scan.nextLine();
             //reservar
-            Reservation newReserv = toReserveRoom(arrival, setDayOfExit(arrival,dayOfStay), numberOfRoom, chooseMealPlan(),dniUser);
+            Reservation newReserv = toReserveRoom(arrival, dayOfLeave, numberOfRoom, chooseMealPlan(),dniUser);
             Passenger passengerToRoom = searchPassengerInList(dniUser);
             result=changeStateOfRoom(passengerToRoom,newReserv.getRoomToReserve(),State.OCCUPIED);
 
@@ -727,7 +741,7 @@ public class Menu {
         if (reservationCheckOut!=null)
         {
             Passenger passengerToCheckOut=searchPassengerInList(dniPassenger);
-            result=changeStateOfRoom(passengerToCheckOut,reservationCheckOut.getRoomToReserve(),State.FREE);
+            result=changeStateOfRoom(passengerToCheckOut,reservationCheckOut.getRoomToReserve(),State.AVAILABLE);
             result=deleteReservationInList(reservationCheckOut);
 
 
