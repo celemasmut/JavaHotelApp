@@ -73,7 +73,7 @@ public class Menu {
     }
 
 
-    public void initiate(){
+    public void initiate() throws UserDoesNotExistException {
         int op;
         do{
             op= toCaptureInt(showFirstMenu());
@@ -214,7 +214,7 @@ public class Menu {
         return 4;
     }
 
-    private void login(){
+    private void login() throws UserDoesNotExistException {
         User userToLogin=userLogin();
         if(userToLogin.getState()==1){//si esta activo
             if (userToLogin instanceof Passenger)
@@ -832,7 +832,7 @@ public class Menu {
         return 8;
     }
 
-    private void admin() {
+    private void admin() throws UserDoesNotExistException {
         boolean exit = false;
         int option;
         while (!exit) {
@@ -854,7 +854,7 @@ public class Menu {
                     deleteUsers();
                     break;
                 case 6:
-                    //backUp();
+                    showUsers();
                     break;
                 case 7:
                     backUp();
@@ -1082,9 +1082,12 @@ public class Menu {
         SaveInfoUsers saveinfo = new SaveInfoUsers();
         DataFile data= new DataFile();
 
+        printOut.println("creating backup ...");
+        saveinfo=data.readInfo("files/users.json");
         data.writeInfo(saveinfo, "files/backUpUsers.json ");
         data.writeJsonBookings(Hotel.getReservationGenericList().getList(),"files/backUpBooking.json");
         data.writeJsonRooms(Hotel.getRoomGenericList().getList(),"files/backUpRoom.json");
-        
+        printOut.println("finalized");
+
     }
 }

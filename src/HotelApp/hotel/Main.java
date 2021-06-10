@@ -1,12 +1,13 @@
 package HotelApp.hotel;
 
 import HotelApp.datafile.DataFile;
+import HotelApp.exception.UserDoesNotExistException;
 import HotelApp.model.users.Admin;
 import HotelApp.model.users.Passenger;
 import HotelApp.model.users.Receptionist;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws UserDoesNotExistException {
         DataFile dataFile = new DataFile();
         Hotel hotelPrueba= new Hotel();
 
