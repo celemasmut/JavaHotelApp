@@ -12,12 +12,4 @@ public class KingRoom extends Room {
     }
 
 
- /*   @Override
-    public String toString() {
-        return "『 ----------------------------------------" +
-                "\n Type: King Room " +'\n'
-                + super.toString()+
-                "\n------------------------------------------』";
-
-    }*/
 }

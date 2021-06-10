@@ -32,6 +32,11 @@ public class Hotel {
 
     }
 
+    public void menu(){
+        Menu menu = new Menu();
+        menu.initiate();
+    }
+
     public static GenericList<User> getUserGenericList() {
         return userGenericList;
     }

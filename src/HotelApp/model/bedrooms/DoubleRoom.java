@@ -11,11 +11,4 @@ public class DoubleRoom extends Room{
     }
 
 
-/*    @Override
-   public String toString() {
-        return "『 ----------------------------------------" +
-                "\n Type: Double Room" +'\n'
-                + super.toString()+
-                "\n------------------------------------------』";
-    }*/
 }

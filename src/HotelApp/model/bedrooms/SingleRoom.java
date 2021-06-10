@@ -10,13 +10,4 @@ public class SingleRoom extends Room{
         super( stateRoom, numberOfBeds, price);
         setTypeRoom("SingleRoom");
     }
-
-
- /*   @Override
-    public String toString() {
-        return "『 ----------------------------------------" +
-                "\n Type: Single Room" +'\n'
-                + super.toString()+
-                "\n------------------------------------------』";
-    }*/
 }

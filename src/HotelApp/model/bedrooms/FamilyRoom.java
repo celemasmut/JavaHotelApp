@@ -11,13 +11,5 @@ public class FamilyRoom extends Room{
     }
 
 
-  /*  @Override
-    public String toString() {
-        return "『 ----------------------------------------" +
-                "\n Type: Family Room " +'\n'
-                + super.toString()+
-                "\n------------------------------------------』";
-
-    }*/
 }
 
