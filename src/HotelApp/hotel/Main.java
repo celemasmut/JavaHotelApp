@@ -52,22 +52,22 @@ public class Main {
 
         Hotel.addRoomToList(knroom);
         Hotel.addRoomToList(knroom2);
-        Hotel.addRoomToList(knroom3);*/
+        Hotel.addRoomToList(knroom3);
         SaveTypeRoom saveRooms = new SaveTypeRoom();
        // saveRooms.addRoomsToList(Hotel.getRoomGenericList().getList());
         //dataFile.writeJsonRooms(saveRooms,"files/room.json");
      saveRooms = dataFile.readRoomJson("files/room.json");
      Hotel.addRoomsToList(saveRooms);
 
-     Hotel.showListOfRoom();
+     Hotel.showListOfRoom();*/
 
 
 
      // dataFile.writeJsonRooms(Hotel.getRoomGenericList().getList(),"files/room.json");
 
-      // Menu menu = new Menu();
-       // menu.initiate();
-      //  dataFile.writeJsonBookings(Hotel.getReservationGenericList().getList(),"files/booking.json");
+     Menu menu = new Menu();
+        menu.initiate();
+      // dataFile.writeJsonBookings(Hotel.getReservationGenericList().getList(),"files/booking.json");
 
 
     }

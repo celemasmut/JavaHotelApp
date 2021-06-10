@@ -7,16 +7,17 @@ public class FamilyRoom extends Room{
 
     public FamilyRoom(State stateRoom, int numberOfBeds, double price) {
         super( stateRoom, numberOfBeds, price);
+        setTypeRoom("Family Room");
     }
 
 
-    @Override
+  /*  @Override
     public String toString() {
         return "『 ----------------------------------------" +
                 "\n Type: Family Room " +'\n'
                 + super.toString()+
                 "\n------------------------------------------』";
 
-    }
+    }*/
 }
 

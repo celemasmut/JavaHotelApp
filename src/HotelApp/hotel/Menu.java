@@ -2,6 +2,7 @@ package HotelApp.hotel;
 
 import HotelApp.datafile.DataFile;
 import HotelApp.datafile.SaveInfoUsers;
+import HotelApp.datafile.SaveTypeRoom;
 import HotelApp.exception.*;
 import HotelApp.model.bedrooms.*;
 import HotelApp.model.reservation.Reservation;
@@ -37,15 +38,20 @@ public class Menu {
         SaveInfoUsers saveinfo = new SaveInfoUsers();
         saveinfo=dataFile.readInfo("files/user.json");
         addUsersToList(saveinfo);
-        //setRoom(dataFile.readRoomJson("files/room.json"));
-        showListOfRoom();
+        SaveTypeRoom saveRooms = new SaveTypeRoom();
+        saveRooms = dataFile.readRoomJson("files/room.json");
+        addRoomsToList(saveRooms);
+        setReservationGenericList(dataFile.readReservationJson("files/booking.json"));
         printOut = System.out;
     }
 
     private void saveInfo(){
         SaveInfoUsers saveinfo = new SaveInfoUsers();
         saveinfo.addUsers(getUserGenericList().getList());
-       // dataFile.writeInfo(saveinfo,"files/user.json");
+        dataFile.writeInfo(saveinfo,"files/user.json");
+        SaveTypeRoom saveRooms = new SaveTypeRoom();
+        saveRooms.addRoomsToList(Hotel.getRoomGenericList().getList());
+        dataFile.writeJsonRooms(saveRooms,"files/room.json");
         dataFile.writeJsonBookings(getReservationGenericList().getList(),"files/booking.json");
     }
 
@@ -88,7 +94,11 @@ public class Menu {
                     }
                     break;
                 case 2:
-                    login();
+                    try {
+                        login();
+                    } catch (UserDoesNotExistException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case 3:
                     printOut.println("Good Bye !! See you soon!!");
@@ -218,28 +228,22 @@ public class Menu {
         return 4;
     }
 
-    private void login() {
+    private void login() throws UserDoesNotExistException {
         User userToLogin= null;
-        try {
-            userToLogin = userLogin();
-        } catch (UserDoesNotExistException e) {
-            e.printStackTrace();
-        }
-        if(userToLogin.getState()==1){//si esta activo
-            if (userToLogin instanceof Passenger)
-            {
-                passenger((Passenger) userToLogin);
-            }else if (userToLogin instanceof Receptionist)
-            {
-                receptionist();
+        userToLogin = userLogin();
+        if(userToLogin != null) {
+            if (userToLogin.getState() == 1) {
+                if (userToLogin instanceof Passenger) {
+                    passenger((Passenger) userToLogin);
+                } else if (userToLogin instanceof Receptionist) {
+                    receptionist();
+                }
+                if (userToLogin instanceof Admin) {
+                    admin();
+                }
             }
-            if (userToLogin instanceof Admin)
-            {
-                admin();
-            }
-        }
-        else{
-            printOut.println("This user was removed");
+        }else{
+            throw new UserDoesNotExistException("The user does not exist, please first go to register");
         }
     }
 
@@ -258,7 +262,7 @@ public class Menu {
                     return aux;
                 }
             }
-        }else{
+        }else {
             throw new UserDoesNotExistException("The user does not exist, please first go to register");
         }
         return null;
@@ -276,8 +280,6 @@ public class Menu {
     private void showListReservation(String dniUser){
         try {
             Hotel.getPassengerReservations(dniUser).forEach(ob -> printOut.println(ob.toString()));
-        }catch (UserDoesNotExistException e){
-            e.printStackTrace();
         }catch (ReservationNotFoundException e){
             e.printStackTrace();
         }
@@ -305,9 +307,7 @@ public class Menu {
                                     reservationChosenMenu(reservationChosen);
                                 }
                             }
-                        } catch (UserDoesNotExistException e) {
-                            e.printStackTrace();
-                        } catch (ReservationNotFoundException e) {
+                        }  catch (ReservationNotFoundException e) {
                             e.printStackTrace();
                         }
                         break;
@@ -533,17 +533,13 @@ public class Menu {
             cant = showReservationByStatus(Hotel.getStatusReservations(Hotel.getPassengerReservations(dniUser),status));
         } catch (ReservationNotFoundException e) {
             e.printStackTrace();
-        } catch (UserDoesNotExistException e) {
-            e.printStackTrace();
         }
         if(cant > 0) {
             printOut.println("Choose the reservation you want to check");
             int index = toCaptureInt(cant);
             try {
                 return Hotel.getStatusReservations(Hotel.getPassengerReservations(dniUser), status).get(index - 1);
-            } catch (UserDoesNotExistException e) {
-                e.printStackTrace();
-            } catch (ReservationNotFoundException e) {
+            }  catch (ReservationNotFoundException e) {
                 e.printStackTrace();
             }
         }
@@ -605,7 +601,9 @@ public class Menu {
         printOut.println("1 - Cancel a reservation");
         printOut.println("2 - Add an order");
         printOut.println("3 - Check your consumptions");
-        return  3;
+        printOut.println("3 - exit");
+
+        return  4;
     }
     private void checkPassengerConsumptions(Reservation reservationChosen) throws ProductNotFoundException{
         if(reservationChosen.getRoomToReserve().getConsumed().size() > 0) {
@@ -713,8 +711,6 @@ public class Menu {
                                 reservationChosenMenu(reservationChosen);
                             }
                         }
-                    } catch (UserDoesNotExistException e) {
-                        e.printStackTrace();
                     } catch (ReservationNotFoundException e) {
                         e.printStackTrace();
                     }

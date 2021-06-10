@@ -111,14 +111,6 @@ public class Hotel {
     protected static void showListOfRoom() {
         for (Room roomAux : roomGenericList.getList()) {
             System.out.println(roomAux.toString());
-          /*  if(roomAux instanceof SingleRoom)
-                System.out.println(roomAux.toString());
-            if(roomAux instanceof DoubleRoom)
-                System.out.println(roomAux.toString());
-            if(roomAux instanceof FamilyRoom)
-                System.out.println(roomAux.toString());
-            if(roomAux instanceof KingRoom)
-                System.out.println(roomAux.toString());*/
         }
     }
 
@@ -130,15 +122,13 @@ public class Hotel {
         }
     }
 
-    protected static List<Reservation> getPassengerReservations(String dni) throws UserDoesNotExistException, ReservationNotFoundException{
+    protected static List<Reservation> getPassengerReservations(String dni) throws ReservationNotFoundException{
         List<Reservation> passengerReservations = new ArrayList<>();
         if (reservationGenericList.getList().size() > 0) {
             for (Reservation reserv : reservationGenericList.getList()) {
                 if (reserv.getDniPassenger().equals(dni)) {
                     if (reserv.getStatus() != Status.CANCELLED)
                         passengerReservations.add(reserv);
-                }else{
-                    throw new UserDoesNotExistException("Passenger does not exist");
                 }
             }
         }else{

@@ -1,6 +1,6 @@
 package HotelApp.model.reservation;
 
-import HotelApp.model.bedrooms.Room;
+import HotelApp.model.bedrooms.*;
 import HotelApp.util.LocalDateDeserializer;
 import HotelApp.util.LocalDateSerializer;
 import HotelApp.util.MealPlan;
@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import java.awt.event.WindowStateListener;
 import java.time.LocalDate;
 
 public class Reservation {
@@ -91,18 +92,33 @@ public class Reservation {
         }
         return totalPriceReservation;
     }
+    private String showRoom(){
+        if(roomToReserve instanceof SingleRoom){
+            return ((SingleRoom)roomToReserve).toString();
+        }
+        if(roomToReserve instanceof DoubleRoom){
+            return ((DoubleRoom)roomToReserve).toString();
+        }
+        if(roomToReserve instanceof FamilyRoom){
+            return ((FamilyRoom)roomToReserve).toString();
+        }
+        if(roomToReserve instanceof KingRoom){
+            return ((KingRoom)roomToReserve).toString();
+        }
+        return null;
+    }
 
     @Override
     public String toString() {
         return "『 ----------------------------------------" +
                 "\n Reservation : " +
-                "\n dniPassenger='" + dniPassenger  +
-                "\n roomToReserve=" + roomToReserve +
-                "\n arrivalDay=" + arrivalDay +
-                "\n dayOfExit=" + dayOfExit +
-                "\n plan=" + plan +
-                "\n status=" + status +
-                "------------------------------------------』";
+                "\n dniPassenger ='" + dniPassenger  +
+                "\n roomToReserve = \n" + getRoomToReserve().toString() +
+                "\n arrivalDay =" + arrivalDay +
+                "\n dayOfExit =" + dayOfExit +
+                "\n plan =" + plan +
+                "\n status =" + status +
+                "\n------------------------------------------』";
 
     }
 }

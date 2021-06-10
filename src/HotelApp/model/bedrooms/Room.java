@@ -17,10 +17,7 @@ public class  Room  {
     private double price;
     private List<ProductToConsume>consumed =new ArrayList<>();
     private static int count = 1;
-
-
-
-
+    private String typeRoom;
 
     public Room() { }
 
@@ -31,6 +28,13 @@ public class  Room  {
         this.price = price;
     }
 
+    public String getTypeRoom() {
+        return typeRoom;
+    }
+
+    public void setTypeRoom(String typeRoom) {
+        this.typeRoom = typeRoom;
+    }
     public Passenger getOccupant() {
         return occupant;
     }
@@ -82,12 +86,16 @@ public class  Room  {
 
     @Override
     public String toString() {
-        return " occupant=" + occupant +
+        return "『 ----------------------------------------" +
+                "\n Type: " + typeRoom +
+                "\n occupant=" + occupant +
                 "\n roomNumber='" + roomNumber  +
                 "\n stateRoom=" + stateRoom +
                 "\n numberOfBeds=" + numberOfBeds +
                 "\n price=" + price +
-                "\n consumed=" + consumed ;
+                "\n consumed=" + consumed+
+                "\n------------------------------------------』";
+
     }
 
 }
