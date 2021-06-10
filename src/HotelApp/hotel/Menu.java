@@ -307,8 +307,11 @@ public class Menu {
             if (Hotel.getReservationGenericList().getList().size() > 0) {
                 for (Reservation booking : Hotel.getReservationGenericList().getList()) {
                     if (room.equals(booking.getRoomToReserve())) {
-                        if (booking.getArrivalDay().isBefore(leave)) {
+                        if ( booking.getArrivalDay().isBefore(arrival) && booking.getDayOfExit().isAfter(leave)) {
                             return false;
+                        }
+                        if(booking.getDayOfExit().isBefore(arrival) || booking.getDayOfExit().isEqual(arrival)){
+                            return true;
                         }
                         if(booking.getDayOfExit().isAfter(arrival) && booking.getDayOfExit().isBefore(leave)){
                             return false;
@@ -475,13 +478,30 @@ public class Menu {
         r.forEach(room -> printOut.println(room.toString()));
     }
 
+    private int confirmAvailableRoomChoosen(List<Room> availableRooms){
+       int roomNumber=0;
+        do {
+             roomNumber = setInt();
+            for (Room room : availableRooms) {
+                if (roomNumber == room.getRoomNumber()) {
+                    return roomNumber;
+                }
+            }
+            printOut.println("That room number does not exist or is not available");
+            roomNumber=0;
+        }while (roomNumber == 0);
+        return roomNumber;
+    }
+
     private void toBookARoom(String dniUser){
         int dayOfStay = setDaysOfStay();
         LocalDate arrival = chooseArrivalDate();
         LocalDate dayOfLeave = setDayOfExit(arrival,dayOfStay);
-        showAvailableRooms(getAvailableRooms(arrival,dayOfLeave));
+        List<Room> availableRooms;
+        availableRooms = getAvailableRooms(arrival,dayOfLeave);
+        showAvailableRooms(availableRooms);
         printOut.println("Insert number of room you want to book ");
-        int room = scan.nextInt();
+        int room = confirmAvailableRoomChoosen(availableRooms);
         scan.nextLine();
         Reservation newReserv = toReserveRoom(arrival, dayOfLeave, room, chooseMealPlan(),dniUser);
         confirmReservation(newReserv, dayOfStay);
