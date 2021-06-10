@@ -3,6 +3,8 @@ import HotelApp.util.State;
 
 public class DoubleRoom extends Room{
 
+    public DoubleRoom(){}
+
     public DoubleRoom(State stateRoom, int numberOfBeds, double price) {
         super(stateRoom, numberOfBeds, price);
     }
@@ -10,7 +12,9 @@ public class DoubleRoom extends Room{
 
     @Override
     public String toString() {
-
-        return super.toString();
+        return "『 ----------------------------------------" +
+                "\n Type: Double Room" +'\n'
+                + super.toString()+
+                "\n------------------------------------------』";
     }
 }

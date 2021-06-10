@@ -1,9 +1,10 @@
 package HotelApp.hotel;
 
 import HotelApp.datafile.SaveInfoUsers;
+import HotelApp.datafile.SaveTypeRoom;
 import HotelApp.exception.ReservationNotFoundException;
 import HotelApp.exception.UserDoesNotExistException;
-import HotelApp.model.bedrooms.Room;
+import HotelApp.model.bedrooms.*;
 import HotelApp.model.reservation.Reservation;
 import HotelApp.model.users.Admin;
 import HotelApp.model.users.Passenger;
@@ -79,11 +80,14 @@ public class Hotel {
         return true;
     }
 
-    protected static Passenger searchPassengerInList(String dni) {
+    protected static Passenger searchPassengerInList(String dni) throws UserDoesNotExistException {
         for (User userAux : userGenericList.getList()) {
             if (userAux instanceof Passenger) {
-                if (((Passenger) userAux).getDni().equals(dni))
+                if (((Passenger) userAux).getDni().equals(dni)){
                     return (Passenger) userAux;
+                }else{
+                    throw new UserDoesNotExistException("The user does not exist, please register");
+                }
             }
         }
         return null;
@@ -107,41 +111,23 @@ public class Hotel {
     protected static void showListOfRoom() {
         for (Room roomAux : roomGenericList.getList()) {
             System.out.println(roomAux.toString());
+          /*  if(roomAux instanceof SingleRoom)
+                System.out.println(roomAux.toString());
+            if(roomAux instanceof DoubleRoom)
+                System.out.println(roomAux.toString());
+            if(roomAux instanceof FamilyRoom)
+                System.out.println(roomAux.toString());
+            if(roomAux instanceof KingRoom)
+                System.out.println(roomAux.toString());*/
         }
     }
 
-    protected static void showListOfRoomXState(){
+    protected static void showListOfRoomXState(State state){
         for (Room roomAux : roomGenericList.getList()) {
-            if (roomAux.getStateRoom().equals(State.AVAILABLE)) {
-                System.out.println("Free:");
-                System.out.println(roomAux.toString());
+            if (roomAux.getStateRoom().equals(state)) {
+                System.out.println(roomAux);
             }
         }
-
-        for (Room roomAux : roomGenericList.getList()) {
-            if (roomAux.getStateRoom().equals(State.RESERVED)) {
-                System.out.println(roomAux.toString());
-            }
-        }
-
-        for (Room roomAux : roomGenericList.getList()) {
-            if(roomAux.getStateRoom().equals(State.OCCUPIED)){
-                System.out.println(roomAux.toString());
-            }
-        }
-
-        for (Room roomAux : roomGenericList.getList()) {
-            if(roomAux.getStateRoom().equals(State.CLEANING)){
-                System.out.println(roomAux.toString());
-            }
-        }
-
-        for (Room roomAux : roomGenericList.getList()) {
-            if(roomAux.getStateRoom().equals(State.IN_MAINTENANCE)){
-                System.out.println(roomAux.toString());
-            }
-        }
-
     }
 
     protected static List<Reservation> getPassengerReservations(String dni) throws UserDoesNotExistException, ReservationNotFoundException{
@@ -220,13 +206,13 @@ public class Hotel {
                 i++;
                 System.out.println(userAux.toString());
             }
-            System.out.println("Cantidad de usuarios:" + i);
+            System.out.println("Total users :" + i);
         }else{
             throw new UserDoesNotExistException("There is not user to show");
         }
     }
 
-    protected static void addToList(SaveInfoUsers infoToAdd) {
+    protected static void addUsersToList(SaveInfoUsers infoToAdd) {
         for (Admin adminToAdd : infoToAdd.getListAdmin()) {
             userGenericList.addToList(adminToAdd);
 
@@ -240,6 +226,21 @@ public class Hotel {
 
         }
 
+    }
+
+    protected static void addRoomsToList(SaveTypeRoom roomList){
+        for(SingleRoom room : roomList.getSingleRoomList()){
+            roomGenericList.addToList(room);
+        }
+        for(DoubleRoom room : roomList.getDoubleRoomList()){
+            roomGenericList.addToList(room);
+        }
+        for(FamilyRoom room : roomList.getFamilyRoomList()){
+            roomGenericList.addToList(room);
+        }
+        for(KingRoom room : roomList.getKingRoomList()){
+            roomGenericList.addToList(room);
+        }
     }
 
 

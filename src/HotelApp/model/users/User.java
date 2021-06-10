@@ -39,8 +39,8 @@ public abstract class User  {
         this.password = password;
     }
 
-    public int deleteLogic(){
-        return this.state = 0; /// 0 == eliminado logico
+    public void deleteLogic(){
+         this.state = 0; /// 0 == eliminado logico
     }
 
     public int getState() {

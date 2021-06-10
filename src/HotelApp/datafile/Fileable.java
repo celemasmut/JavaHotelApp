@@ -8,13 +8,13 @@ import java.util.List;
 public interface Fileable {
      void writeJsonBookings(List<Reservation> reservationList, String nameFile)throws IOException;
 
-      void writeJsonRooms(List<Room> rooms, String fileName)throws IOException;
+      void writeJsonRooms(SaveTypeRoom infoRooms, String fileName)throws IOException;
 
 
      List<Reservation> readReservationJson(String fileName)throws IOException;
 
 
-     List<Room> readRoomJson(String fileName)throws IOException;
+     SaveTypeRoom readRoomJson(String fileName)throws IOException;
 
      void writeInfo (SaveInfoUsers infoToSave, String fileName)throws IOException;
 

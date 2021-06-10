@@ -1,6 +1,5 @@
 package HotelApp.datafile;
 
-import HotelApp.model.bedrooms.Room;
 import HotelApp.model.reservation.Reservation;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -14,28 +13,32 @@ public class DataFile implements Fileable  {
     }
     @Override
     public  void writeJsonBookings(List<Reservation> reservationList,String nameFile){
-        try{
-            File file = new File(nameFile);
-            if(!file.exists()){
-                file.createNewFile();
-            }
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.writerWithDefaultPrettyPrinter().writeValue(file,reservationList);
-        }catch (IOException e){
-            e.printStackTrace();
-        }
+       if(reservationList != null) {
+           try {
+               File file = new File(nameFile);
+               if (!file.exists()) {
+                   file.createNewFile();
+               }
+               ObjectMapper mapper = new ObjectMapper();
+               mapper.writerWithDefaultPrettyPrinter().writeValue(file, reservationList);
+           } catch (IOException e) {
+               e.printStackTrace();
+           }
+       }
     }
     @Override
-    public  void writeJsonRooms(List<Room> rooms, String fileName){
-        try{
-            File file = new File((fileName));
-            if(!file.exists()){
-                file.createNewFile();
+    public  void writeJsonRooms(SaveTypeRoom infoRooms, String fileName){
+        if(infoRooms != null) {
+            try {
+                File file = new File((fileName));
+                if (!file.exists()) {
+                    file.createNewFile();
+                }
+                ObjectMapper mapper = new ObjectMapper();
+                mapper.writerWithDefaultPrettyPrinter().writeValue(file, infoRooms);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.writerWithDefaultPrettyPrinter().writeValue(file,rooms);
-        }catch (IOException e){
-            e.printStackTrace();
         }
     }
     @Override
@@ -53,23 +56,22 @@ public class DataFile implements Fileable  {
         return reservationList;
     }
     @Override
-    public  List<Room> readRoomJson(String fileName){
-        List<Room> roomList = new ArrayList<>();
+    public  SaveTypeRoom readRoomJson(String fileName){
+        SaveTypeRoom infoRooms = new SaveTypeRoom();
         try {
             File file = new File(fileName);
             if(file.exists()){
                 ObjectMapper mapper = new ObjectMapper();
-                roomList = mapper.readValue(file,mapper.getTypeFactory().constructCollectionType(List.class,Room.class));
+                infoRooms = mapper.readValue(file,SaveTypeRoom.class);
             }
         }catch (IOException e){
             e.printStackTrace();
         }
 
-        return roomList;
+        return infoRooms;
     }
     @Override
-    public void writeInfo (SaveInfoUsers infoToSave, String fileName)
-    {
+    public void writeInfo (SaveInfoUsers infoToSave, String fileName){
         try{
             File file = new File((fileName));
             if(!file.exists()){

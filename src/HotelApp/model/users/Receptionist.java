@@ -22,9 +22,9 @@ public class Receptionist extends User{
 
     @Override
     public String toString() {
-        return "Receptionist{" +
-                "user= '" +this.getLoginName() + '\''+
-                ", fileNumber= '" + fileNumber +'\''+
-                '}';
+        return "『 ----------------------------------------" +
+                "\n Receptionist :" +this.getLoginName() +
+                "\n fileNumber= '" + fileNumber +
+                "\n------------------------------------------』";
     }
 }

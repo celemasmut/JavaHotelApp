@@ -82,33 +82,12 @@ public class  Room  {
 
     @Override
     public String toString() {
-        return "Room{" +
-                "occupant=" + occupant +
-                ", roomNumber='" + roomNumber + '\'' +
-                ", stateRoom=" + stateRoom +
-                ", numberOfBeds=" + numberOfBeds +
-                ", price=" + price +
-                ", consumed=" + consumed +
-                '}';
+        return " occupant=" + occupant +
+                "\n roomNumber='" + roomNumber  +
+                "\n stateRoom=" + stateRoom +
+                "\n numberOfBeds=" + numberOfBeds +
+                "\n price=" + price +
+                "\n consumed=" + consumed ;
     }
 
-    /*@Override
-    public boolean addToList(ProductToConsume algo) {
-        return false;
-    }
-
-    @Override
-    public boolean deleteFromList(ProductToConsume algo) {
-        return false;
-    }
-
-    @Override
-    public int searchInList(String name) {
-        return 0;
-    }
-
-    @Override
-    public void showList(List<ProductToConsume> list) {
-
-    }*/
 }

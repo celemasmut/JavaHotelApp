@@ -15,7 +15,6 @@ import HotelApp.util.State;
 import HotelApp.util.Status;
 
 import java.io.PrintStream;
-import java.io.PrintWriter;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -28,21 +27,26 @@ import static HotelApp.hotel.Hotel.*;
 
 public class Menu {
     private PrintStream printOut;
+    DataFile dataFile= new DataFile();
+
 
     Scanner scan = new Scanner(System.in);
 
 
     public Menu(){
         SaveInfoUsers saveinfo = new SaveInfoUsers();
-        DataFile dataFile= new DataFile();
-        setRoom(dataFile.readRoomJson("files/room.json"));
-
-        ///writeInfo(saveinfo,"files/users.json");
-        saveinfo=dataFile.readInfo("files/users.json");
-        addToList(saveinfo);
-        setReservationGenericList(dataFile.readReservationJson("files/booking.json"));
-
+        saveinfo=dataFile.readInfo("files/user.json");
+        addUsersToList(saveinfo);
+        //setRoom(dataFile.readRoomJson("files/room.json"));
+        showListOfRoom();
         printOut = System.out;
+    }
+
+    private void saveInfo(){
+        SaveInfoUsers saveinfo = new SaveInfoUsers();
+        saveinfo.addUsers(getUserGenericList().getList());
+       // dataFile.writeInfo(saveinfo,"files/user.json");
+        dataFile.writeJsonBookings(getReservationGenericList().getList(),"files/booking.json");
     }
 
     private int toCaptureInt(int options){
@@ -87,8 +91,8 @@ public class Menu {
                     login();
                     break;
                 case 3:
-                default:
-                    printOut.println("Wrong option");
+                    printOut.println("Good Bye !! See you soon!!");
+                    saveInfo();
                     break;
             }
         }while (op != 3);
@@ -137,7 +141,7 @@ public class Menu {
         }
     }
        ///unicamente lo puede registrar un administrador
-    public void registerRecepcionist(){
+    public void registerReceptionist(){
         printOut.println("Insert file number: ");
         int fileNumber = scan.nextInt();
         boolean exist = validateRecepcionist(fileNumber);
@@ -172,7 +176,7 @@ public class Menu {
         return false;
     }
 
-    public User findReceptionist(int fileNumber){
+    public User findReceptionist(int fileNumber)throws UserDoesNotExistException{
         if(Hotel.getUserGenericList().getList().size() > 0 ){
             for (User user : Hotel.getUserGenericList().getList()){
                 if (user instanceof Receptionist)
@@ -182,6 +186,8 @@ public class Menu {
                     }
                 }
             }
+        }else{
+            throw new UserDoesNotExistException("The receptionist does not exist");
         }
         return null;
     }
@@ -213,7 +219,12 @@ public class Menu {
     }
 
     private void login() {
-        User userToLogin=userLogin();
+        User userToLogin= null;
+        try {
+            userToLogin = userLogin();
+        } catch (UserDoesNotExistException e) {
+            e.printStackTrace();
+        }
         if(userToLogin.getState()==1){//si esta activo
             if (userToLogin instanceof Passenger)
             {
@@ -232,7 +243,7 @@ public class Menu {
         }
     }
 
-    private User userLogin ()
+    private User userLogin () throws UserDoesNotExistException
     {
         String userName;
         String password;
@@ -241,11 +252,14 @@ public class Menu {
         scan.nextLine();
         printOut.println("Insert password:");
         password=scan.next();
-        for (User aux: getUserGenericList().getList()) {
-        if (userName.equals(aux.getLoginName()) && password.equals(aux.getPassword()))
-        {
-            return aux;
-        }
+        if(getUserGenericList().getList() != null) {
+            for (User aux : getUserGenericList().getList()) {
+                if (userName.equals(aux.getLoginName()) && password.equals(aux.getPassword())) {
+                    return aux;
+                }
+            }
+        }else{
+            throw new UserDoesNotExistException("The user does not exist, please first go to register");
         }
         return null;
     }
@@ -279,14 +293,7 @@ public class Menu {
                         toBookARoom(passenger.getDni());
                         break;
                     case 2:
-                        try {
-                            Hotel.getPassengerReservations(passenger.getDni()).forEach(ob -> printOut.println(ob.toString()));
-                        } catch (UserDoesNotExistException e) {
-                            e.printStackTrace();
-                        } catch (ReservationNotFoundException e) {
-                            e.printStackTrace();
-                        }
-                        showListReservation(passenger.getDni());
+                       showListReservation(passenger.getDni());
                         break;
                     case 3:
                         try {
@@ -417,7 +424,6 @@ public class Menu {
     }
 
     private int setDaysOfStay(){
-        printOut.println("Days of Stay:");
         int days=0;
         while(days == 0) {
             try {
@@ -491,7 +497,7 @@ public class Menu {
     }
 
     private void showAvailableRooms(List<Room> r){
-        r.forEach(room -> printOut.println(room));
+        r.forEach(room -> printOut.println(room.toString()));
     }
 
     private void toBookARoom(String dniUser){
@@ -751,7 +757,12 @@ public class Menu {
             scan.nextLine();
             //reservar
             Reservation newReserv = toReserveRoom(arrival, dayOfLeave, numberOfRoom, chooseMealPlan(),dniUser);
-            Passenger passengerToRoom = searchPassengerInList(dniUser);
+            Passenger passengerToRoom = null;
+            try {
+                passengerToRoom = searchPassengerInList(dniUser);
+            } catch (UserDoesNotExistException e) {
+                e.printStackTrace();
+            }
             result=changeStateOfRoom(passengerToRoom,newReserv.getRoomToReserve(),State.OCCUPIED);
 
 
@@ -762,7 +773,12 @@ public class Menu {
             Reservation reservToActivate=searchReservationInList(dniUser);
             if (reservToActivate!=null)
             {
-                Passenger passengerToRoom=searchPassengerInList(dniUser);
+                Passenger passengerToRoom= null;
+                try {
+                    passengerToRoom = searchPassengerInList(dniUser);
+                } catch (UserDoesNotExistException e) {
+                    e.printStackTrace();
+                }
                 result=changeStateOfRoom(passengerToRoom,reservToActivate.getRoomToReserve(),State.OCCUPIED);
             }else {
                 printOut.println("There is no coincidence with DNI");
@@ -786,7 +802,12 @@ public class Menu {
         }
         if (reservationCheckOut!=null)
         {
-            Passenger passengerToCheckOut=searchPassengerInList(dniPassenger);
+            Passenger passengerToCheckOut= null;
+            try {
+                passengerToCheckOut = searchPassengerInList(dniPassenger);
+            } catch (UserDoesNotExistException e) {
+                e.printStackTrace();
+            }
             result=changeStateOfRoom(passengerToCheckOut,reservationCheckOut.getRoomToReserve(),State.AVAILABLE);
             result=deleteReservationInList(reservationCheckOut);
 
@@ -874,11 +895,10 @@ public class Menu {
         boolean exit = false;
         int option;
         while (!exit) {
-            showRegisterAllMenu();
-            option = scan.nextInt();
+            option = toCaptureInt(showRegisterAllMenu());
             switch (option) {
                 case 1:
-                    registerRecepcionist();
+                    registerReceptionist();
                     break;
                 case 2:
                     try {
@@ -894,27 +914,31 @@ public class Menu {
 
         }
     }
-    private void showRegisterAllMenu() {
+    private int showRegisterAllMenu() {
         printOut.println("1_Register receptionist ");
-        printOut.println("2_Register passanger");
+        printOut.println("2_Register passenger");
         printOut.println("3_Exit");
+        return 3;
     }
 
     private void optionsRooms(){
         boolean exit = false;
         int option;
         while (!exit) {
-            showAdminRoomMenu();
-            option = scan.nextInt();
+            option = toCaptureInt(showAdminRoomMenu());
             switch (option) {
                 case 1:
-                    showListOfRoomXState();
+                    showListOfRoomXState(State.AVAILABLE);
+                    showListOfRoomXState(State.CLEANING);
+                    showListOfRoomXState(State.OCCUPIED);
+                    showListOfRoomXState(State.IN_MAINTENANCE);
+                    showListOfRoomXState(State.RESERVED);
                     ///mostrar lista de habitaciones
                     break;
                 case 2:
                     int numberRoom;
                     printOut.println("Enter room number");
-                    numberRoom = scan.nextInt();
+                    numberRoom = setInt();
                     changeStateRoom(numberRoom);
                     //cambiar el estado de la habitacion
                     break;
@@ -926,20 +950,21 @@ public class Menu {
         }
     }
 
-    private void showAdminRoomMenu() {
+    private int showAdminRoomMenu() {
         printOut.println("1_Show room list");
         printOut.println("2_Change state of room");
         printOut.println("3_Exit");
+        return 3;
     }
 
     private void changeStateRoom(int numberRoom){
         printOut.println("choose a state");
-        printOut.println("1-Free");
+        printOut.println("1-Available");
         printOut.println("2-Reserved");
         printOut.println("3-Occupied");
         printOut.println("4-Cleaning");
         printOut.println("5-In maintenance");
-        int numberState = scan.nextInt();
+        int numberState = toCaptureInt(5);
         switch (numberState){
             case 1:
                 changeStateOfRoomXNumber(numberRoom, State.AVAILABLE);
@@ -964,24 +989,29 @@ public class Menu {
         int option;
         printOut.println("Enter passenger dni");
         String dniUser = scan.toString();
-        while (!exit) {
-            option = toCaptureInt(showAdminReservationMenu());
-            switch (option) {
-                case 1:
-                    showListReservation(dniUser);
-                    ///mostrar lista de reservas de un cliente y su estado
-                    break;
-                case 2:
-                    printOut.println("Enter Reservation number");
-                    int reservationNumber = scan.nextInt();
-                    changeStatusOfReserve(dniUser, reservationNumber);
-                    //cambiar el estado de una reserva
-                    break;
-                case 3:
-                    exit = true;
-                    break;
-            }
+        try {
+            if(searchPassengerInList(dniUser) != null) {
+                while (!exit) {
+                    option = toCaptureInt(showAdminReservationMenu());
+                    switch (option) {
+                        case 1:
+                            showListReservation(dniUser);
+                            break;
+                        case 2:
+                            printOut.println("Enter Reservation number");
+                            int reservationNumber = setInt();
+                            changeStatusOfReserve(reservationNumber);
+                            //cambiar el estado de una reserva
+                            break;
+                        case 3:
+                            exit = true;
+                            break;
+                    }
 
+                }
+            }
+        } catch (UserDoesNotExistException e) {
+            e.printStackTrace();
         }
     }
 
@@ -992,13 +1022,13 @@ public class Menu {
         return 3;
     }
 
-    private void changeStatusOfReserve(String dniUser, int reservationNumber){
+    private void changeStatusOfReserve(int reservationNumber){
         printOut.println("choose a status");
         printOut.println("1-Confirmed");
         printOut.println("2-Cancelled");
         printOut.println("3-Completed");
         printOut.println("4-Active");
-        int numberStatus = scan.nextInt();
+        int numberStatus = toCaptureInt(4);
         switch (numberStatus){
             case 1:
                 statusOfReserveChange(reservationNumber, Status.CONFIRMED);
@@ -1025,34 +1055,36 @@ public class Menu {
         boolean exit = false;
         int option;
         while (!exit) {
-            showAdminDeletMenu();
-            option = scan.nextInt();
+            option = toCaptureInt(showAdminDeletMenu());
             switch (option) {
                 case 1:
                     printOut.println("Enter passenger dni");
                     String dniUser = scan.next();
-                    Passenger find =searchPassengerInList(dniUser);
+                    Passenger find = null;
+                    try {
+                        find = searchPassengerInList(dniUser);
+                    } catch (UserDoesNotExistException e) {
+                        e.printStackTrace();
+                    }
                     if(find != null){
                         find.deleteLogic();
                     }
-                    ///eliminar passenger
                     break;
                 case 2:
                     printOut.println("Enter receptionist file number");
-                    int fileNumber = scan.nextInt();
-                    Receptionist findReceptionist =(Receptionist) findReceptionist(fileNumber);
+                    int fileNumber = setInt();
+                    Receptionist findReceptionist = null;
+                    try {
+                        findReceptionist = (Receptionist) findReceptionist(fileNumber);
+                    } catch (UserDoesNotExistException e) {
+                        e.printStackTrace();
+                    }
                     if(findReceptionist != null){
                         findReceptionist.deleteLogic();
                     }
-                    else{
-                        printOut.println("file number failed");
-                    }
-
-                    //eliminar Recepcionista
                     break;
                 case 3:
                     showListUsersDeleted();
-                    ///mostrar lista de usuarios eliminados
                     break;
                 case 4:
                     exit = true;
@@ -1067,7 +1099,7 @@ public class Menu {
         printOut.println("2_Delete Receptionist");
         printOut.println("3_Show Delete Users");
         printOut.println("4_Exit");
-        return 3;
+        return 4;
     }
 
     private void showListUsersDeleted(){
@@ -1081,14 +1113,14 @@ public class Menu {
     }
 
     private void backUp(){
-        SaveInfoUsers saveinfo = new SaveInfoUsers();
+        SaveInfoUsers saveinfo;
         DataFile data= new DataFile();
 
         printOut.println("creating backup ...");
         saveinfo=data.readInfo("files/users.json");
         data.writeInfo(saveinfo, "files/backUpUsers.json ");
         data.writeJsonBookings(Hotel.getReservationGenericList().getList(),"files/backUpBooking.json");
-        data.writeJsonRooms(Hotel.getRoomGenericList().getList(),"files/backUpRoom.json");
+       // data.writeJsonRooms(Hotel.getRoomGenericList().getList(),"files/backUpRoom.json");
         printOut.println("finalized");
 
     }

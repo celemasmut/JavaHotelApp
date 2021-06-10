@@ -94,13 +94,15 @@ public class Reservation {
 
     @Override
     public String toString() {
-        return "Reservation{" +
-                "dniPassenger='" + dniPassenger + '\'' +
-                ", roomToReserve=" + roomToReserve +
-                ", arrivalDay=" + arrivalDay +
-                ", dayOfExit=" + dayOfExit +
-                ", plan=" + plan +
-                ", status=" + status +
-                '}';
+        return "『 ----------------------------------------" +
+                "\n Reservation : " +
+                "\n dniPassenger='" + dniPassenger  +
+                "\n roomToReserve=" + roomToReserve +
+                "\n arrivalDay=" + arrivalDay +
+                "\n dayOfExit=" + dayOfExit +
+                "\n plan=" + plan +
+                "\n status=" + status +
+                "------------------------------------------』";
+
     }
 }

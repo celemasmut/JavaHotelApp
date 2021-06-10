@@ -1,28 +1,28 @@
 {
   "listPassenger" : [ {
     "id" : 10,
-    "loginName" : "Celeste",
+    "loginName" : "celes",
     "password" : "1234hola",
     "state" : 1,
-    "name" : "celes",
+    "name" : "Celeste",
     "dni" : "11111",
     "homeAddress" : "mdp123",
     "source" : "mdp"
   }, {
     "id" : 11,
-    "loginName" : "Mauro",
+    "loginName" : "Mau",
     "password" : "00012",
     "state" : 1,
-    "name" : "mau",
+    "name" : "Mauro",
     "dni" : "123243",
     "homeAddress" : "mdq543",
     "source" : "mdp"
   }, {
     "id" : 12,
-    "loginName" : "Jair",
+    "loginName" : "jair",
     "password" : "121212",
     "state" : 1,
-    "name" : "jair",
+    "name" : "Jair",
     "dni" : "123756",
     "homeAddress" : "mdq765",
     "source" : "mdp"

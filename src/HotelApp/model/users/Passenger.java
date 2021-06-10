@@ -55,11 +55,11 @@ public class Passenger extends User  {
 
     @Override
     public String toString() {
-        return "Passenger{" +
-                "name='" + name + '\'' +
-                ", dni='" + dni + '\'' +
-                ", hometown='" + hometown + '\'' +
-                ", homeAddress='" + homeAddress + '\'' +
-                '}';
+        return "『 ----------------------------------------" +
+                "\n Name='" + name  +
+                "\n dni='" + dni  +
+                "\n hometown='" + hometown  +
+                "\n homeAddress='" + homeAddress  +
+                "\n------------------------------------------』";
     }
 }
