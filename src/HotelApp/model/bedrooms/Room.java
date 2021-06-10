@@ -8,6 +8,7 @@ import HotelApp.util.ProductToConsume;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class  Room  {
     private Passenger occupant;
@@ -82,7 +83,18 @@ public class  Room  {
     }
 
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Room)) return false;
+        Room room = (Room) o;
+        return roomNumber == room.roomNumber && numberOfBeds == room.numberOfBeds && Double.compare(room.price, price) == 0 && Objects.equals(occupant, room.occupant) && stateRoom == room.stateRoom && Objects.equals(consumed, room.consumed) && Objects.equals(typeRoom, room.typeRoom);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(occupant, roomNumber, stateRoom, numberOfBeds, price, consumed, typeRoom);
+    }
 
     @Override
     public String toString() {

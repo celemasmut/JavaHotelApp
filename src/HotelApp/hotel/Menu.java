@@ -202,31 +202,6 @@ public class Menu {
         return null;
     }
 
-    private int findReceptionistInlist(int fileNumber){
-        int pos = -1;
-        ///primero hago una lista de personas
-        List<Receptionist> receptionistList = new ArrayList<>();
-        for (User user : Hotel.getUserGenericList().getList()){
-            if (user instanceof Receptionist) {
-                receptionistList.add((Receptionist) user);
-            }
-        }
-
-        for(int i = 0; i < receptionistList.size() && pos==-1;i++){
-            if(receptionistList.get(i).getFileNumber() == fileNumber ){
-                pos = i;
-            }
-        }
-        return pos;
-    }
-
-    private int showLoginMenu(){
-        printOut.println("1- Passenger");
-        printOut.println("2- Receptionist");
-        printOut.println("3- Admin");
-        printOut.println("4- Exit");
-        return 4;
-    }
 
     private void login() throws UserDoesNotExistException {
         User userToLogin= null;
