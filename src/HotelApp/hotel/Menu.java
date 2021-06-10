@@ -35,8 +35,6 @@ public class Menu {
     public Menu(){
         SaveInfoUsers saveinfo = new SaveInfoUsers();
         DataFile dataFile= new DataFile();
-
-        ///saveinfo.addUsers(getUserList());
         setRoom(dataFile.readRoomJson("files/room.json"));
 
         ///writeInfo(saveinfo,"files/users.json");
@@ -73,7 +71,7 @@ public class Menu {
     }
 
 
-    public void initiate() throws UserDoesNotExistException {
+    public void initiate() {
         int op;
         do{
             op= toCaptureInt(showFirstMenu());
@@ -214,7 +212,7 @@ public class Menu {
         return 4;
     }
 
-    private void login() throws UserDoesNotExistException {
+    private void login() {
         User userToLogin=userLogin();
         if(userToLogin.getState()==1){//si esta activo
             if (userToLogin instanceof Passenger)
@@ -832,7 +830,7 @@ public class Menu {
         return 8;
     }
 
-    private void admin() throws UserDoesNotExistException {
+    private void admin() {
         boolean exit = false;
         int option;
         while (!exit) {
@@ -854,7 +852,11 @@ public class Menu {
                     deleteUsers();
                     break;
                 case 6:
-                    showUsers();
+                    try {
+                        showUsers();
+                    } catch (UserDoesNotExistException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case 7:
                     backUp();

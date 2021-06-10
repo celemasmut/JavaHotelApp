@@ -3,7 +3,6 @@ package HotelApp.datafile;
 import HotelApp.model.bedrooms.Room;
 import HotelApp.model.reservation.Reservation;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,8 +20,7 @@ public class DataFile implements Fileable  {
                 file.createNewFile();
             }
             ObjectMapper mapper = new ObjectMapper();
-           // mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS,false);
-            mapper.writeValue(file,reservationList);
+            mapper.writerWithDefaultPrettyPrinter().writeValue(file,reservationList);
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -35,7 +33,7 @@ public class DataFile implements Fileable  {
                 file.createNewFile();
             }
             ObjectMapper mapper = new ObjectMapper();
-            mapper.writeValue(file,rooms);
+            mapper.writerWithDefaultPrettyPrinter().writeValue(file,rooms);
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -78,7 +76,7 @@ public class DataFile implements Fileable  {
                 file.createNewFile();
             }
             ObjectMapper mapper = new ObjectMapper();
-            mapper.writeValue(file,infoToSave);
+            mapper.writerWithDefaultPrettyPrinter().writeValue(file,infoToSave);
         }catch (IOException e){
             e.printStackTrace();
         }

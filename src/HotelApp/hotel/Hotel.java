@@ -35,9 +35,6 @@ public class Hotel {
         return userGenericList;
     }
 
-    public static void setUserGenericList(GenericList<User> userGenericList) {
-        Hotel.userGenericList = userGenericList;
-    }
 
     public static GenericList<Room> getRoomGenericList() {
         return roomGenericList;
@@ -62,6 +59,9 @@ public class Hotel {
     protected static boolean addReservation(Reservation reservationToAdd)
     {
         return reservationGenericList.addToList(reservationToAdd);
+    }
+    public static void addRoomToList(Room room){
+        roomGenericList.addToList(room);
     }
 
     protected static boolean changeStateOfRoom(Passenger passengerToRoom, Room roomToReserve, State state) {
