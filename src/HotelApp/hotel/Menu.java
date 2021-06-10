@@ -216,18 +216,22 @@ public class Menu {
 
     private void login(){
         User userToLogin=userLogin();
-        if (userToLogin instanceof Passenger)
-        {
-            passenger((Passenger) userToLogin);
-        }else if (userToLogin instanceof Receptionist)
-        {
-            receptionist();
+        if(userToLogin.getState()==1){//si esta activo
+            if (userToLogin instanceof Passenger)
+            {
+                passenger((Passenger) userToLogin);
+            }else if (userToLogin instanceof Receptionist)
+            {
+                receptionist();
+            }
+            if (userToLogin instanceof Admin)
+            {
+                admin();
+            }
         }
-        if (userToLogin instanceof Admin)
-        {
-            admin();
+        else{
+            printOut.println("This user was removed");
         }
-
     }
 
     private User userLogin ()
@@ -1075,8 +1079,12 @@ public class Menu {
     }
 
     private void backUp(){
+        SaveInfoUsers saveinfo = new SaveInfoUsers();
+        DataFile data= new DataFile();
 
+        data.writeInfo(saveinfo, "files/backUpUsers.json ");
+        data.writeJsonBookings(Hotel.getReservationGenericList().getList(),"files/backUpBooking.json");
+        data.writeJsonRooms(Hotel.getRoomGenericList().getList(),"files/backUpRoom.json");
+        
     }
-
-
 }
