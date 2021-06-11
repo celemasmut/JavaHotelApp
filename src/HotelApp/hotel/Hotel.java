@@ -203,7 +203,20 @@ public class Hotel {
         }
         return null;
     }
-
+    protected static boolean coincidenceInFileNumberInList(int newFileNumber)
+    {
+        for (User userAux: getUserGenericList().getList())
+        {
+            if (userAux instanceof Receptionist)
+            {
+                if (newFileNumber==((Receptionist) userAux).getFileNumber())
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     protected static void showUsers()throws UserDoesNotExistException {
         int i = 0;
         if(userGenericList.getList().size() > 0) {
