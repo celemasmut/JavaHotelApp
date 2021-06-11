@@ -1,0 +1,102 @@
+{
+  "singleRoomList" : [ {
+    "occupant" : null,
+    "roomNumber" : 1,
+    "stateRoom" : "AVAILABLE",
+    "numberOfBeds" : 1,
+    "price" : 500.0,
+    "consumed" : [ ],
+    "typeRoom" : "SingleRoom"
+  }, {
+    "occupant" : null,
+    "roomNumber" : 2,
+    "stateRoom" : "OCCUPIED",
+    "numberOfBeds" : 1,
+    "price" : 500.0,
+    "consumed" : [ ],
+    "typeRoom" : "SingleRoom"
+  }, {
+    "occupant" : null,
+    "roomNumber" : 3,
+    "stateRoom" : "AVAILABLE",
+    "numberOfBeds" : 1,
+    "price" : 500.0,
+    "consumed" : [ ],
+    "typeRoom" : "SingleRoom"
+  } ],
+  "doubleRoomList" : [ {
+    "occupant" : null,
+    "roomNumber" : 4,
+    "stateRoom" : "AVAILABLE",
+    "numberOfBeds" : 2,
+    "price" : 750.0,
+    "consumed" : [ ],
+    "typeRoom" : "Double Room"
+  }, {
+    "occupant" : null,
+    "roomNumber" : 5,
+    "stateRoom" : "IN_MAINTENANCE",
+    "numberOfBeds" : 2,
+    "price" : 750.0,
+    "consumed" : [ ],
+    "typeRoom" : "Double Room"
+  }, {
+    "occupant" : null,
+    "roomNumber" : 6,
+    "stateRoom" : "CLEANING",
+    "numberOfBeds" : 2,
+    "price" : 750.0,
+    "consumed" : [ ],
+    "typeRoom" : "Double Room"
+  } ],
+  "familyRoomList" : [ {
+    "occupant" : null,
+    "roomNumber" : 7,
+    "stateRoom" : "AVAILABLE",
+    "numberOfBeds" : 3,
+    "price" : 850.0,
+    "consumed" : [ ],
+    "typeRoom" : "Family Room"
+  }, {
+    "occupant" : null,
+    "roomNumber" : 8,
+    "stateRoom" : "IN_MAINTENANCE",
+    "numberOfBeds" : 3,
+    "price" : 850.0,
+    "consumed" : [ ],
+    "typeRoom" : "Family Room"
+  }, {
+    "occupant" : null,
+    "roomNumber" : 9,
+    "stateRoom" : "AVAILABLE",
+    "numberOfBeds" : 3,
+    "price" : 850.0,
+    "consumed" : [ ],
+    "typeRoom" : "Family Room"
+  } ],
+  "kingRoomList" : [ {
+    "occupant" : null,
+    "roomNumber" : 10,
+    "stateRoom" : "AVAILABLE",
+    "numberOfBeds" : 1,
+    "price" : 1500.0,
+    "consumed" : [ ],
+    "typeRoom" : "King Room"
+  }, {
+    "occupant" : null,
+    "roomNumber" : 11,
+    "stateRoom" : "CLEANING",
+    "numberOfBeds" : 1,
+    "price" : 1500.0,
+    "consumed" : [ ],
+    "typeRoom" : "King Room"
+  }, {
+    "occupant" : null,
+    "roomNumber" : 12,
+    "stateRoom" : "AVAILABLE",
+    "numberOfBeds" : 1,
+    "price" : 1500.0,
+    "consumed" : [ ],
+    "typeRoom" : "King Room"
+  } ]
+}

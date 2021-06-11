@@ -2,6 +2,8 @@ package HotelApp.datafile;
 
 import HotelApp.model.bedrooms.Room;
 import HotelApp.model.reservation.Reservation;
+
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 

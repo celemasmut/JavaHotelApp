@@ -15,6 +15,7 @@ import HotelApp.util.GenericList;
 import HotelApp.util.State;
 import HotelApp.util.Status;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class Hotel {
 
     }
 
-    public void menu(){
+    public void menu() {
         Menu menu = new Menu();
         menu.initiate();
     }
@@ -78,6 +79,14 @@ public class Hotel {
         roomGenericList.getList().get(posInList).setOccupant(passengerToRoom);
         return true;
     }
+    protected static Room searchRoomForNumber(int roomNumber){
+        for (Room roomAux : roomGenericList.getList()){
+            if (roomNumber==roomAux.getRoomNumber()){
+                return roomAux;
+            }
+        }
+        return null;
+    }
 
     protected static boolean changeStateOfRoomXNumber(int roomNumber, State state)
     {
@@ -86,25 +95,25 @@ public class Hotel {
     }
 
     protected static Passenger searchPassengerInList(String dni) throws UserDoesNotExistException {
-        for (User userAux : userGenericList.getList()) {
-            if (userAux instanceof Passenger) {
-                if (((Passenger) userAux).getDni().equals(dni)){
-                    return (Passenger) userAux;
-                }else{
-                    throw new UserDoesNotExistException("The user does not exist, please register");
-                }
-            }
-        }
+       if(userGenericList.getList() != null) {
+           for (User userAux : userGenericList.getList()) {
+               if (userAux instanceof Passenger) {
+                   if (((Passenger) userAux).getDni().equals(dni)) {
+                       return (Passenger) userAux;
+                   }
+               }
+           }
+       }else{
+           throw new UserDoesNotExistException("The user does not exist, please register");
+       }
         return null;
     }
 
-    protected static Reservation searchReservation(String dniPassenger) throws ReservationNotFoundException, UserDoesNotExistException {
+    protected static Reservation searchReservation(String dniPassenger) throws ReservationNotFoundException {
         if(reservationGenericList.getList().size() > 0) {
             for (Reservation reservation : reservationGenericList.getList()) {
                 if (dniPassenger.equals(reservation.getDniPassenger())) {
                     return reservation;
-                }else{
-                    throw new UserDoesNotExistException("The passenger does not exist");
                 }
             }
         }else{

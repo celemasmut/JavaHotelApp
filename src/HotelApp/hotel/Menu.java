@@ -14,7 +14,9 @@ import HotelApp.util.MealPlan;
 import HotelApp.util.ProductToConsume;
 import HotelApp.util.State;
 import HotelApp.util.Status;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
+import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.time.DateTimeException;
 import java.time.LocalDate;
@@ -34,10 +36,13 @@ public class Menu {
     Scanner scan = new Scanner(System.in);
 
 
-    public Menu(){
+    public Menu() {
         SaveInfoUsers saveinfo = new SaveInfoUsers();
         saveinfo=dataFile.readInfo("files/user.json");
         addUsersToList(saveinfo);
+        if(getUserGenericList().getList() == null){
+            addUser(new Admin("admin2","admin2"));
+        }
         SaveTypeRoom saveRooms = new SaveTypeRoom();
         saveRooms = dataFile.readRoomJson("files/room.json");
         addRoomsToList(saveRooms);
@@ -122,7 +127,7 @@ public class Menu {
         return false;
     }
 
-    private String register() throws UserAlreadyExistException {
+    private Passenger register() throws UserAlreadyExistException {
         printOut.println("Insert Name: ");
         String name = scan.next();
         printOut.println("Insert DNI :");
@@ -142,10 +147,10 @@ public class Menu {
             printOut.println("Insert password : ");
             scan.nextLine();
             String password = scan.next();
-
-            Hotel.addUser(new Passenger(userName,password,name,dni,homeTown,homeAddress));
+            Passenger newPassenger=new Passenger(userName,password,name,dni,homeTown,homeAddress);
+            Hotel.addUser(newPassenger);
             printOut.println("New Passenger registered");
-            return dni;
+            return newPassenger;
         }else{
             throw new UserAlreadyExistException();
         }
@@ -664,15 +669,9 @@ public class Menu {
             {
                 case 1:
                     checkIn();
-                    showListOfRoom();
                     break;
                 case 2:
                     checkOut();
-                    try {
-                        showReservation();
-                    } catch (ReservationNotFoundException e) {
-                        e.printStackTrace();
-                    }
                     break;
                 case 3:
                     printOut.println("Enter room number:");
@@ -722,14 +721,14 @@ public class Menu {
         int option=0;
         int optionOfRoom=0;
         int numberOfRoom;
-        String dniUser="0";
+        Passenger p = new Passenger();
         boolean result;
         printOut.println("wants to make the entry of a passenger. Enter 1 or if you want to enter a reservation enter 2");
         option=toCaptureInt(2);
         if (option==1)
         {
             try {
-                dniUser=register();
+                p=register();
             } catch (UserAlreadyExistException e) {
                 e.printStackTrace();
             }
@@ -747,29 +746,31 @@ public class Menu {
             }while (numberOfRoom == 0);
             scan.nextLine();
             //reservar
-            Reservation newReserv = toReserveRoom(arrival, dayOfLeave, numberOfRoom, chooseMealPlan(),dniUser);
+            Reservation newReserv = toReserveRoom(arrival, dayOfLeave, numberOfRoom, chooseMealPlan(),p.getDni());
+            addReservation(newReserv);
             Passenger passengerToRoom = null;
             try {
-                passengerToRoom = searchPassengerInList(dniUser);
+                passengerToRoom = searchPassengerInList(p.getDni());
             } catch (UserDoesNotExistException e) {
                 e.printStackTrace();
             }
             result=changeStateOfRoom(passengerToRoom,newReserv.getRoomToReserve(),State.OCCUPIED);
-
+            newReserv.setStatus(Status.ACTIVE);
 
         }else if (option==2){
             printOut.println("Insert DNI :");
             scan.nextLine();
-            dniUser= scan.next();
-            Reservation reservToActivate=searchReservationInList(dniUser);
+            String dni= scan.next();
+            Reservation reservToActivate=searchReservationInList(dni);
             if (reservToActivate!=null)
             {
                 Passenger passengerToRoom= null;
                 try {
-                    passengerToRoom = searchPassengerInList(dniUser);
+                    passengerToRoom = searchPassengerInList(dni);
                 } catch (UserDoesNotExistException e) {
                     e.printStackTrace();
                 }
+                reservToActivate.setStatus(Status.ACTIVE);
                 result=changeStateOfRoom(passengerToRoom,reservToActivate.getRoomToReserve(),State.OCCUPIED);
             }else {
                 printOut.println("There is no coincidence with DNI");
@@ -788,10 +789,8 @@ public class Menu {
             reservationCheckOut = searchReservation(dniPassenger);
         } catch (ReservationNotFoundException e) {
             e.printStackTrace();
-        } catch (UserDoesNotExistException e) {
-            e.printStackTrace();
         }
-        if (reservationCheckOut!=null)
+        if (reservationCheckOut!=null && reservationCheckOut.getStatus() == Status.ACTIVE)
         {
             Passenger passengerToCheckOut= null;
             try {
@@ -799,10 +798,10 @@ public class Menu {
             } catch (UserDoesNotExistException e) {
                 e.printStackTrace();
             }
-            result=changeStateOfRoom(passengerToCheckOut,reservationCheckOut.getRoomToReserve(),State.AVAILABLE);
+            Room roomTocheckOut= searchRoomForNumber(reservationCheckOut.getRoomToReserve().getRoomNumber());
+            result=changeStateOfRoom(passengerToCheckOut,roomTocheckOut,State.AVAILABLE);
             result=deleteReservationInList(reservationCheckOut);
-
-
+            printOut.println(reservationCheckOut);
         }
     }
     private void showConsumeOfRoom(int roomNumber) throws ReservationNotFoundException, ProductNotFoundException, RoomDoesNotExistException
@@ -1104,14 +1103,15 @@ public class Menu {
     }
 
     private void backUp(){
-        SaveInfoUsers saveinfo;
+        SaveInfoUsers saveinfo= new SaveInfoUsers();
         DataFile data= new DataFile();
-
         printOut.println("creating backup ...");
-        saveinfo=data.readInfo("files/users.json");
+        saveinfo.addUsers(getUserGenericList().getList());
         data.writeInfo(saveinfo, "files/backUpUsers.json ");
         data.writeJsonBookings(Hotel.getReservationGenericList().getList(),"files/backUpBooking.json");
-       // data.writeJsonRooms(Hotel.getRoomGenericList().getList(),"files/backUpRoom.json");
+        SaveTypeRoom saveRooms = new SaveTypeRoom();
+        saveRooms.addRoomsToList(Hotel.getRoomGenericList().getList());
+        dataFile.writeJsonRooms(saveRooms,"files/backUpRoom.json");
         printOut.println("finalized");
 
     }

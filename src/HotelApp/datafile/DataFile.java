@@ -42,12 +42,15 @@ public class DataFile implements Fileable  {
         }
     }
     @Override
-    public  List<Reservation> readReservationJson(String fileName){
+    public  List<Reservation> readReservationJson(String fileName) {
         List<Reservation> reservationList = new ArrayList<>();
+        ObjectMapper mapper = new ObjectMapper();
         try{
             File file = new File(fileName);
             if(file.exists()){
-                ObjectMapper mapper = new ObjectMapper();
+                reservationList = mapper.readValue(file,mapper.getTypeFactory().constructCollectionType(List.class,Reservation.class));
+            }else{
+                file = new File("files/backUpBooking.json");
                 reservationList = mapper.readValue(file,mapper.getTypeFactory().constructCollectionType(List.class,Reservation.class));
             }
         }catch (IOException e){
@@ -56,13 +59,16 @@ public class DataFile implements Fileable  {
         return reservationList;
     }
     @Override
-    public  SaveTypeRoom readRoomJson(String fileName){
+    public  SaveTypeRoom readRoomJson(String fileName) {
         SaveTypeRoom infoRooms = new SaveTypeRoom();
+        ObjectMapper mapper = new ObjectMapper();
         try {
             File file = new File(fileName);
             if(file.exists()){
-                ObjectMapper mapper = new ObjectMapper();
                 infoRooms = mapper.readValue(file,SaveTypeRoom.class);
+            }else{
+                file = new File("files/backUpRoom.json");
+                infoRooms = mapper.readValue(file, SaveTypeRoom.class);
             }
         }catch (IOException e){
             e.printStackTrace();
@@ -84,15 +90,16 @@ public class DataFile implements Fileable  {
         }
     }
     @Override
-    public  SaveInfoUsers readInfo(String fileName)
-    {
+    public  SaveInfoUsers readInfo(String fileName) {
         SaveInfoUsers infoToRead = new SaveInfoUsers();
         ObjectMapper mapper= new ObjectMapper();
         try
         {
             File file =new File(fileName);
-            if (file.exists())
-            {
+            if (file.exists()) {
+                infoToRead=mapper.readValue(file,SaveInfoUsers.class);
+            }else{
+                file = new File("files/backUpUsers.json");
                 infoToRead=mapper.readValue(file,SaveInfoUsers.class);
             }
         }catch(IOException e){
