@@ -19,6 +19,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Hotel {
 
@@ -71,17 +72,11 @@ public class Hotel {
     public static void addRoomToList(Room room){
         roomGenericList.addToList(room);
     }
-    protected static boolean changeStateOfRoom(Passenger passengerToRoom, Reservation booking, State state) {
-        booking.getRoomToReserve().setStateRoom(state);
-        return true;
-    }
     protected static Room searchRoomForNumber(int roomNumber){
-        for (Room roomAux : roomGenericList.getList()){
-            if (roomNumber==roomAux.getRoomNumber()){
-                return roomAux;
-            }
-        }
-        return null;
+        return roomGenericList.getList().stream().
+                filter(rn -> rn.getRoomNumber() == roomNumber).
+                findFirst().
+                orElse(null);
     }
 
     protected static boolean changeStateOfRoomXNumber(int roomNumber, State state)
@@ -91,72 +86,41 @@ public class Hotel {
     }
 
     protected static Passenger searchPassengerInList(String dni) throws UserDoesNotExistException {
-       if(userGenericList.getList() != null) {
-           for (User userAux : userGenericList.getList()) {
-               if (userAux instanceof Passenger) {
-                   if (((Passenger) userAux).getDni().equals(dni)) {
-                       return (Passenger) userAux;
-                   }
-               }
-           }
-       }else{
-           throw new UserDoesNotExistException("The user does not exist, please register");
-       }
-        return null;
+
+        return (Passenger) userGenericList.getList().stream().
+                filter(user -> user instanceof Passenger).
+                filter(user -> ((Passenger) user).getDni().equals(dni)).
+                findFirst().
+                get();
     }
 
-    protected static Reservation searchReservation(String dniPassenger) throws ReservationNotFoundException {
-        if(reservationGenericList.getList().size() > 0) {
-            for (Reservation reservation : reservationGenericList.getList()) {
-                if (dniPassenger.equals(reservation.getDniPassenger())) {
-                    return reservation;
-                }
-            }
-        }else{
-            throw new ReservationNotFoundException();
-        }
-        return null;
+    protected static List<Reservation> searchReservation(String dniPassenger) throws ReservationNotFoundException {
+        return reservationGenericList.getList().stream().
+                filter(reservation -> reservation.getDniPassenger().equals(dniPassenger)).
+                collect(Collectors.toList());
     }
 
     protected static void showListOfRoom() {
-        for (Room roomAux : roomGenericList.getList()) {
-            System.out.println(roomAux.toString());
-        }
+        roomGenericList.getList().forEach(room -> System.out.println(room));
     }
 
     protected static void showListOfRoomXState(State state){
-        for (Room roomAux : roomGenericList.getList()) {
-            if (roomAux.getStateRoom().equals(state)) {
-                System.out.println(roomAux);
-            }
-        }
+        roomGenericList.getList().stream().
+                filter(room -> room.getStateRoom().equals(state)).
+                forEach(System.out::println);
     }
 
     protected static List<Reservation> getPassengerReservations(String dni) throws ReservationNotFoundException{
-        List<Reservation> passengerReservations = new ArrayList<>();
-        if (reservationGenericList.getList().size() > 0) {
-            for (Reservation reserv : reservationGenericList.getList()) {
-                if (reserv.getDniPassenger().equals(dni)) {
-                    if (reserv.getStatus() != Status.CANCELLED)
-                        passengerReservations.add(reserv);
-                }
-            }
-        }else{
-            throw new ReservationNotFoundException();
-        }
-        return passengerReservations;
+       return reservationGenericList.getList().stream().
+               filter(reservation -> reservation.getDniPassenger().equals(dni)).
+               filter(reservation -> reservation.getStatus() != Status.CANCELLED).
+               collect(Collectors.toList());
     }
 
     protected static List<Reservation> getStatusReservations(List<Reservation> passengerReservList, Status status) {
-        List<Reservation> statusReservation = new ArrayList<>();
-        if (passengerReservList.size() > 0) {
-            for (Reservation reserv : passengerReservList) {
-                if (reserv.getStatus().equals(status)) {
-                    statusReservation.add(reserv);
-                }
-            }
-        }
-        return statusReservation;
+        return passengerReservList.stream().
+                filter(reservation -> reservation.getStatus().equals(status)).
+                collect(Collectors.toList());
     }
 
     protected static boolean toCancelReservation(Reservation canceledReservation) {
@@ -183,12 +147,9 @@ public class Hotel {
     }
 
     protected static Reservation searchReservationInList(String dniPassenger) {
-        for (Reservation reservationAux : reservationGenericList.getList()) {
-            if (dniPassenger.equalsIgnoreCase(reservationAux.getDniPassenger()) && reservationAux.getStatus() == Status.CONFIRMED) {
-                return reservationAux;
-            }
-        }
-        return null;
+        return reservationGenericList.getList().stream().
+                filter(reservation -> reservation.getDniPassenger().equals(dniPassenger) && reservation.getStatus() == Status.CONFIRMED).
+                findFirst().get();
     }
 
     protected static void showUsers()throws UserDoesNotExistException {

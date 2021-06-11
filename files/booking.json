@@ -4,7 +4,7 @@
   "dniPassenger" : "123756",
   "roomToReserve" : {
     "occupant" : {
-      "id" : 18,
+      "id" : 41,
       "loginName" : "jair",
       "password" : "121212",
       "state" : 1,
@@ -43,7 +43,7 @@
   "dniPassenger" : "11111",
   "roomToReserve" : {
     "occupant" : {
-      "id" : 19,
+      "id" : 42,
       "loginName" : "celes",
       "password" : "1234hola",
       "state" : 1,
@@ -60,22 +60,31 @@
     "typeRoom" : "King Room"
   },
   "plan" : "CP",
-  "status" : "ACTIVE"
+  "status" : "COMPLETED"
 }, {
   "arrivalDay" : "2021-04-04",
   "dayOfExit" : "2021-04-08",
   "dniPassenger" : "11111",
   "roomToReserve" : {
-    "occupant" : null,
+    "occupant" : {
+      "id" : 43,
+      "loginName" : "celes",
+      "password" : "1234hola",
+      "state" : 1,
+      "name" : "Celeste",
+      "dni" : "11111",
+      "homeAddress" : "mdp123",
+      "source" : "mdp"
+    },
     "roomNumber" : 3,
-    "stateRoom" : "AVAILABLE",
+    "stateRoom" : "OCCUPIED",
     "numberOfBeds" : 1,
     "price" : 500.0,
     "consumed" : [ ],
     "typeRoom" : "SingleRoom"
   },
   "plan" : "CP",
-  "status" : "CONFIRMED"
+  "status" : "ACTIVE"
 }, {
   "arrivalDay" : "2021-04-04",
   "dayOfExit" : "2021-04-08",

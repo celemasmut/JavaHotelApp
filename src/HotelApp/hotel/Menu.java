@@ -712,7 +712,7 @@ public class Menu {
                     break;
 
             }
-
+            saveInfo();
         }
     }
 
@@ -810,7 +810,6 @@ public class Menu {
                 reservToActivate.getRoomToReserve().setStateRoom(State.OCCUPIED);
                 reservToActivate.getRoomToReserve().setOccupant(p);
                 reservToActivate.setStatus(Status.ACTIVE);
-                //addReservation(reservToActivate);
                 printOut.println("Check in on reservation "+ reservToActivate);
             }else {
                 printOut.println("There is no coincidence with DNI");
@@ -823,18 +822,19 @@ public class Menu {
         printOut.println("Insert DNI :");
         scan.nextLine();
         dniPassenger=scan.next();
-        Reservation reservationCheckOut= null;
+        List<Reservation> reservationlist= null;
         try {
-            reservationCheckOut = searchReservation(dniPassenger);
+            reservationlist = searchReservation(dniPassenger);
         } catch (ReservationNotFoundException e) {
             e.printStackTrace();
         }
-        if (reservationCheckOut!=null && reservationCheckOut.getStatus() == Status.ACTIVE)
+        Reservation reservationChosen = checkStatusReservation(dniPassenger,Status.ACTIVE);
+        if (reservationChosen!=null && reservationChosen.getStatus() == Status.ACTIVE)
         {
-            showConsumptionPassenger(reservationCheckOut);
-            reservationCheckOut.setStatus(Status.COMPLETED);
-            printOut.println("Check out of passenger : "+ reservationCheckOut.getRoomToReserve().getOccupant().toString());
-            printOut.println(reservationCheckOut);
+            showConsumptionPassenger(reservationChosen);
+            reservationChosen.setStatus(Status.COMPLETED);
+            printOut.println("Check out of passenger : "+ reservationChosen.getRoomToReserve().getOccupant().toString());
+            printOut.println(reservationChosen);
         }else{
             printOut.println( "The is not reservation to do check out");
         }
