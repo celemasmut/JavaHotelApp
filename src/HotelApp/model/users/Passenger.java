@@ -53,6 +53,14 @@ public class Passenger extends User  {
         this.homeAddress = homeAddress;
     }
 
+    public String getHometown() {
+        return hometown;
+    }
+
+    public void setHometown(String hometown) {
+        this.hometown = hometown;
+    }
+
     @Override
     public String toString() {
         return "『 ----------------------------------------" +

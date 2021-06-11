@@ -151,7 +151,20 @@ public class Hotel {
                 filter(reservation -> reservation.getDniPassenger().equals(dniPassenger) && reservation.getStatus() == Status.CONFIRMED).
                 findFirst().get();
     }
-
+    protected static boolean coincidenceInFileNumberInList(int newFileNumber)
+    {
+        for (User userAux: getUserGenericList().getList())
+        {
+            if (userAux instanceof Receptionist)
+            {
+                if (newFileNumber==((Receptionist) userAux).getFileNumber())
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     protected static void showUsers()throws UserDoesNotExistException {
         int i = 0;
         if(userGenericList.getList().size() > 0) {

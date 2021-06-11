@@ -6,6 +6,7 @@
     "state" : 1,
     "name" : "Celeste",
     "dni" : "11111",
+    "hometown" : "mdp",
     "homeAddress" : "mdp123",
     "source" : "mdp"
   }, {
@@ -15,15 +16,23 @@
     "state" : 1,
     "name" : "Mauro",
     "dni" : "123243",
+    "hometown" : "mdp",
     "homeAddress" : "mdq543",
     "source" : "mdp"
   }, {
+<<<<<<< HEAD
     "id" : 35,
     "loginName" : "jair",
     "password" : "121212",
+=======
+    "id" : 2,
+    "loginName" : "Jair",
+    "password" : "12346",
+>>>>>>> 9bc92654655e5f0dec762f42e19c6f27406aaed2
     "state" : 1,
     "name" : "Jair",
-    "dni" : "123756",
+    "dni" : "44221436",
+    "hometown" : "mdp",
     "homeAddress" : "mdq765",
     "source" : "mdp"
   }, {

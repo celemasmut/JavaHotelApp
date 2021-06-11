@@ -252,9 +252,10 @@ public class Menu {
         printOut.println("1 - To book a room");
         printOut.println("2 - See all your reservations");
         printOut.println("3 - Check a reservation");
-        printOut.println("4 - exit");
+        printOut.println("4 - Edit Profile");
+        printOut.println("5 - exit");
 
-        return 4;
+        return 5;
     }
 
     private void showListReservation(String dniUser){
@@ -292,6 +293,10 @@ public class Menu {
                         }
                         break;
                     case 4:
+                        passenger=editProfileOfPassenger(passenger);
+
+                        break;
+                    case 5:
                         sortReservationByDates();
                         saveInfo();
                         exit=true;
@@ -299,6 +304,87 @@ public class Menu {
                 }
             }while (!exit);
         }
+    }
+    private Passenger editProfileOfPassenger(Passenger passengerToEdit)
+    {
+        boolean exit =false;
+        int posInList=-1;
+        String aux;
+        posInList=Hotel.getUserGenericList().getList().indexOf(passengerToEdit);
+        do {
+            int op = toCaptureInt(showMenuEditProfileOfPassenger());
+            switch (op){
+                case 1:
+                    printOut.println("Enter new name for you account.");
+                    scan.nextLine();
+                    aux=scan.next();
+                    ((Passenger) Hotel.getUserGenericList().getList().get(posInList)).setName(aux);
+                    passengerToEdit.setName(aux);
+                    break;
+                case 2:
+                    printOut.println("Enter new DNI for you account");
+                    scan.nextLine();
+                    aux=scan.next();
+                    ((Passenger) Hotel.getUserGenericList().getList().get(posInList)).setDni(aux);
+                    passengerToEdit.setDni(aux);
+                    break;
+                case 3:
+                    printOut.println("Enter new hometown:");
+                    scan.nextLine();
+                    aux=scan.next();
+                    ((Passenger) Hotel.getUserGenericList().getList().get(posInList)).setHometown(aux);
+                    passengerToEdit.setHometown(aux);
+                    break;
+                case 4:
+                    printOut.println("Enter new home adress");
+                    scan.nextLine();
+                    aux=scan.next();
+                    ((Passenger) Hotel.getUserGenericList().getList().get(posInList)).setHomeAddress(aux);
+                    passengerToEdit.setHometown(aux);
+                    break;
+                case 5:
+                    printOut.println("Enter new Login Name.");
+                    scan.nextLine();
+                    aux=scan.next();
+                    Hotel.getUserGenericList().getList().get(posInList).setLoginName(aux);
+                    passengerToEdit.setLoginName(aux);
+                    break;
+                case 6:
+                    printOut.println("Enter new Password.");
+                    scan.nextLine();
+                    aux=scan.next();
+                    printOut.println("Enter password again.");
+                    scan.nextLine();
+                    String aux2=scan.next();
+                    if (aux.equals(aux2))
+                    {
+                        Hotel.getUserGenericList().getList().get(posInList).setPassword(aux);
+                        passengerToEdit.setPassword(aux);
+                    }
+                    else
+                    {
+                        printOut.println("Passwords do not match");
+                    }
+                    break;
+                case 7:
+                    exit=true;
+                    break;
+            }
+        }while(!exit);
+        printOut.println(((Passenger) Hotel.getUserGenericList().getList().get(posInList)).toString());
+        return passengerToEdit;
+    }
+
+    private int showMenuEditProfileOfPassenger(){
+        printOut.println("1- Edit Name");
+        printOut.println("2- Edit DNI");
+        printOut.println("3- Edit Hometown");
+        printOut.println("4- Edit Homeaddress");
+        printOut.println("5- Edit Login Name");
+        printOut.println("6- Edit Password");
+        printOut.println("7- Exit");
+
+        return 7;
     }
     private List<Room> getAvailableRooms(LocalDate arrival, LocalDate leave){
         List<Room> availableRoomsList = new ArrayList<>();
@@ -881,9 +967,26 @@ public class Menu {
                     }
                     break;
                 case 7:
-                    backUp();
+                    printOut.println("Enter DNI of passenger to edit");
+                    scan.nextLine();
+                    String aux= scan.next();
+                    Passenger passengerAux= null;
+                    try {
+                        passengerAux = searchPassengerInList(aux);
+                        if (passengerAux != null){
+                            editProfileOfPassenger(passengerAux);
+                        }
+                    } catch (UserDoesNotExistException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case 8:
+
+                    break;
+                case 9:
+                    backUp();
+                    break;
+                case 10:
                     saveInfo();
                     exit = true;
                     break;
@@ -891,8 +994,73 @@ public class Menu {
             }
         }
     }
+    private void editRecepcionist(Receptionist receptionistToEdit)
+    {
+        String aux;
+        boolean answer;
+        boolean exit= false;
+        int posInList=-1;
+        posInList=Hotel.getUserGenericList().getList().indexOf(receptionistToEdit);
+        do {
+           int option = toCaptureInt(showMenuEditRecepcionist());
+            switch (option)
+            {
+                case 1:
+                    printOut.println("Enter new login name.");
+                    scan.nextLine();
+                    aux=scan.next();
+                    Hotel.getUserGenericList().getList().get(posInList).setLoginName(aux);
+                    receptionistToEdit.setLoginName(aux);
+                    break;
+                case 2:
+                    printOut.println("Enter new Password.");
+                    scan.nextLine();
+                    aux=scan.next();
+                    printOut.println("Enter password again.");
+                    scan.nextLine();
+                    String aux2=scan.next();
+                    if (aux.equals(aux2))
+                    {
+                        Hotel.getUserGenericList().getList().get(posInList).setPassword(aux);
+                        receptionistToEdit.setPassword(aux);
+                    }
+                    else
+                    {
+                        printOut.println("Passwords do not match");
+                    }
+                    break;
+                case 3:
+                    printOut.println("Enter new file number");
+                    scan.nextLine();
+                    int auxOfFileNumber=scan.nextInt();
+                    answer=coincidenceInFileNumberInList(auxOfFileNumber);
+                    if (!answer)
+                    {
+                        ((Receptionist)Hotel.getUserGenericList().getList().get(posInList)).setFileNumber(auxOfFileNumber);
+                        receptionistToEdit.setFileNumber(auxOfFileNumber);
+                    }
+                    else
+                    {
+                        printOut.println("The file number already exists ");
+                    }
+                    break;
+                case 4:
+                    exit=true;
+                    break;
 
 
+
+            }
+        }while (!exit);
+    }
+    private int showMenuEditRecepcionist()
+    {
+        printOut.println("1- Edit login name.");
+        printOut.println("2- Edit password.");
+        printOut.println("3- Edit fileNumber.");
+        printOut.println("4- Exit.");
+        return 3;
+    }
     public void registerAll(){
         boolean exit = false;
         int option;

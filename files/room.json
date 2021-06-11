@@ -16,7 +16,21 @@
     "consumed" : [ ],
     "typeRoom" : "SingleRoom"
   }, {
+<<<<<<< HEAD
     "occupant" : null,
+=======
+    "occupant" : {
+      "id" : 7,
+      "loginName" : "celes",
+      "password" : "1234hola",
+      "state" : 1,
+      "name" : "Celeste",
+      "dni" : "11111",
+      "hometown" : "mdp",
+      "homeAddress" : "mdp123",
+      "source" : "mdp"
+    },
+>>>>>>> 9bc92654655e5f0dec762f42e19c6f27406aaed2
     "roomNumber" : 3,
     "stateRoom" : "AVAILABLE",
     "numberOfBeds" : 1,
@@ -91,7 +105,21 @@
     "consumed" : [ ],
     "typeRoom" : "King Room"
   }, {
+<<<<<<< HEAD
     "occupant" : null,
+=======
+    "occupant" : {
+      "id" : 8,
+      "loginName" : "celes",
+      "password" : "1234hola",
+      "state" : 1,
+      "name" : "Celeste",
+      "dni" : "11111",
+      "hometown" : "mdp",
+      "homeAddress" : "mdp123",
+      "source" : "mdp"
+    },
+>>>>>>> 9bc92654655e5f0dec762f42e19c6f27406aaed2
     "roomNumber" : 12,
     "stateRoom" : "AVAILABLE",
     "numberOfBeds" : 1,
