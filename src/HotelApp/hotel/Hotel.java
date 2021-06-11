@@ -71,13 +71,8 @@ public class Hotel {
     public static void addRoomToList(Room room){
         roomGenericList.addToList(room);
     }
-
-    protected static boolean changeStateOfRoom(Passenger passengerToRoom, Room roomToReserve, State state) {
-        int posInList;
-
-        posInList = roomGenericList.getList().indexOf(roomToReserve);
-        roomGenericList.getList().get(posInList).setStateRoom(state);
-        roomGenericList.getList().get(posInList).setOccupant(passengerToRoom);
+    protected static boolean changeStateOfRoom(Passenger passengerToRoom, Reservation booking, State state) {
+        booking.getRoomToReserve().setStateRoom(state);
         return true;
     }
     protected static Room searchRoomForNumber(int roomNumber){
@@ -176,14 +171,6 @@ public class Hotel {
         return false;
     }
 
-    protected static boolean deleteReservationInList(Reservation reservationToDelete) {
-        if (reservationToDelete != null) {
-            int posInList = reservationGenericList.getList().indexOf(reservationToDelete);
-            reservationGenericList.getList().get(posInList).setStatus(Status.COMPLETED);
-            return true;
-        }
-        return false;
-    }
 
     protected static void showReservation() throws ReservationNotFoundException {
         if(reservationGenericList.getList().size() > 0) {

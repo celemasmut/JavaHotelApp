@@ -17,7 +17,7 @@
     "typeRoom" : "SingleRoom"
   }, {
     "occupant" : {
-      "id" : 7,
+      "id" : 19,
       "loginName" : "celes",
       "password" : "1234hola",
       "state" : 1,
@@ -84,12 +84,21 @@
     "typeRoom" : "Family Room"
   } ],
   "kingRoomList" : [ {
-    "occupant" : null,
+    "occupant" : {
+      "id" : 20,
+      "loginName" : "rocio",
+      "password" : "mdp21",
+      "state" : 1,
+      "name" : "rocio",
+      "dni" : "333333",
+      "homeAddress" : "mdp33",
+      "source" : "mdp"
+    },
     "roomNumber" : 10,
-    "stateRoom" : "AVAILABLE",
+    "stateRoom" : "OCCUPIED",
     "numberOfBeds" : 1,
     "price" : 1500.0,
-    "consumed" : [ ],
+    "consumed" : [ "ALCOHOLIC_DRINKS", "SNACKS", "LAUNDRY" ],
     "typeRoom" : "King Room"
   }, {
     "occupant" : null,
@@ -101,7 +110,7 @@
     "typeRoom" : "King Room"
   }, {
     "occupant" : {
-      "id" : 8,
+      "id" : 21,
       "loginName" : "celes",
       "password" : "1234hola",
       "state" : 1,
@@ -111,7 +120,7 @@
       "source" : "mdp"
     },
     "roomNumber" : 12,
-    "stateRoom" : "OCCUPIED",
+    "stateRoom" : "AVAILABLE",
     "numberOfBeds" : 1,
     "price" : 1500.0,
     "consumed" : [ ],

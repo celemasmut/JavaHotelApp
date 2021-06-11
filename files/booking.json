@@ -42,7 +42,7 @@
     "typeRoom" : "King Room"
   },
   "plan" : "CP",
-  "status" : "ACTIVE"
+  "status" : "COMPLETED"
 }, {
   "arrivalDay" : "2021-04-04",
   "dayOfExit" : "2021-04-08",
@@ -88,6 +88,30 @@
   },
   "plan" : "CP",
   "status" : "CONFIRMED"
+}, {
+  "arrivalDay" : "2021-06-11",
+  "dayOfExit" : "2021-06-13",
+  "dniPassenger" : "333333",
+  "roomToReserve" : {
+    "occupant" : {
+      "id" : 22,
+      "loginName" : "rocio",
+      "password" : "mdp21",
+      "state" : 1,
+      "name" : "rocio",
+      "dni" : "333333",
+      "homeAddress" : "mdp33",
+      "source" : "mdp"
+    },
+    "roomNumber" : 10,
+    "stateRoom" : "OCCUPIED",
+    "numberOfBeds" : 1,
+    "price" : 1500.0,
+    "consumed" : [ "ALCOHOLIC_DRINKS", "SNACKS", "LAUNDRY" ],
+    "typeRoom" : "King Room"
+  },
+  "plan" : "CP",
+  "status" : "ACTIVE"
 }, {
   "arrivalDay" : "2022-04-06",
   "dayOfExit" : "2022-04-09",

@@ -687,23 +687,6 @@ public class Menu {
                     }  catch (ReservationNotFoundException e) {
                         e.printStackTrace();
                     }
-
-                   /* printOut.println("Enter room number:");
-                    scan.nextLine();
-                    do {
-                        try {
-                            roomNumber = setInt();
-                            showConsumeOfRoom(roomNumber);
-                            break;
-                        } catch (InputMismatchException e) {
-                            roomNumber = 0;
-                        } catch (RoomDoesNotExistException e) {
-                            e.printStackTrace();
-                            roomNumber = 0;
-                        } catch (ProductNotFoundException e) {
-                            e.printStackTrace();
-                        }
-                    }while (roomNumber == 0);*/
                     break;
                 case 4:
                     printOut.println("Enter DNI of passenger:");
@@ -801,7 +784,7 @@ public class Menu {
             printOut.println("Insert number of room you want to reserve ");
             do {
                 try {
-                    numberOfRoom = scan.nextInt();
+                    numberOfRoom = setInt();
                 } catch (InputMismatchException e) {
                     numberOfRoom = 0;
                 }
@@ -809,15 +792,10 @@ public class Menu {
             scan.nextLine();
             //reservar
             Reservation newReserv = toReserveRoom(arrival, dayOfLeave, numberOfRoom, chooseMealPlan(),p.getDni());
-            addReservation(newReserv);
-            Passenger passengerToRoom = null;
-            try {
-                passengerToRoom = searchPassengerInList(p.getDni());
-            } catch (UserDoesNotExistException e) {
-                e.printStackTrace();
-            }
-            result=changeStateOfRoom(passengerToRoom,newReserv.getRoomToReserve(),State.OCCUPIED);
+            newReserv.getRoomToReserve().setStateRoom(State.OCCUPIED);
+            newReserv.getRoomToReserve().setOccupant(p);
             newReserv.setStatus(Status.ACTIVE);
+            addReservation(newReserv);
 
         }else if (option==2){
             printOut.println("Insert DNI :");
@@ -832,8 +810,10 @@ public class Menu {
                 } catch (UserDoesNotExistException e) {
                     e.printStackTrace();
                 }
+                reservToActivate.getRoomToReserve().setStateRoom(State.OCCUPIED);
+                reservToActivate.getRoomToReserve().setOccupant(p);
                 reservToActivate.setStatus(Status.ACTIVE);
-                result=changeStateOfRoom(passengerToRoom,reservToActivate.getRoomToReserve(),State.OCCUPIED);
+                addReservation(reservToActivate);
             }else {
                 printOut.println("There is no coincidence with DNI");
             }
@@ -854,37 +834,10 @@ public class Menu {
         }
         if (reservationCheckOut!=null && reservationCheckOut.getStatus() == Status.ACTIVE)
         {
-            Passenger passengerToCheckOut= null;
-            try {
-                passengerToCheckOut = searchPassengerInList(dniPassenger);
-            } catch (UserDoesNotExistException e) {
-                e.printStackTrace();
-            }
-            Room roomTocheckOut= searchRoomForNumber(reservationCheckOut.getRoomToReserve().getRoomNumber());
-            result=changeStateOfRoom(passengerToCheckOut,roomTocheckOut,State.AVAILABLE);
-            result=deleteReservationInList(reservationCheckOut);
+            showConsumptionPassenger(reservationCheckOut);
+            reservationCheckOut.setStatus(Status.COMPLETED);
+            printOut.println("Check out of passenger : "+ reservationCheckOut.getRoomToReserve().getOccupant().toString());
             printOut.println(reservationCheckOut);
-        }
-    }
-    private void showConsumeOfRoom(int roomNumber) throws ProductNotFoundException, RoomDoesNotExistException
-    {
-        double totalPrice=0;
-        if(Hotel.getRoomGenericList().getList().size() > 0) {
-            for (Room roomToConsume : Hotel.getRoomGenericList().getList()) {
-                if (roomNumber == roomToConsume.getRoomNumber()) {
-                    if (roomToConsume.getConsumed() != null) {
-                        printOut.println("Product:");
-                        for (ProductToConsume productToConsumeForRoom : roomToConsume.getConsumed()) {
-                            printOut.println(productToConsumeForRoom.toString());
-                            totalPrice = totalPrice + productToConsumeForRoom.getPrice();
-                        }
-                    } else {
-                        throw new ProductNotFoundException();
-                    }
-                }
-            }
-        }else{
-            throw new RoomDoesNotExistException();
         }
     }
 
