@@ -17,6 +17,7 @@ import HotelApp.util.Status;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Hotel {
@@ -245,6 +246,10 @@ public class Hotel {
         for(KingRoom room : roomList.getKingRoomList()){
             roomGenericList.addToList(room);
         }
+    }
+
+    protected static void sortReservationByDates(){
+        Collections.sort(reservationGenericList.getList());
     }
 
 

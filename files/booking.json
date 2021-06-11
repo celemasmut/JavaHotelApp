@@ -1,4 +1,49 @@
 [ {
+  "arrivalDay" : "2021-01-01",
+  "dayOfExit" : "2021-01-02",
+  "dniPassenger" : "123756",
+  "roomToReserve" : {
+    "occupant" : null,
+    "roomNumber" : 1,
+    "stateRoom" : "AVAILABLE",
+    "numberOfBeds" : 1,
+    "price" : 500.0,
+    "consumed" : [ ],
+    "typeRoom" : "SingleRoom"
+  },
+  "plan" : "CP",
+  "status" : "CONFIRMED"
+}, {
+  "arrivalDay" : "2021-01-01",
+  "dayOfExit" : "2021-01-02",
+  "dniPassenger" : "123243",
+  "roomToReserve" : {
+    "occupant" : null,
+    "roomNumber" : 3,
+    "stateRoom" : "AVAILABLE",
+    "numberOfBeds" : 1,
+    "price" : 500.0,
+    "consumed" : [ ],
+    "typeRoom" : "SingleRoom"
+  },
+  "plan" : "EP",
+  "status" : "CONFIRMED"
+}, {
+  "arrivalDay" : "2021-01-01",
+  "dayOfExit" : "2021-01-03",
+  "dniPassenger" : "11111",
+  "roomToReserve" : {
+    "occupant" : null,
+    "roomNumber" : 12,
+    "stateRoom" : "AVAILABLE",
+    "numberOfBeds" : 1,
+    "price" : 1500.0,
+    "consumed" : [ "TOWEL", "LAUNDRY", "SNACKS" ],
+    "typeRoom" : "King Room"
+  },
+  "plan" : "CP",
+  "status" : "ACTIVE"
+}, {
   "arrivalDay" : "2021-04-04",
   "dayOfExit" : "2021-04-08",
   "dniPassenger" : "11111",
@@ -14,24 +59,9 @@
   "plan" : "CP",
   "status" : "CONFIRMED"
 }, {
-  "arrivalDay" : "2022-08-15",
-  "dayOfExit" : "2022-08-20",
+  "arrivalDay" : "2021-04-04",
+  "dayOfExit" : "2021-04-08",
   "dniPassenger" : "11111",
-  "roomToReserve" : {
-    "occupant" : null,
-    "roomNumber" : 4,
-    "stateRoom" : "AVAILABLE",
-    "numberOfBeds" : 2,
-    "price" : 750.0,
-    "consumed" : [ ],
-    "typeRoom" : "Double Room"
-  },
-  "plan" : "EP",
-  "status" : "CONFIRMED"
-}, {
-  "arrivalDay" : "2022-04-06",
-  "dayOfExit" : "2022-04-09",
-  "dniPassenger" : "123243",
   "roomToReserve" : {
     "occupant" : null,
     "roomNumber" : 10,
@@ -44,9 +74,24 @@
   "plan" : "EP",
   "status" : "CONFIRMED"
 }, {
-  "arrivalDay" : "2021-04-04",
-  "dayOfExit" : "2021-04-08",
-  "dniPassenger" : "11111",
+  "arrivalDay" : "2021-04-06",
+  "dayOfExit" : "2021-04-09",
+  "dniPassenger" : "123756",
+  "roomToReserve" : {
+    "occupant" : null,
+    "roomNumber" : 1,
+    "stateRoom" : "AVAILABLE",
+    "numberOfBeds" : 1,
+    "price" : 500.0,
+    "consumed" : [ ],
+    "typeRoom" : "SingleRoom"
+  },
+  "plan" : "CP",
+  "status" : "CONFIRMED"
+}, {
+  "arrivalDay" : "2022-04-06",
+  "dayOfExit" : "2022-04-09",
+  "dniPassenger" : "123243",
   "roomToReserve" : {
     "occupant" : null,
     "roomNumber" : 10,
@@ -89,63 +134,18 @@
   "plan" : "EP",
   "status" : "CONFIRMED"
 }, {
-  "arrivalDay" : "2021-01-01",
-  "dayOfExit" : "2021-01-02",
-  "dniPassenger" : "123756",
-  "roomToReserve" : {
-    "occupant" : null,
-    "roomNumber" : 1,
-    "stateRoom" : "AVAILABLE",
-    "numberOfBeds" : 1,
-    "price" : 500.0,
-    "consumed" : [ ],
-    "typeRoom" : "SingleRoom"
-  },
-  "plan" : "CP",
-  "status" : "CONFIRMED"
-}, {
-  "arrivalDay" : "2021-04-06",
-  "dayOfExit" : "2021-04-09",
-  "dniPassenger" : "123756",
-  "roomToReserve" : {
-    "occupant" : null,
-    "roomNumber" : 1,
-    "stateRoom" : "AVAILABLE",
-    "numberOfBeds" : 1,
-    "price" : 500.0,
-    "consumed" : [ ],
-    "typeRoom" : "SingleRoom"
-  },
-  "plan" : "CP",
-  "status" : "CONFIRMED"
-}, {
-  "arrivalDay" : "2021-01-01",
-  "dayOfExit" : "2021-01-02",
-  "dniPassenger" : "123243",
-  "roomToReserve" : {
-    "occupant" : null,
-    "roomNumber" : 3,
-    "stateRoom" : "AVAILABLE",
-    "numberOfBeds" : 1,
-    "price" : 500.0,
-    "consumed" : [ ],
-    "typeRoom" : "SingleRoom"
-  },
-  "plan" : "EP",
-  "status" : "CONFIRMED"
-}, {
-  "arrivalDay" : "2021-01-01",
-  "dayOfExit" : "2021-01-03",
+  "arrivalDay" : "2022-08-15",
+  "dayOfExit" : "2022-08-20",
   "dniPassenger" : "11111",
   "roomToReserve" : {
     "occupant" : null,
-    "roomNumber" : 12,
+    "roomNumber" : 4,
     "stateRoom" : "AVAILABLE",
-    "numberOfBeds" : 1,
-    "price" : 1500.0,
+    "numberOfBeds" : 2,
+    "price" : 750.0,
     "consumed" : [ ],
-    "typeRoom" : "King Room"
+    "typeRoom" : "Double Room"
   },
-  "plan" : "CP",
+  "plan" : "EP",
   "status" : "CONFIRMED"
 } ]

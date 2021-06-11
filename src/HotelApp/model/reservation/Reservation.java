@@ -12,7 +12,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.awt.event.WindowStateListener;
 import java.time.LocalDate;
 
-public class Reservation {
+public class Reservation implements Comparable<Reservation>{
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     @JsonDeserialize(using = LocalDateDeserializer.class)
@@ -120,5 +120,13 @@ public class Reservation {
                 "\n status =" + status +
                 "\n------------------------------------------』";
 
+    }
+
+    @Override
+    public int compareTo(Reservation o) {
+        if(o.getArrivalDay().isAfter(this.arrivalDay)){
+            return -1;
+        }
+        return 0;
     }
 }
