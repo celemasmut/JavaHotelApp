@@ -100,7 +100,7 @@ public class  Room  {
     public String toString() {
         return "『 ----------------------------------------" +
                 "\n Type: " + typeRoom +
-                "\n occupant=" + occupant +
+                "\n" + occupant +
                 "\n roomNumber='" + roomNumber  +
                 "\n stateRoom=" + stateRoom +
                 "\n numberOfBeds=" + numberOfBeds +

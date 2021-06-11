@@ -184,7 +184,7 @@ public class Hotel {
 
     protected static Reservation searchReservationInList(String dniPassenger) {
         for (Reservation reservationAux : reservationGenericList.getList()) {
-            if (dniPassenger.equalsIgnoreCase(reservationAux.getDniPassenger())) {
+            if (dniPassenger.equalsIgnoreCase(reservationAux.getDniPassenger()) && reservationAux.getStatus() == Status.CONFIRMED) {
                 return reservationAux;
             }
         }
@@ -237,6 +237,14 @@ public class Hotel {
 
     protected static void sortReservationByDates(){
         Collections.sort(reservationGenericList.getList());
+    }
+
+    protected static int countBookings(){
+        int i=0;
+        for(Reservation r : reservationGenericList.getList()){
+            i++;
+        }
+        return i;
     }
 
 

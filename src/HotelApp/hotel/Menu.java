@@ -106,6 +106,7 @@ public class Menu {
                     }
                     break;
                 case 3:
+                    saveInfo();
                     printOut.println("Good Bye !! See you soon!!");
                     break;
             }
@@ -662,7 +663,6 @@ public class Menu {
         boolean exit=false;
         int option;
         String dniUser;
-        int roomNumber=0;
         while (!exit)
         {
             option=toCaptureInt(showRecepcionistMenu());
@@ -764,10 +764,8 @@ public class Menu {
     }
     private void checkIn(){
         int option=0;
-        int optionOfRoom=0;
         int numberOfRoom;
         Passenger p = new Passenger();
-        boolean result;
         printOut.println("wants to make the entry of a passenger. Enter 1 or if you want to enter a reservation enter 2");
         option=toCaptureInt(2);
         if (option==1)
@@ -801,19 +799,19 @@ public class Menu {
             printOut.println("Insert DNI :");
             scan.nextLine();
             String dni= scan.next();
+            try {
+                p=searchPassengerInList(dni);
+            } catch (UserDoesNotExistException e) {
+                e.printStackTrace();
+            }
             Reservation reservToActivate=searchReservationInList(dni);
             if (reservToActivate!=null && reservToActivate.getStatus() == Status.CONFIRMED)
             {
-                Passenger passengerToRoom= null;
-                try {
-                    passengerToRoom = searchPassengerInList(dni);
-                } catch (UserDoesNotExistException e) {
-                    e.printStackTrace();
-                }
                 reservToActivate.getRoomToReserve().setStateRoom(State.OCCUPIED);
                 reservToActivate.getRoomToReserve().setOccupant(p);
                 reservToActivate.setStatus(Status.ACTIVE);
-                addReservation(reservToActivate);
+                //addReservation(reservToActivate);
+                printOut.println("Check in on reservation "+ reservToActivate);
             }else {
                 printOut.println("There is no coincidence with DNI");
             }
@@ -822,7 +820,6 @@ public class Menu {
     private void checkOut()
     {
         String dniPassenger;
-        boolean result;
         printOut.println("Insert DNI :");
         scan.nextLine();
         dniPassenger=scan.next();
@@ -838,6 +835,8 @@ public class Menu {
             reservationCheckOut.setStatus(Status.COMPLETED);
             printOut.println("Check out of passenger : "+ reservationCheckOut.getRoomToReserve().getOccupant().toString());
             printOut.println(reservationCheckOut);
+        }else{
+            printOut.println( "The is not reservation to do check out");
         }
     }
 
@@ -991,18 +990,20 @@ public class Menu {
         boolean exit = false;
         int option;
         printOut.println("Enter passenger dni");
-        String dniUser = scan.toString();
+        String userDni;
+        userDni= scan.next();
+        scan.nextLine();
         try {
-            if(searchPassengerInList(dniUser) != null) {
+            if(searchPassengerInList(userDni) != null) {
                 while (!exit) {
                     option = toCaptureInt(showAdminReservationMenu());
                     switch (option) {
                         case 1:
-                            showListReservation(dniUser);
+                            showListReservation(userDni);
                             break;
                         case 2:
                             printOut.println("Enter Reservation number");
-                            int reservationNumber = setInt();
+                            int reservationNumber = toCaptureInt(countBookings());
                             changeStatusOfReserve(reservationNumber);
                             //cambiar el estado de una reserva
                             break;

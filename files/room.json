@@ -16,18 +16,9 @@
     "consumed" : [ ],
     "typeRoom" : "SingleRoom"
   }, {
-    "occupant" : {
-      "id" : 19,
-      "loginName" : "celes",
-      "password" : "1234hola",
-      "state" : 1,
-      "name" : "Celeste",
-      "dni" : "11111",
-      "homeAddress" : "mdp123",
-      "source" : "mdp"
-    },
+    "occupant" : null,
     "roomNumber" : 3,
-    "stateRoom" : "OCCUPIED",
+    "stateRoom" : "AVAILABLE",
     "numberOfBeds" : 1,
     "price" : 500.0,
     "consumed" : [ ],
@@ -84,21 +75,12 @@
     "typeRoom" : "Family Room"
   } ],
   "kingRoomList" : [ {
-    "occupant" : {
-      "id" : 20,
-      "loginName" : "rocio",
-      "password" : "mdp21",
-      "state" : 1,
-      "name" : "rocio",
-      "dni" : "333333",
-      "homeAddress" : "mdp33",
-      "source" : "mdp"
-    },
+    "occupant" : null,
     "roomNumber" : 10,
-    "stateRoom" : "OCCUPIED",
+    "stateRoom" : "AVAILABLE",
     "numberOfBeds" : 1,
     "price" : 1500.0,
-    "consumed" : [ "ALCOHOLIC_DRINKS", "SNACKS", "LAUNDRY" ],
+    "consumed" : [ ],
     "typeRoom" : "King Room"
   }, {
     "occupant" : null,
@@ -109,16 +91,7 @@
     "consumed" : [ ],
     "typeRoom" : "King Room"
   }, {
-    "occupant" : {
-      "id" : 21,
-      "loginName" : "celes",
-      "password" : "1234hola",
-      "state" : 1,
-      "name" : "Celeste",
-      "dni" : "11111",
-      "homeAddress" : "mdp123",
-      "source" : "mdp"
-    },
+    "occupant" : null,
     "roomNumber" : 12,
     "stateRoom" : "AVAILABLE",
     "numberOfBeds" : 1,

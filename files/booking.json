@@ -3,16 +3,25 @@
   "dayOfExit" : "2021-01-02",
   "dniPassenger" : "123756",
   "roomToReserve" : {
-    "occupant" : null,
+    "occupant" : {
+      "id" : 18,
+      "loginName" : "jair",
+      "password" : "121212",
+      "state" : 1,
+      "name" : "Jair",
+      "dni" : "123756",
+      "homeAddress" : "mdq765",
+      "source" : "mdp"
+    },
     "roomNumber" : 1,
-    "stateRoom" : "AVAILABLE",
+    "stateRoom" : "OCCUPIED",
     "numberOfBeds" : 1,
     "price" : 500.0,
-    "consumed" : [ ],
+    "consumed" : [ "MINIBAR", "LAUNDRY", "TOWEL" ],
     "typeRoom" : "SingleRoom"
   },
   "plan" : "CP",
-  "status" : "CONFIRMED"
+  "status" : "COMPLETED"
 }, {
   "arrivalDay" : "2021-01-01",
   "dayOfExit" : "2021-01-02",
@@ -33,16 +42,25 @@
   "dayOfExit" : "2021-01-03",
   "dniPassenger" : "11111",
   "roomToReserve" : {
-    "occupant" : null,
+    "occupant" : {
+      "id" : 19,
+      "loginName" : "celes",
+      "password" : "1234hola",
+      "state" : 1,
+      "name" : "Celeste",
+      "dni" : "11111",
+      "homeAddress" : "mdp123",
+      "source" : "mdp"
+    },
     "roomNumber" : 12,
-    "stateRoom" : "AVAILABLE",
+    "stateRoom" : "OCCUPIED",
     "numberOfBeds" : 1,
     "price" : 1500.0,
-    "consumed" : [ "TOWEL", "LAUNDRY", "SNACKS" ],
+    "consumed" : [ "MINIBAR", "TOWEL", "LAUNDRY" ],
     "typeRoom" : "King Room"
   },
   "plan" : "CP",
-  "status" : "COMPLETED"
+  "status" : "ACTIVE"
 }, {
   "arrivalDay" : "2021-04-04",
   "dayOfExit" : "2021-04-08",
@@ -88,30 +106,6 @@
   },
   "plan" : "CP",
   "status" : "CONFIRMED"
-}, {
-  "arrivalDay" : "2021-06-11",
-  "dayOfExit" : "2021-06-13",
-  "dniPassenger" : "333333",
-  "roomToReserve" : {
-    "occupant" : {
-      "id" : 22,
-      "loginName" : "rocio",
-      "password" : "mdp21",
-      "state" : 1,
-      "name" : "rocio",
-      "dni" : "333333",
-      "homeAddress" : "mdp33",
-      "source" : "mdp"
-    },
-    "roomNumber" : 10,
-    "stateRoom" : "OCCUPIED",
-    "numberOfBeds" : 1,
-    "price" : 1500.0,
-    "consumed" : [ "ALCOHOLIC_DRINKS", "SNACKS", "LAUNDRY" ],
-    "typeRoom" : "King Room"
-  },
-  "plan" : "CP",
-  "status" : "ACTIVE"
 }, {
   "arrivalDay" : "2022-04-06",
   "dayOfExit" : "2022-04-09",
