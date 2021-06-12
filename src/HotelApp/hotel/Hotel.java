@@ -15,8 +15,6 @@ import HotelApp.util.GenericList;
 import HotelApp.util.State;
 import HotelApp.util.Status;
 
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -79,6 +77,14 @@ public class Hotel {
                 orElse(null);
     }
 
+    protected static Receptionist searchReceptionist(int filenumber) throws UserDoesNotExistException{
+        return (Receptionist) userGenericList.getList().stream().
+                filter(user -> user instanceof Receptionist).
+                filter(user -> ((Receptionist)user).getFileNumber() == filenumber).
+                findFirst().
+                get();
+    }
+
     protected static boolean changeStateOfRoomXNumber(int roomNumber, State state)
     {
         roomGenericList.getList().get(roomNumber).setStateRoom(state);
@@ -94,11 +100,6 @@ public class Hotel {
                 get();
     }
 
-    protected static List<Reservation> searchReservation(String dniPassenger) throws ReservationNotFoundException {
-        return reservationGenericList.getList().stream().
-                filter(reservation -> reservation.getDniPassenger().equals(dniPassenger)).
-                collect(Collectors.toList());
-    }
 
     protected static void showListOfRoom() {
         roomGenericList.getList().forEach(room -> System.out.println(room));
@@ -136,20 +137,12 @@ public class Hotel {
     }
 
 
-    protected static void showReservation() throws ReservationNotFoundException {
-        if(reservationGenericList.getList().size() > 0) {
-            for (Reservation reservation : reservationGenericList.getList()) {
-                System.out.println(reservation.toString());
-            }
-        }else{
-            throw new ReservationNotFoundException();
-        }
-    }
 
     protected static Reservation searchReservationInList(String dniPassenger) {
         return reservationGenericList.getList().stream().
                 filter(reservation -> reservation.getDniPassenger().equals(dniPassenger) && reservation.getStatus() == Status.CONFIRMED).
-                findFirst().get();
+                findFirst().
+                get();
     }
     protected static boolean coincidenceInFileNumberInList(int newFileNumber)
     {
@@ -174,7 +167,7 @@ public class Hotel {
             }
             System.out.println("Total users :" + i);
         }else{
-            throw new UserDoesNotExistException("There is not user to show");
+            throw new UserDoesNotExistException();
         }
     }
 
