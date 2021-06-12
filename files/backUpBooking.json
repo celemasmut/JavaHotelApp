@@ -1,111 +1,6 @@
 [ {
-  "arrivalDay" : "2021-04-04",
-  "dayOfExit" : "2021-04-08",
-  "dniPassenger" : "11111",
-  "roomToReserve" : {
-    "occupant" : null,
-    "roomNumber" : 3,
-    "stateRoom" : "AVAILABLE",
-    "numberOfBeds" : 1,
-    "price" : 500.0,
-    "consumed" : [ ],
-    "typeRoom" : "SingleRoom"
-  },
-  "plan" : "CP",
-  "status" : "CONFIRMED"
-}, {
-  "arrivalDay" : "2022-08-15",
-  "dayOfExit" : "2022-08-20",
-  "dniPassenger" : "11111",
-  "roomToReserve" : {
-    "occupant" : null,
-    "roomNumber" : 4,
-    "stateRoom" : "AVAILABLE",
-    "numberOfBeds" : 2,
-    "price" : 750.0,
-    "consumed" : [ ],
-    "typeRoom" : "Double Room"
-  },
-  "plan" : "EP",
-  "status" : "CONFIRMED"
-}, {
-  "arrivalDay" : "2022-04-06",
-  "dayOfExit" : "2022-04-09",
-  "dniPassenger" : "123243",
-  "roomToReserve" : {
-    "occupant" : null,
-    "roomNumber" : 10,
-    "stateRoom" : "AVAILABLE",
-    "numberOfBeds" : 1,
-    "price" : 1500.0,
-    "consumed" : [ ],
-    "typeRoom" : "King Room"
-  },
-  "plan" : "EP",
-  "status" : "CONFIRMED"
-}, {
-  "arrivalDay" : "2021-04-04",
-  "dayOfExit" : "2021-04-08",
-  "dniPassenger" : "11111",
-  "roomToReserve" : {
-    "occupant" : null,
-    "roomNumber" : 10,
-    "stateRoom" : "AVAILABLE",
-    "numberOfBeds" : 1,
-    "price" : 1500.0,
-    "consumed" : [ ],
-    "typeRoom" : "King Room"
-  },
-  "plan" : "EP",
-  "status" : "CONFIRMED"
-}, {
-  "arrivalDay" : "2022-04-08",
-  "dayOfExit" : "2022-04-11",
-  "dniPassenger" : "123756",
-  "roomToReserve" : {
-    "occupant" : null,
-    "roomNumber" : 7,
-    "stateRoom" : "AVAILABLE",
-    "numberOfBeds" : 3,
-    "price" : 850.0,
-    "consumed" : [ ],
-    "typeRoom" : "Family Room"
-  },
-  "plan" : "MAP",
-  "status" : "CONFIRMED"
-}, {
-  "arrivalDay" : "2022-08-13",
-  "dayOfExit" : "2022-08-18",
-  "dniPassenger" : "123756",
-  "roomToReserve" : {
-    "occupant" : null,
-    "roomNumber" : 9,
-    "stateRoom" : "AVAILABLE",
-    "numberOfBeds" : 3,
-    "price" : 850.0,
-    "consumed" : [ ],
-    "typeRoom" : "Family Room"
-  },
-  "plan" : "EP",
-  "status" : "CONFIRMED"
-}, {
   "arrivalDay" : "2021-01-01",
   "dayOfExit" : "2021-01-02",
-  "dniPassenger" : "123756",
-  "roomToReserve" : {
-    "occupant" : null,
-    "roomNumber" : 1,
-    "stateRoom" : "AVAILABLE",
-    "numberOfBeds" : 1,
-    "price" : 500.0,
-    "consumed" : [ ],
-    "typeRoom" : "SingleRoom"
-  },
-  "plan" : "CP",
-  "status" : "CONFIRMED"
-}, {
-  "arrivalDay" : "2021-04-06",
-  "dayOfExit" : "2021-04-09",
   "dniPassenger" : "123756",
   "roomToReserve" : {
     "occupant" : null,
@@ -138,8 +33,158 @@
   "dayOfExit" : "2021-01-03",
   "dniPassenger" : "11111",
   "roomToReserve" : {
-    "occupant" : null,
+    "occupant" : {
+      "id" : 79,
+      "loginName" : "celes",
+      "password" : "1234hola",
+      "state" : 1,
+      "name" : "Celeste",
+      "dni" : "11111",
+      "hometown" : "mdp",
+      "homeAddress" : "mdp123",
+      "source" : "mdp"
+    },
     "roomNumber" : 12,
+    "stateRoom" : "OCCUPIED",
+    "numberOfBeds" : 1,
+    "price" : 1500.0,
+    "consumed" : [ "MINIBAR", "TOWEL", "LAUNDRY" ],
+    "typeRoom" : "King Room"
+  },
+  "plan" : "CP",
+  "status" : "ACTIVE"
+}, {
+  "arrivalDay" : "2021-04-04",
+  "dayOfExit" : "2021-04-08",
+  "dniPassenger" : "11111",
+  "roomToReserve" : {
+    "occupant" : null,
+    "roomNumber" : 3,
+    "stateRoom" : "AVAILABLE",
+    "numberOfBeds" : 1,
+    "price" : 500.0,
+    "consumed" : [ ],
+    "typeRoom" : "SingleRoom"
+  },
+  "plan" : "CP",
+  "status" : "CONFIRMED"
+}, {
+  "arrivalDay" : "2021-04-04",
+  "dayOfExit" : "2021-04-08",
+  "dniPassenger" : "11111",
+  "roomToReserve" : {
+    "occupant" : null,
+    "roomNumber" : 10,
+    "stateRoom" : "AVAILABLE",
+    "numberOfBeds" : 1,
+    "price" : 1500.0,
+    "consumed" : [ ],
+    "typeRoom" : "King Room"
+  },
+  "plan" : "EP",
+  "status" : "CONFIRMED"
+}, {
+  "arrivalDay" : "2021-04-06",
+  "dayOfExit" : "2021-04-09",
+  "dniPassenger" : "123756",
+  "roomToReserve" : {
+    "occupant" : null,
+    "roomNumber" : 1,
+    "stateRoom" : "AVAILABLE",
+    "numberOfBeds" : 1,
+    "price" : 500.0,
+    "consumed" : [ ],
+    "typeRoom" : "SingleRoom"
+  },
+  "plan" : "CP",
+  "status" : "CONFIRMED"
+}, {
+  "arrivalDay" : "2021-06-11",
+  "dayOfExit" : "2021-06-13",
+  "dniPassenger" : "122334",
+  "roomToReserve" : {
+    "occupant" : {
+      "id" : 80,
+      "loginName" : "roci",
+      "password" : "1111",
+      "state" : 1,
+      "name" : "rocio",
+      "dni" : "122334",
+      "hometown" : "mdp",
+      "homeAddress" : "mdp",
+      "source" : "mdp"
+    },
+    "roomNumber" : 10,
+    "stateRoom" : "OCCUPIED",
+    "numberOfBeds" : 1,
+    "price" : 1500.0,
+    "consumed" : [ "TOWEL", "MINIBAR" ],
+    "typeRoom" : "King Room"
+  },
+  "plan" : "CP",
+  "status" : "ACTIVE"
+}, {
+  "arrivalDay" : "2021-06-11",
+  "dayOfExit" : "2021-06-15",
+  "dniPassenger" : "233445",
+  "roomToReserve" : {
+    "occupant" : {
+      "id" : 81,
+      "loginName" : "yair",
+      "password" : "2222",
+      "state" : 1,
+      "name" : "Yair",
+      "dni" : "233445",
+      "hometown" : "mdp",
+      "homeAddress" : "mdp",
+      "source" : "mdp"
+    },
+    "roomNumber" : 9,
+    "stateRoom" : "OCCUPIED",
+    "numberOfBeds" : 3,
+    "price" : 850.0,
+    "consumed" : [ ],
+    "typeRoom" : "Family Room"
+  },
+  "plan" : "MAP",
+  "status" : "ACTIVE"
+}, {
+  "arrivalDay" : "2022-04-06",
+  "dayOfExit" : "2022-04-09",
+  "dniPassenger" : "123243",
+  "roomToReserve" : {
+    "occupant" : null,
+    "roomNumber" : 10,
+    "stateRoom" : "AVAILABLE",
+    "numberOfBeds" : 1,
+    "price" : 1500.0,
+    "consumed" : [ ],
+    "typeRoom" : "King Room"
+  },
+  "plan" : "EP",
+  "status" : "CONFIRMED"
+}, {
+  "arrivalDay" : "2022-04-08",
+  "dayOfExit" : "2022-04-11",
+  "dniPassenger" : "123756",
+  "roomToReserve" : {
+    "occupant" : null,
+    "roomNumber" : 7,
+    "stateRoom" : "AVAILABLE",
+    "numberOfBeds" : 3,
+    "price" : 850.0,
+    "consumed" : [ ],
+    "typeRoom" : "Family Room"
+  },
+  "plan" : "MAP",
+  "status" : "CONFIRMED"
+}, {
+  "arrivalDay" : "2022-06-24",
+  "dayOfExit" : "2022-06-27",
+  "dniPassenger" : "11111",
+  "roomToReserve" : {
+    "occupant" : null,
+    "roomNumber" : 10,
     "stateRoom" : "AVAILABLE",
     "numberOfBeds" : 1,
     "price" : 1500.0,
@@ -147,5 +192,35 @@
     "typeRoom" : "King Room"
   },
   "plan" : "CP",
+  "status" : "CONFIRMED"
+}, {
+  "arrivalDay" : "2022-08-13",
+  "dayOfExit" : "2022-08-18",
+  "dniPassenger" : "123756",
+  "roomToReserve" : {
+    "occupant" : null,
+    "roomNumber" : 9,
+    "stateRoom" : "AVAILABLE",
+    "numberOfBeds" : 3,
+    "price" : 850.0,
+    "consumed" : [ ],
+    "typeRoom" : "Family Room"
+  },
+  "plan" : "EP",
+  "status" : "CONFIRMED"
+}, {
+  "arrivalDay" : "2022-08-15",
+  "dayOfExit" : "2022-08-20",
+  "dniPassenger" : "11111",
+  "roomToReserve" : {
+    "occupant" : null,
+    "roomNumber" : 4,
+    "stateRoom" : "AVAILABLE",
+    "numberOfBeds" : 2,
+    "price" : 750.0,
+    "consumed" : [ ],
+    "typeRoom" : "Double Room"
+  },
+  "plan" : "EP",
   "status" : "CONFIRMED"
 } ]

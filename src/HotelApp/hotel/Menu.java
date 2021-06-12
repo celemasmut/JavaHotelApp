@@ -666,7 +666,7 @@ public class Menu {
         printOut.println("1 - Cancel a reservation");
         printOut.println("2 - Add an order");
         printOut.println("3 - Check your consumptions");
-        printOut.println("3 - exit");
+        printOut.println("4 - exit");
 
         return  4;
     }
@@ -909,7 +909,7 @@ public class Menu {
         printOut.println("9_Back Up");
         printOut.println("10_Exit");
 
-        return 9;
+        return 10;
     }
 
     private void admin() {
@@ -955,7 +955,7 @@ public class Menu {
                     }
                     break;
                 case 8:
-                    editRecepcionist();
+                    editReceptionist();
                     break;
                 case 9:
                     backUp();
@@ -967,16 +967,16 @@ public class Menu {
             saveInfo();
         }
     }
-    private void editRecepcionist()
+    private void editReceptionist()
     {
         String aux;
         boolean answer;
         boolean exit= false;
         printOut.println("Insert the receptionist file number you want to edit ");
-        int fileNumbre = toCaptureInt(2);
+        int fileNumber = toCaptureInt(2);
         Receptionist receptionistToEdit = null;
         try {
-            receptionistToEdit = searchReceptionist(fileNumbre);
+            receptionistToEdit = searchReceptionist(fileNumber);
         } catch (UserDoesNotExistException e) {
             e.printStackTrace();
         }
@@ -1028,8 +1028,6 @@ public class Menu {
                 case 4:
                     exit=true;
                     break;
-
-
 
             }
         }while (!exit);

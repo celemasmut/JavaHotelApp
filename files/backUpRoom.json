@@ -66,21 +66,41 @@
     "consumed" : [ ],
     "typeRoom" : "Family Room"
   }, {
-    "occupant" : null,
+    "occupant" : {
+      "id" : 82,
+      "loginName" : "yair",
+      "password" : "2222",
+      "state" : 1,
+      "name" : "Yair",
+      "dni" : "233445",
+      "hometown" : "mdp",
+      "homeAddress" : "mdp",
+      "source" : "mdp"
+    },
     "roomNumber" : 9,
-    "stateRoom" : "AVAILABLE",
+    "stateRoom" : "OCCUPIED",
     "numberOfBeds" : 3,
     "price" : 850.0,
     "consumed" : [ ],
     "typeRoom" : "Family Room"
   } ],
   "kingRoomList" : [ {
-    "occupant" : null,
+    "occupant" : {
+      "id" : 83,
+      "loginName" : "roci",
+      "password" : "1111",
+      "state" : 1,
+      "name" : "rocio",
+      "dni" : "122334",
+      "hometown" : "mdp",
+      "homeAddress" : "mdp",
+      "source" : "mdp"
+    },
     "roomNumber" : 10,
-    "stateRoom" : "AVAILABLE",
+    "stateRoom" : "OCCUPIED",
     "numberOfBeds" : 1,
     "price" : 1500.0,
-    "consumed" : [ ],
+    "consumed" : [ "TOWEL", "MINIBAR" ],
     "typeRoom" : "King Room"
   }, {
     "occupant" : null,
