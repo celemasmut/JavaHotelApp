@@ -3,25 +3,16 @@
   "dayOfExit" : "2021-01-02",
   "dniPassenger" : "123756",
   "roomToReserve" : {
-    "occupant" : {
-      "id" : 41,
-      "loginName" : "jair",
-      "password" : "121212",
-      "state" : 1,
-      "name" : "Jair",
-      "dni" : "123756",
-      "homeAddress" : "mdq765",
-      "source" : "mdp"
-    },
+    "occupant" : null,
     "roomNumber" : 1,
-    "stateRoom" : "OCCUPIED",
+    "stateRoom" : "AVAILABLE",
     "numberOfBeds" : 1,
     "price" : 500.0,
-    "consumed" : [ "MINIBAR", "LAUNDRY", "TOWEL" ],
+    "consumed" : [ ],
     "typeRoom" : "SingleRoom"
   },
   "plan" : "CP",
-  "status" : "COMPLETED"
+  "status" : "CONFIRMED"
 }, {
   "arrivalDay" : "2021-01-01",
   "dayOfExit" : "2021-01-02",
@@ -43,12 +34,13 @@
   "dniPassenger" : "11111",
   "roomToReserve" : {
     "occupant" : {
-      "id" : 42,
+      "id" : 94,
       "loginName" : "celes",
       "password" : "1234hola",
       "state" : 1,
       "name" : "Celeste",
       "dni" : "11111",
+      "hometown" : "mdp",
       "homeAddress" : "mdp123",
       "source" : "mdp"
     },
@@ -60,31 +52,22 @@
     "typeRoom" : "King Room"
   },
   "plan" : "CP",
-  "status" : "COMPLETED"
+  "status" : "ACTIVE"
 }, {
   "arrivalDay" : "2021-04-04",
   "dayOfExit" : "2021-04-08",
   "dniPassenger" : "11111",
   "roomToReserve" : {
-    "occupant" : {
-      "id" : 43,
-      "loginName" : "celes",
-      "password" : "1234hola",
-      "state" : 1,
-      "name" : "Celeste",
-      "dni" : "11111",
-      "homeAddress" : "mdp123",
-      "source" : "mdp"
-    },
+    "occupant" : null,
     "roomNumber" : 3,
-    "stateRoom" : "OCCUPIED",
+    "stateRoom" : "AVAILABLE",
     "numberOfBeds" : 1,
     "price" : 500.0,
     "consumed" : [ ],
     "typeRoom" : "SingleRoom"
   },
   "plan" : "CP",
-  "status" : "ACTIVE"
+  "status" : "CONFIRMED"
 }, {
   "arrivalDay" : "2021-04-04",
   "dayOfExit" : "2021-04-08",
@@ -116,6 +99,56 @@
   "plan" : "CP",
   "status" : "CONFIRMED"
 }, {
+  "arrivalDay" : "2021-06-11",
+  "dayOfExit" : "2021-06-13",
+  "dniPassenger" : "122334",
+  "roomToReserve" : {
+    "occupant" : {
+      "id" : 95,
+      "loginName" : "roci",
+      "password" : "1111",
+      "state" : 1,
+      "name" : "rocio",
+      "dni" : "122334",
+      "hometown" : "mdp",
+      "homeAddress" : "mdp",
+      "source" : "mdp"
+    },
+    "roomNumber" : 10,
+    "stateRoom" : "OCCUPIED",
+    "numberOfBeds" : 1,
+    "price" : 1500.0,
+    "consumed" : [ "TOWEL", "MINIBAR" ],
+    "typeRoom" : "King Room"
+  },
+  "plan" : "CP",
+  "status" : "ACTIVE"
+}, {
+  "arrivalDay" : "2021-06-11",
+  "dayOfExit" : "2021-06-15",
+  "dniPassenger" : "233445",
+  "roomToReserve" : {
+    "occupant" : {
+      "id" : 96,
+      "loginName" : "yair",
+      "password" : "2222",
+      "state" : 1,
+      "name" : "Yair",
+      "dni" : "233445",
+      "hometown" : "mdp",
+      "homeAddress" : "mdp",
+      "source" : "mdp"
+    },
+    "roomNumber" : 9,
+    "stateRoom" : "OCCUPIED",
+    "numberOfBeds" : 3,
+    "price" : 850.0,
+    "consumed" : [ ],
+    "typeRoom" : "Family Room"
+  },
+  "plan" : "MAP",
+  "status" : "ACTIVE"
+}, {
   "arrivalDay" : "2022-04-06",
   "dayOfExit" : "2022-04-09",
   "dniPassenger" : "123243",
@@ -144,6 +177,21 @@
     "typeRoom" : "Family Room"
   },
   "plan" : "MAP",
+  "status" : "CONFIRMED"
+}, {
+  "arrivalDay" : "2022-06-24",
+  "dayOfExit" : "2022-06-27",
+  "dniPassenger" : "11111",
+  "roomToReserve" : {
+    "occupant" : null,
+    "roomNumber" : 10,
+    "stateRoom" : "AVAILABLE",
+    "numberOfBeds" : 1,
+    "price" : 1500.0,
+    "consumed" : [ ],
+    "typeRoom" : "King Room"
+  },
+  "plan" : "CP",
   "status" : "CONFIRMED"
 }, {
   "arrivalDay" : "2022-08-13",

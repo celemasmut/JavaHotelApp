@@ -16,21 +16,7 @@
     "consumed" : [ ],
     "typeRoom" : "SingleRoom"
   }, {
-<<<<<<< HEAD
     "occupant" : null,
-=======
-    "occupant" : {
-      "id" : 7,
-      "loginName" : "celes",
-      "password" : "1234hola",
-      "state" : 1,
-      "name" : "Celeste",
-      "dni" : "11111",
-      "hometown" : "mdp",
-      "homeAddress" : "mdp123",
-      "source" : "mdp"
-    },
->>>>>>> 9bc92654655e5f0dec762f42e19c6f27406aaed2
     "roomNumber" : 3,
     "stateRoom" : "AVAILABLE",
     "numberOfBeds" : 1,
@@ -80,21 +66,41 @@
     "consumed" : [ ],
     "typeRoom" : "Family Room"
   }, {
-    "occupant" : null,
+    "occupant" : {
+      "id" : 92,
+      "loginName" : "yair",
+      "password" : "2222",
+      "state" : 1,
+      "name" : "Yair",
+      "dni" : "233445",
+      "hometown" : "mdp",
+      "homeAddress" : "mdp",
+      "source" : "mdp"
+    },
     "roomNumber" : 9,
-    "stateRoom" : "AVAILABLE",
+    "stateRoom" : "OCCUPIED",
     "numberOfBeds" : 3,
     "price" : 850.0,
     "consumed" : [ ],
     "typeRoom" : "Family Room"
   } ],
   "kingRoomList" : [ {
-    "occupant" : null,
+    "occupant" : {
+      "id" : 93,
+      "loginName" : "roci",
+      "password" : "1111",
+      "state" : 1,
+      "name" : "rocio",
+      "dni" : "122334",
+      "hometown" : "mdp",
+      "homeAddress" : "mdp",
+      "source" : "mdp"
+    },
     "roomNumber" : 10,
-    "stateRoom" : "AVAILABLE",
+    "stateRoom" : "OCCUPIED",
     "numberOfBeds" : 1,
     "price" : 1500.0,
-    "consumed" : [ ],
+    "consumed" : [ "TOWEL", "MINIBAR" ],
     "typeRoom" : "King Room"
   }, {
     "occupant" : null,
@@ -105,21 +111,7 @@
     "consumed" : [ ],
     "typeRoom" : "King Room"
   }, {
-<<<<<<< HEAD
     "occupant" : null,
-=======
-    "occupant" : {
-      "id" : 8,
-      "loginName" : "celes",
-      "password" : "1234hola",
-      "state" : 1,
-      "name" : "Celeste",
-      "dni" : "11111",
-      "hometown" : "mdp",
-      "homeAddress" : "mdp123",
-      "source" : "mdp"
-    },
->>>>>>> 9bc92654655e5f0dec762f42e19c6f27406aaed2
     "roomNumber" : 12,
     "stateRoom" : "AVAILABLE",
     "numberOfBeds" : 1,

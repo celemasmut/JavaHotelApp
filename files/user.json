@@ -1,6 +1,6 @@
 {
   "listPassenger" : [ {
-    "id" : 33,
+    "id" : 83,
     "loginName" : "celes",
     "password" : "1234hola",
     "state" : 1,
@@ -10,7 +10,7 @@
     "homeAddress" : "mdp123",
     "source" : "mdp"
   }, {
-    "id" : 34,
+    "id" : 84,
     "loginName" : "Mau",
     "password" : "00012",
     "state" : 1,
@@ -20,51 +20,56 @@
     "homeAddress" : "mdq543",
     "source" : "mdp"
   }, {
-<<<<<<< HEAD
-    "id" : 35,
+    "id" : 85,
     "loginName" : "jair",
     "password" : "121212",
-=======
-    "id" : 2,
-    "loginName" : "Jair",
-    "password" : "12346",
->>>>>>> 9bc92654655e5f0dec762f42e19c6f27406aaed2
     "state" : 1,
     "name" : "Jair",
-    "dni" : "44221436",
+    "dni" : "123756",
     "hometown" : "mdp",
     "homeAddress" : "mdq765",
     "source" : "mdp"
   }, {
-    "id" : 36,
-    "loginName" : "rocio",
-    "password" : "mdp21",
+    "id" : 86,
+    "loginName" : "roci",
+    "password" : "1111",
     "state" : 1,
     "name" : "rocio",
-    "dni" : "333333",
-    "homeAddress" : "mdp33",
+    "dni" : "122334",
+    "hometown" : "mdp",
+    "homeAddress" : "mdp",
+    "source" : "mdp"
+  }, {
+    "id" : 87,
+    "loginName" : "yair",
+    "password" : "2222",
+    "state" : 1,
+    "name" : "Yair",
+    "dni" : "233445",
+    "hometown" : "mdp",
+    "homeAddress" : "mdp",
     "source" : "mdp"
   } ],
   "listAdmin" : [ {
-    "id" : 37,
+    "id" : 88,
     "loginName" : "admin",
     "password" : "admin",
     "state" : 1
   } ],
   "listRecepcionist" : [ {
-    "id" : 38,
+    "id" : 89,
     "loginName" : "recep1",
     "password" : "1234",
     "state" : 1,
     "fileNumber" : 4
   }, {
-    "id" : 39,
+    "id" : 90,
     "loginName" : "recep2",
     "password" : "0987",
     "state" : 1,
     "fileNumber" : 6
   }, {
-    "id" : 40,
+    "id" : 91,
     "loginName" : "recep3",
     "password" : "0001",
     "state" : 1,
